@@ -1,4 +1,5 @@
 import { connectMongoDb } from "@/server/database/db";
+import { ServiceModel } from "@/server/models";
 import { StaffModel } from "@/server/models/staff.model";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,10 +12,10 @@ export async function GET(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (id) {
-      const staff = await StaffModel.findById(id);
+      const staff = await StaffModel.findById(id).populate("services");
       return NextResponse.json({ message: "Success", staff }, { status: 200 });
     } else {
-      const allStaff = await StaffModel.find();
+      const allStaff = await StaffModel.find().populate("services");
       return NextResponse.json(
         { message: "Success", allStaff },
         { status: 200 }
@@ -35,11 +36,19 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const staff = await req.json();
-    const createdStaff = await StaffModel.create(staff);
+    const body = await req.json();
+    const { category, ...staffData } = body;
+    const services = await ServiceModel.find({ category });
+    const serviceIds = services.map((service) => service._id);
+
+    const newStaff = await StaffModel.create({
+      ...staffData,
+      category,
+      services: serviceIds,
+    });
 
     return NextResponse.json(
-      { message: "Staff successfully added", createdStaff },
+      { message: "Staff successfully added", newStaff },
       { status: 201 }
     );
   } catch (error) {

@@ -1,6 +1,9 @@
 import { model, Model, models, Schema } from "mongoose";
 import { ServiceType } from "../utils";
 import { CategoryEnum } from "../constant";
+import { connectMongoDb } from "../database/db";
+
+connectMongoDb();
 
 const ServiceSchema: Schema = new Schema<ServiceType>(
   {
