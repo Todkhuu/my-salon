@@ -1,6 +1,6 @@
 import { model, Model, models, Schema } from "mongoose";
 import { StaffType } from "../utils/types";
-import { CategoryEnum, StaffRoleEnum } from "../constant";
+import { CategoryEnum, ProfessionEnum, StaffRoleEnum } from "../constant";
 
 const StaffSchema: Schema = new Schema<StaffType>(
   {
@@ -20,6 +20,16 @@ const StaffSchema: Schema = new Schema<StaffType>(
     category: {
       type: String,
       enum: Object.values(CategoryEnum),
+      required: true,
+    },
+    profession: {
+      type: String,
+      enum: Object.values(ProfessionEnum),
+      required: true,
+    },
+    services: {
+      type: [Schema.Types.ObjectId],
+      ref: "Services",
       required: true,
     },
     availableTimes: { type: [Date], required: true },

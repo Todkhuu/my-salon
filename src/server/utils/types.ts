@@ -2,6 +2,7 @@ import { Schema } from "mongoose";
 import {
   AppointmentStatusEnum,
   CategoryEnum,
+  ProfessionEnum,
   StaffRoleEnum,
 } from "../constant";
 
@@ -26,6 +27,8 @@ export interface StaffType {
   rating: number;
   image: string;
   category: CategoryEnum;
+  profession: ProfessionEnum;
+  services: ServiceType;
   availableTimes: Date[];
   createdAt: Date;
   updatedAt: Date;

@@ -13,3 +13,8 @@ export enum CategoryEnum {
   HAIR = "HAIR",
   NAILS = "NAILS",
 }
+
+export enum ProfessionEnum {
+  HairStylist = "Hair stylist",
+  Manicurist = "Manicurist",
+}
