@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
     const { email, password, username } = await req.json();
 
     const existingUsername = await UserModel.findOne({ username });
-    console.log("existingUserName", existingUsername);
 
     if (existingUsername) {
       return NextResponse.json(
@@ -30,7 +29,6 @@ export async function POST(req: NextRequest) {
     }
 
     const existingUser = await isExistingUser(email);
-    console.log("existingUser", existingUser);
 
     if (existingUser) {
       return NextResponse.json(

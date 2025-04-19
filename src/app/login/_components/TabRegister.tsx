@@ -1,144 +1,97 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
-import { CustomInput } from "./CustomInput";
+import { FormInput } from "./FormInput";
 
 type TabType = "login" | "register";
 
 interface RegisterFormProps {
-  setTab: Dispatch<SetStateAction<TabType>>;
+  setTab: React.Dispatch<React.SetStateAction<TabType>>;
 }
 
+// Form-ийн validation schema
+const formSchema = z
+  .object({
+    username: z.string().min(1, { message: "Username заавал бөглөнө." }),
+    email: z
+      .string()
+      .min(1, { message: "Email хоосон байна." })
+      .email({ message: "Буруу email формат." }),
+    password: z.string().min(1, { message: "Нууц үг хоосон байна." }),
+    confirmPassword: z
+      .string()
+      .min(1, { message: "Баталгаажуулах нууц үг хоосон байна." }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Нууц үг таарахгүй байна.",
+    path: ["confirmPassword"],
+  });
+
 export const TabRegister = ({ setTab }: RegisterFormProps) => {
-  const [registerData, setRegisterData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const [errors, setErrors] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setRegisterData((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-  };
-
-  const validate = () => {
-    let valid = true;
-    let newErrors = {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
       username: "",
       email: "",
       password: "",
       confirmPassword: "",
-    };
+    },
+  });
 
-    if (!registerData.username) {
-      newErrors.username = "Username заавал бөглөнө.";
-      valid = false;
-    }
-
-    // Email validation
-    if (!registerData.email) {
-      newErrors.email = "Email хоосон байна.";
-      valid = false;
-    } else if (!/\S+@\S+\.\S+/.test(registerData.email)) {
-      newErrors.email = "Буруу email формат.";
-      valid = false;
-    }
-
-    // Password validation
-    if (!registerData.password) {
-      newErrors.password = "Нууц үг хоосон байна.";
-      valid = false;
-    }
-
-    // Confirm Password validation
-    if (registerData.password !== registerData.confirmPassword) {
-      newErrors.confirmPassword = "Нууц үг таарахгүй байна.";
-      valid = false;
-    }
-
-    setErrors(newErrors);
-    return valid;
-  };
-
-  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!validate()) {
-      return;
-    }
-
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const res = await axios.post("/api/signup", {
-        username: registerData.username,
-        email: registerData.email,
-        password: registerData.password,
+      await axios.post("/api/signup", {
+        username: values.username,
+        email: values.email,
+        password: values.password,
       });
 
       toast.success("Бүртгэл амжилттай үүслээ!");
       setTab("login");
-    } catch (error) {}
+    } catch (error) {
+      console.error("Signup error:", error);
+      toast("Системд алдаа гарлаа. Дахин оролдоно уу.");
+    }
   };
 
   return (
     <TabsContent value="register">
-      <form onSubmit={handleRegister} className="space-y-4 pt-4">
-        <CustomInput
-          id="username"
-          label="Username"
-          value={registerData.username}
-          onChange={handleChange}
-          // required
-          error={errors.username}
-        />
-        <CustomInput
-          id="email"
-          label="Email"
-          type="email"
-          value={registerData.email}
-          onChange={handleChange}
-          placeholder="m@example.com"
-          // required
-          error={errors.email}
-        />
-        <CustomInput
-          id="password"
-          label="Password"
-          type="password"
-          value={registerData.password}
-          onChange={handleChange}
-          // required
-          error={errors.password}
-        />
-        <CustomInput
-          id="confirmPassword"
-          label="Password"
-          type="password"
-          value={registerData.confirmPassword}
-          onChange={handleChange}
-          // required
-          error={errors.confirmPassword}
-        />
-        <Button
-          type="submit"
-          className="w-full bg-black text-white hover:bg-gray-800"
-        >
-          Create Account
-        </Button>
-      </form>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
+          <FormInput control={form.control} name="username" label="Username" />
+          <FormInput
+            control={form.control}
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="m@example.com"
+          />
+          <FormInput
+            control={form.control}
+            name="password"
+            label="Нууц үг"
+            type="password"
+          />
+          <FormInput
+            control={form.control}
+            name="confirmPassword"
+            label="Нууц үг баталгаажуулах"
+            type="password"
+          />
+          <Button
+            type="submit"
+            className="w-full bg-black text-white hover:bg-gray-800"
+          >
+            Create Account
+          </Button>
+        </form>
+      </Form>
     </TabsContent>
   );
 };
