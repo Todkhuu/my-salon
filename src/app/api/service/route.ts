@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     const createdStaff = await ServiceModel.create(staff);
 
     return NextResponse.json(
-      { message: "Service successfully added", createdStaff },
+      { message: "Үйлчилгээ амжилттай нэмэгдлээ", createdStaff },
       { status: 201 }
     );
   } catch (error) {
@@ -20,6 +20,31 @@ export async function POST(req: NextRequest) {
       {
         message: "Internal Server Error",
         error: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    const serviceData = await ServiceModel.find();
+    console.log("servid", serviceData);
+
+    return NextResponse.json(
+      {
+        message: "Амжилттай service мэдээлэл татлаа",
+        data: serviceData,
+      },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.error("Алдаа гарлаа service татах үед:", err);
+
+    return NextResponse.json(
+      {
+        message: "Дотоод серверийн алдаа",
+        error: err instanceof Error ? err.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );

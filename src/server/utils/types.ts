@@ -1,19 +1,18 @@
 import { Schema } from "mongoose";
 import {
   AppointmentStatusEnum,
-  CategoryEnum,
   ProfessionEnum,
   StaffRoleEnum,
 } from "../constant";
 
 export interface UserType {
-  _id: Schema.Types.ObjectId;
+  _id?: Schema.Types.ObjectId;
   email: string;
   password: string;
-  phoneNumber: string;
-  username: string;
-  createdAt: Date;
-  updatedAt: Date;
+  phoneNumber?: string;
+  username?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface StaffType {
@@ -26,7 +25,7 @@ export interface StaffType {
   about: string;
   rating: number;
   image: string;
-  category: CategoryEnum;
+  category: CategoryType;
   profession: ProfessionEnum;
   services: ServiceType;
   availableTimes: Date[];
@@ -59,9 +58,15 @@ export interface ServiceType {
   _id: Schema.Types.ObjectId;
   name: string;
   price: number;
-  category: CategoryEnum; // HAIR, NAILS
+  category: CategoryType;
   duration: number; // minutes
   description: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface CategoryType {
+  _id: Schema.Types.ObjectId;
+  name: string;
+  image: string;
 }

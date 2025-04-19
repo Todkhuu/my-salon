@@ -1,17 +1,13 @@
 import { model, Model, models, Schema } from "mongoose";
 import { ServiceType } from "../utils";
-import { CategoryEnum } from "../constant";
-import { connectMongoDb } from "../database/db";
-
-connectMongoDb();
 
 const ServiceSchema: Schema = new Schema<ServiceType>(
   {
     name: { type: String, required: true },
     price: { type: Number, required: true },
     category: {
-      type: String,
-      enum: Object.values(CategoryEnum),
+      type: Schema.Types.ObjectId,
+      ref: "Categories",
       required: true,
     },
     duration: { type: Number, required: true },

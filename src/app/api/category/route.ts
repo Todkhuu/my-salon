@@ -1,6 +1,5 @@
 import { connectMongoDb } from "@/server/database/db";
-import { ServiceModel } from "@/server/models";
-import { StaffModel } from "@/server/models/staff.model";
+import { CategoryModel } from "@/server/models";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,12 +11,15 @@ export async function GET(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (id) {
-      const staff = await StaffModel.findById(id).populate("services");
-      return NextResponse.json({ message: "Success", staff }, { status: 200 });
-    } else {
-      const allStaff = await StaffModel.find().populate("services");
+      const category = await CategoryModel.findById(id);
       return NextResponse.json(
-        { message: "Success", allStaff },
+        { message: "success", category },
+        { status: 200 }
+      );
+    } else {
+      const allCategory = await CategoryModel.find();
+      return NextResponse.json(
+        { message: "Success", allCategory },
         { status: 200 }
       );
     }
@@ -36,26 +38,15 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { category, ...staffData } = body;
+    const { name, image } = await req.json();
 
-    const services = await ServiceModel.find({ category });
-    if (!services.length) {
-      return NextResponse.json(
-        { message: "No services found for this category" },
-        { status: 404 }
-      );
-    }
-
-    const serviceIds = services.map((service) => service._id);
-    const newStaff = await StaffModel.create({
-      ...staffData,
-      category,
-      services: serviceIds,
+    const newCategory = await CategoryModel.create({
+      name,
+      image,
     });
 
     return NextResponse.json(
-      { message: "Staff successfully added", newStaff },
+      { message: "Category амжилттай нэмлээ", newCategory },
       { status: 201 }
     );
   } catch (error) {
@@ -82,7 +73,7 @@ export async function PUT(req: NextRequest) {
 
     const data = await req.json();
 
-    const updatedStaff = await StaffModel.findByIdAndUpdate(id, data, {
+    const updatedStaff = await CategoryModel.findByIdAndUpdate(id, data, {
       new: true,
     });
 
@@ -115,7 +106,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ message: "Invalid ID" }, { status: 400 });
     }
 
-    const deletedStaff = await StaffModel.findByIdAndDelete(id);
+    const deletedStaff = await CategoryModel.findByIdAndDelete(id);
 
     if (!deletedStaff) {
       return NextResponse.json({ message: "Staff not found" }, { status: 404 });

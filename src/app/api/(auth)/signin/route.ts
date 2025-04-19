@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 
     if (!user) {
       return NextResponse.json(
-        { message: "No user found with this email." },
+        { message: "Энэ имэйлтэй хэрэглэгч олдсонгүй." },
         { status: 401 }
       );
     }
@@ -22,13 +22,13 @@ export async function POST(req: Request) {
 
     if (!isPasswordCorrect) {
       return NextResponse.json(
-        { message: "Incorrect email or password." },
+        { message: "Нууц үг эсвэл имэйл буруу байна." },
         { status: 401 }
       );
     }
 
     return NextResponse.json(
-      { message: "Successfully logged in.", user },
+      { message: "Амжилттай нэвтэрлээ.", user },
       { status: 200 }
     );
   } catch (error) {

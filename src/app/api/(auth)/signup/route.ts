@@ -7,11 +7,12 @@ connectMongoDb();
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password } = await req.json();
+    const { email, password, username } = await req.json();
+    console.log("email", email, password, username);
 
     if (!email) {
       return NextResponse.json(
-        { message: "Email is required." },
+        { message: "Имэйл хаяг шаардлагатай." },
         { status: 400 }
       );
     }
@@ -20,8 +21,17 @@ export async function POST(req: NextRequest) {
 
     if (existingUser) {
       return NextResponse.json(
-        { message: "User is already registered." },
+        { message: "Энэ имэйл хаяг аль хэдийн бүртгэгдсэн байна." },
         { status: 409 }
+      );
+    }
+
+    const existingUsername = await UserModel.findOne({ username });
+
+    if (existingUsername) {
+      return NextResponse.json(
+        { message: "Xэрэглэгчийн нэр аль хэдийн бүртгэгдсэн байна." },
+        { status: 400 }
       );
     }
 
@@ -29,11 +39,12 @@ export async function POST(req: NextRequest) {
 
     const newStaff = await UserModel.create({
       email,
+      username,
       password: hashedPassword,
     });
 
     return NextResponse.json(
-      { message: "User successfully registered.", data: newStaff },
+      { message: "Хэрэглэгч амжилттай бүртгэгдлээ.", data: newStaff },
       { status: 201 }
     );
   } catch (error) {

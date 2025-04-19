@@ -1,6 +1,6 @@
 import { model, Model, models, Schema } from "mongoose";
 import { StaffType } from "../utils/types";
-import { CategoryEnum, ProfessionEnum, StaffRoleEnum } from "../constant";
+import { ProfessionEnum, StaffRoleEnum } from "../constant";
 
 const StaffSchema: Schema = new Schema<StaffType>(
   {
@@ -18,8 +18,8 @@ const StaffSchema: Schema = new Schema<StaffType>(
     rating: { type: Number, required: true },
     image: { type: String, required: true },
     category: {
-      type: String,
-      enum: Object.values(CategoryEnum),
+      type: Schema.Types.ObjectId,
+      ref: "Categories",
       required: true,
     },
     profession: {
