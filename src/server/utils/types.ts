@@ -6,7 +6,7 @@ import {
 } from "../constant";
 
 export interface UserType {
-  _id?: Schema.Types.ObjectId;
+  _id: Schema.Types.ObjectId;
   email: string;
   password: string;
   phoneNumber?: string;

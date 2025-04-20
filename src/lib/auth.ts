@@ -1,18 +1,35 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
+import { UserModel } from "@/server/models";
+import { Types } from "mongoose";
+import { UserType } from "@/server/utils";
 
 const SECRET = process.env.JWT_SECRET!;
+
+// export interface UserType {
+//   _id: Types.ObjectId;
+//   username: string;
+//   email: string;
+// }
 
 export async function getUserFromCookie() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
-  console.log("token", token);
 
   if (!token) return null;
 
   try {
     const decoded = jwt.verify(token, SECRET) as { id: string };
-    return decoded;
+
+    const user = await UserModel.findById(decoded.id)
+      .select("-password")
+      .lean();
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user as UserType;
   } catch {
     return null;
   }
