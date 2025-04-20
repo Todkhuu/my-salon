@@ -35,7 +35,7 @@ export function ServiceCategories() {
       {categories.map((category) => (
         <Link key={category.id} href={`/services/${category.id}`}>
           <Card className="overflow-hidden transition-all hover:shadow-lg">
-            <div className="aspect-video w-full overflow-hidden">
+            <div className="w-full overflow-hidden">
               <Image
                 src={category.image || "/placeholder.svg"}
                 alt={category.name}

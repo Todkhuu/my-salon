@@ -5,10 +5,10 @@ import { ServiceCategories } from "@/components/service-categories";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="min-w-[100vw] min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-purple-100 to-pink-100 py-20 md:py-32">
-        <div className="container px-4 md:px-6">
+      <section className="bg-gradient-to-r from-purple-100 to-pink-100 py-20 md:py-32">
+        <div className="px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
               Book your next style transformation
@@ -17,32 +17,13 @@ export default function Home() {
               Professional haircuts, styling, and beauty services at your
               fingertips
             </p>
-            <div className="mt-8 w-full max-w-3xl rounded-lg bg-white p-4 shadow-lg">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <div className="flex items-center gap-2 rounded-md border p-3">
-                  <Search className="h-5 w-5 text-gray-400" />
-                  <span className="text-sm text-gray-500">All services</span>
-                </div>
-                <div className="flex items-center gap-2 rounded-md border p-3">
-                  <Calendar className="h-5 w-5 text-gray-400" />
-                  <span className="text-sm text-gray-500">Select date</span>
-                </div>
-                <div className="flex items-center gap-2 rounded-md border p-3">
-                  <Clock className="h-5 w-5 text-gray-400" />
-                  <span className="text-sm text-gray-500">Select time</span>
-                </div>
-              </div>
-              <Button className="mt-4 w-full bg-black text-white hover:bg-gray-800">
-                Find Appointments
-              </Button>
-            </div>
           </div>
         </div>
       </section>
 
       {/* Service Categories */}
-      <section className="py-12 md:py-16">
-        <div className="container px-4 md:px-6">
+      <section className="max-w-[1400px] m-auto py-12 md:py-16">
+        <div className="px-4 md:px-6">
           <h2 className="mb-8 text-center text-3xl font-bold">Our Services</h2>
           <ServiceCategories />
         </div>
@@ -50,7 +31,7 @@ export default function Home() {
 
       {/* How It Works */}
       <section className="bg-gray-50 py-12 md:py-16">
-        <div className="container px-4 md:px-6">
+        <div className="max-w-[1400px] m-auto px-4 md:px-6">
           <h2 className="mb-8 text-center text-3xl font-bold">How It Works</h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             <div className="flex flex-col items-center text-center">

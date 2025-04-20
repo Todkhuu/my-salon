@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           message: "Xэрэглэгчийн нэр аль хэдийн бүртгэгдсэн байна.",
-          field: "username",
         },
         { status: 400 }
       );
@@ -34,7 +33,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           message: "Энэ имэйл хаяг аль хэдийн бүртгэгдсэн байна.",
-          field: "email",
         },
         { status: 409 }
       );

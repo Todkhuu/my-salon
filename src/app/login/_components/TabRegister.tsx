@@ -15,7 +15,6 @@ interface RegisterFormProps {
   setTab: React.Dispatch<React.SetStateAction<TabType>>;
 }
 
-// Form-ийн validation schema
 const formSchema = z
   .object({
     username: z.string().min(1, { message: "Username заавал бөглөнө." }),

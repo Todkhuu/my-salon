@@ -2,6 +2,8 @@ import { connectMongoDb } from "@/server/database/db";
 import { UserModel } from "@/server/models";
 import { comparePassword } from "@/server/utils";
 import { NextResponse } from "next/server";
+import { signToken } from "@/server/utils/jwt";
+import { cookies } from "next/headers";
 
 connectMongoDb();
 
@@ -26,6 +28,15 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
+
+    const token = signToken({ id: user._id });
+
+    const cookieStore = await cookies();
+    cookieStore.set("token", token, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 хоног
+    });
 
     return NextResponse.json(
       { message: "Амжилттай нэвтэрлээ.", user },

@@ -1,3 +1,4 @@
+"use client";
 import { Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input"; // эсвэл өөрийн input
 
