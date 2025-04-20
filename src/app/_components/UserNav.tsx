@@ -13,8 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User, Settings, CreditCard, LogOut } from "lucide-react";
 import Link from "next/link";
+interface UserNavProps {
+  handleLogout: () => void;
+}
 
-export function UserNav({ handleLogout }: any) {
+export function UserNav({ handleLogout }: UserNavProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

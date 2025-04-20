@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { UserCircle, Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { UserCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 import { UserNav } from "./UserNav";
+import NavLinks from "./NavLinks";
+import MobileMenu from "./MobileMenu";
 
 interface HeaderProps {
   user: {
@@ -23,7 +24,7 @@ export default function Navbar({ user }: HeaderProps) {
       await axios.post("/api/logout");
       toast.success("Амжилттай гарлаа");
       router.push("/");
-      router.refresh(); // хэрэглэгчийг дахин шалгах
+      router.refresh();
     } catch (error) {
       toast.error("Гарахад алдаа гарлаа. Дахин оролдож үзээрэй.");
       console.error(error);
@@ -36,23 +37,7 @@ export default function Navbar({ user }: HeaderProps) {
         <Link href={user ? "/home" : "/"} className="flex items-center gap-2">
           <span className="text-xl font-bold">StyleCut</span>
         </Link>
-        <nav className="hidden gap-6 md:flex">
-          <Link
-            href="/services"
-            className="text-sm font-medium hover:underline"
-          >
-            Services
-          </Link>
-          <Link href="/barbers" className="text-sm font-medium hover:underline">
-            Our Barbers
-          </Link>
-          <Link href="/about" className="text-sm font-medium hover:underline">
-            About Us
-          </Link>
-          <Link href="/contact" className="text-sm font-medium hover:underline">
-            Contact
-          </Link>
-        </nav>
+        <NavLinks />
         <div className="flex items-center gap-4">
           {user ? (
             <UserNav handleLogout={handleLogout} />
@@ -64,77 +49,7 @@ export default function Navbar({ user }: HeaderProps) {
               </Button>
             </Link>
           )}
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="md:hidden">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <nav className="flex flex-col gap-4 pt-10">
-                <Link
-                  href="/services"
-                  className="text-sm font-medium hover:underline"
-                >
-                  Services
-                </Link>
-                <Link
-                  href="/barbers"
-                  className="text-sm font-medium hover:underline"
-                >
-                  Our Barbers
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-sm font-medium hover:underline"
-                >
-                  About Us
-                </Link>
-                <Link
-                  href="/contact"
-                  className="text-sm font-medium hover:underline"
-                >
-                  Contact
-                </Link>
-                {user ? (
-                  <>
-                    <Link
-                      href="/dashboard"
-                      className="text-sm font-medium hover:underline"
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      href="/dashboard/appointments"
-                      className="text-sm font-medium hover:underline"
-                    >
-                      My Appointments
-                    </Link>
-                    <Link
-                      href="/dashboard/profile"
-                      className="text-sm font-medium hover:underline"
-                    >
-                      My Profile
-                    </Link>
-                    <Link
-                      href="/login"
-                      className="text-sm font-medium hover:underline"
-                    >
-                      Logout
-                    </Link>
-                  </>
-                ) : (
-                  <Link
-                    href="/login"
-                    className="text-sm font-medium hover:underline"
-                  >
-                    Login / Register
-                  </Link>
-                )}
-              </nav>
-            </SheetContent>
-          </Sheet>
+          <MobileMenu user={user} onLogout={handleLogout} />
         </div>
       </div>
     </header>

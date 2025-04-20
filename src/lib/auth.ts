@@ -1,16 +1,9 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { UserModel } from "@/server/models";
-import { Types } from "mongoose";
 import { UserType } from "@/server/utils";
 
 const SECRET = process.env.JWT_SECRET!;
-
-// export interface UserType {
-//   _id: Types.ObjectId;
-//   username: string;
-//   email: string;
-// }
 
 export async function getUserFromCookie() {
   const cookieStore = await cookies();
@@ -30,7 +23,8 @@ export async function getUserFromCookie() {
     }
 
     return user as UserType;
-  } catch {
+  } catch (error) {
+    console.error("Error verifying token or fetching user:", error);
     return null;
   }
 }
