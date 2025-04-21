@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
@@ -32,7 +32,8 @@ export const TabLogin = () => {
       toast.success("Амжилттай нэвтэрлээ");
       router.push("/"); // refresh хийхэд хэрэглэгч хадгалагдана
     } catch (err: any) {
-      toast.error(err.response?.data?.message || "Алдаа гарлаа");
+      console.log("first", err.response.data.message);
+      toast.error(err.response.data.message);
     } finally {
       setLoading(false);
     }

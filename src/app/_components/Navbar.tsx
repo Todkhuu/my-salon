@@ -8,16 +8,11 @@ import { toast } from "sonner";
 import { UserNav } from "./UserNav";
 import NavLinks from "./NavLinks";
 import MobileMenu from "./MobileMenu";
+import { useUser } from "@/app/_context/UserContext";
 
-interface HeaderProps {
-  user: {
-    id: string;
-    username: string | undefined;
-    email: string;
-  } | null;
-}
-export default function Navbar({ user }: HeaderProps) {
+export default function Navbar() {
   const router = useRouter();
+  const { user } = useUser();
 
   const handleLogout = async () => {
     try {
@@ -30,10 +25,10 @@ export default function Navbar({ user }: HeaderProps) {
       console.error(error);
     }
   };
-  console.log("user", user);
+
   return (
-    <header className="border-b bg-white max-w-[1400px] m-auto">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6">
+    <header className="border-b bg-white ">
+      <div className="max-w-[1400px] m-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link href={user ? "/home" : "/"} className="flex items-center gap-2">
           <span className="text-xl font-bold">StyleCut</span>
         </Link>

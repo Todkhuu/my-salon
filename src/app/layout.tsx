@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_components/Navbar";
-import { getUserFromCookie } from "@/lib/auth";
-import { UserType } from "@/server/utils";
+import { Toaster } from "sonner";
+import { UserProvider } from "./_context/UserContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,22 +25,25 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const mongoUser = await getUserFromCookie();
-  const user = mongoUser
-    ? {
-        id: mongoUser._id.toString(),
-        username: mongoUser.username,
-        email: mongoUser.email,
-      }
-    : null;
+  // const mongoUser = await getUserFromCookie();
+  // const user = mongoUser
+  //   ? {
+  //       id: mongoUser._id.toString(),
+  //       username: mongoUser.username,
+  //       email: mongoUser.email,
+  //     }
+  //   : null;
 
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar user={user} />
-        {children}
+        <UserProvider>
+          <Navbar />
+          {children}
+          <Toaster />
+        </UserProvider>
       </body>
     </html>
   );

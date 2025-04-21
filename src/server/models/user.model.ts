@@ -1,5 +1,6 @@
 import { model, Model, models, Schema } from "mongoose";
 import { UserType } from "../utils/types";
+import mongoose from "mongoose";
 
 const UserSchema: Schema = new Schema<UserType>(
   {
@@ -7,6 +8,7 @@ const UserSchema: Schema = new Schema<UserType>(
     password: { type: String, required: true, select: false },
     phoneNumber: { type: String },
     username: { type: String, required: true },
+    favoriteStaff: [{ type: mongoose.Schema.Types.ObjectId, ref: "Staff" }],
   },
   { timestamps: true }
 );

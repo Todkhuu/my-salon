@@ -1,25 +1,35 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, Search } from "lucide-react";
 import { ServiceCategories } from "@/components/service-categories";
+import { useUser } from "./_context/UserContext";
+import { UserWelcome } from "@/components/home/UserWelcome";
+import FavoriteStaffs from "@/components/home/FavoriteStaffs";
 
 export default function Home() {
+  const { user } = useUser();
   return (
     <div className="min-w-[100vw] min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-purple-100 to-pink-100 py-20 md:py-32">
-        <div className="px-4 md:px-6">
-          <div className="flex flex-col items-center space-y-4 text-center">
-            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-              Book your next style transformation
-            </h1>
-            <p className="max-w-[700px] text-gray-500 md:text-xl">
-              Professional haircuts, styling, and beauty services at your
-              fingertips
-            </p>
+      {user ? (
+        <UserWelcome />
+      ) : (
+        <section className="bg-gradient-to-r from-purple-100 to-pink-100 py-20 md:py-32">
+          <div className="px-4 md:px-6">
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+                Book your next style transformation
+              </h1>
+              <p className="max-w-[700px] text-gray-500 md:text-xl">
+                Professional haircuts, styling, and beauty services at your
+                fingertips
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {user ? <FavoriteStaffs /> : null}
 
       {/* Service Categories */}
       <section className="max-w-[1400px] m-auto py-12 md:py-16">

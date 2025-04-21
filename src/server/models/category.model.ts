@@ -5,6 +5,7 @@ const CategorySchema: Schema = new Schema<CategoryType>(
   {
     name: { type: String, required: true },
     image: { type: String },
+    description: { type: String },
   },
   { timestamps: true }
 );

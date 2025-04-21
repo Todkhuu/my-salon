@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     } else {
       const allStaff = await StaffModel.find().populate("services");
       return NextResponse.json(
-        { message: "Success", allStaff },
+        { message: "Success", data: allStaff },
         { status: 200 }
       );
     }

@@ -6,17 +6,18 @@ import {
 } from "../constant";
 
 export interface UserType {
-  _id: Schema.Types.ObjectId;
+  _id: string;
   email: string;
   password: string;
   phoneNumber?: string;
   username?: string;
+  favoriteStaff?: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface StaffType {
-  _id: Schema.Types.ObjectId;
+  _id: string;
   email: string;
   password: string;
   role: StaffRoleEnum;
@@ -34,7 +35,7 @@ export interface StaffType {
 }
 
 export interface AppointmentType {
-  _id: Schema.Types.ObjectId;
+  _id: string;
   userId: UserType;
   staffId: StaffType;
   date: Date;
@@ -47,7 +48,7 @@ export interface AppointmentType {
 }
 
 export interface FeedbackType {
-  _id: Schema.Types.ObjectId;
+  _id: string;
   userId: UserType;
   staffId: StaffType;
   rating: number;
@@ -55,7 +56,7 @@ export interface FeedbackType {
 }
 
 export interface ServiceType {
-  _id: Schema.Types.ObjectId;
+  _id: string;
   name: string;
   price: number;
   category: CategoryType;
@@ -66,7 +67,10 @@ export interface ServiceType {
 }
 
 export interface CategoryType {
-  _id: Schema.Types.ObjectId;
+  _id: string;
   name: string;
   image: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

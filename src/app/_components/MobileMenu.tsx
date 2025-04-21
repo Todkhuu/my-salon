@@ -8,13 +8,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { UserType } from "@/server/utils";
 
 interface MobileMenuProps {
-  user: {
-    id: string;
-    username?: string;
-    email: string;
-  } | null;
+  user: UserType | undefined;
   onLogout: () => void;
 }
 
