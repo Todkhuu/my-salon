@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import UserHomePageFeature from "./UserHomePageFeature";
-import { ServiceCategories } from "../service-categories";
+import { ServiceCategories } from "../../app/_components/service-categories";
 import { useUser } from "@/app/_context/UserContext";
 import HowItWorks from "./HowItWorks";
 import { Loader } from "../ui/Loader";

@@ -7,7 +7,6 @@ const AppointmentSchema: Schema = new Schema<AppointmentType>(
     userId: {
       type: Schema.Types.ObjectId,
       ref: "Users",
-      required: true,
     },
     staffId: {
       type: Schema.Types.ObjectId,

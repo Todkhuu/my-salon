@@ -18,15 +18,24 @@ import { useEffect, useState } from "react";
 import { CategoryType, ServiceType } from "../utils/types";
 import axios from "axios";
 import { FavoriteServiceButton } from "@/components/home/FavoriteServiceButton";
+import { Loader } from "@/components/ui/Loader";
 
 export default function ServicesPage() {
   const [services, setServices] = useState<ServiceType[] | null>(null);
   const { user } = useUser();
   const [categories, setCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const getCategories = async () => {
-    const categories = await axios.get("/api/category");
-    setCategories(categories.data.data);
+    try {
+      const categories = await axios.get("/api/category");
+      setCategories(categories.data.data);
+      setLoading(true);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => {
     getCategories();
@@ -39,6 +48,14 @@ export default function ServicesPage() {
   useEffect(() => {
     getServices();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -88,7 +105,11 @@ export default function ServicesPage() {
                 return (
                   <div key={category._id} className="space-y-6">
                     <div className="flex items-center gap-2">
-                      {/* <category.icon className="h-6 w-6" /> */}
+                      {category.name == "Үсчин" ? (
+                        <Scissors className="h-6 w-6" />
+                      ) : (
+                        <Sparkles className="h-6 w-6" />
+                      )}
                       <h2 className="text-2xl font-bold">{category.name}</h2>
                     </div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -117,7 +138,7 @@ export default function ServicesPage() {
                               </div>
                             </div>
                             <Link
-                              href={`/barbers?service=${service._id}`}
+                              href={`/staffs?service=${service._id}`}
                               className="w-full"
                             >
                               <Button className="w-full bg-black text-white hover:bg-gray-800">
@@ -129,7 +150,7 @@ export default function ServicesPage() {
                       ))}
                     </div>
                     <div className="flex justify-center">
-                      <Link href={`/services/${category?._id}`}>
+                      <Link href={`/staffs/${category?._id}`}>
                         <Button variant="outline">
                           View All {category.name}
                         </Button>
@@ -183,7 +204,7 @@ export default function ServicesPage() {
                             </div>
                           </div>
                           <Link
-                            href={`/barbers?service=${service._id}`}
+                            href={`/staffs?service=${service._id}`}
                             className="w-full"
                           >
                             <Button className="w-full bg-black text-white hover:bg-gray-800">
