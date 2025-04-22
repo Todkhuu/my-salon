@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -9,18 +8,35 @@ import axios from "axios";
 import { StaffType } from "@/app/utils/types";
 import { FavoriteButton } from "@/components/home/FavoriteStaffButton";
 import { useUser } from "@/app/_context/UserContext";
+import { Loader } from "@/components/ui/Loader";
 
 export default function BarbersPage() {
   const [staffs, setStaffs] = useState<StaffType[] | null>(null);
+  const [loading, setLoading] = useState(true);
   const { user } = useUser();
 
   const getStaffs = async () => {
-    const staffs = await axios.get("/api/staff");
-    setStaffs(staffs.data.data);
+    setLoading(true);
+    try {
+      const staffs = await axios.get("/api/staff");
+      setStaffs(staffs.data.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => {
     getStaffs();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-[1400px] m-auto px-4 py-8 md:px-6 md:py-12">

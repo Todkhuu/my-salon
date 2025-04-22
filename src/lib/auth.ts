@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { UserModel } from "@/server/models";
 import { UserType } from "@/server/utils";
-import { populate } from "dotenv";
 
 const SECRET = process.env.JWT_SECRET!;
 
