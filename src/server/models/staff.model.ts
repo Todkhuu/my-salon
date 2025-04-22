@@ -38,4 +38,4 @@ const StaffSchema: Schema = new Schema<StaffType>(
 );
 
 export const StaffModel: Model<StaffType> =
-  models["Staffs"] || model<StaffType>("Staffs", StaffSchema);
+  models["Staff"] || model<StaffType>("Staff", StaffSchema);

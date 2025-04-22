@@ -8,7 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { UserType } from "@/server/utils";
+import { UserType } from "../utils/types";
 
 interface MobileMenuProps {
   user: UserType | undefined;

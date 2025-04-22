@@ -25,15 +25,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const mongoUser = await getUserFromCookie();
-  // const user = mongoUser
-  //   ? {
-  //       id: mongoUser._id.toString(),
-  //       username: mongoUser.username,
-  //       email: mongoUser.email,
-  //     }
-  //   : null;
-
   return (
     <html lang="en">
       <body

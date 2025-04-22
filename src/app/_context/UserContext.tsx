@@ -1,5 +1,5 @@
 "use client";
-import { UserType } from "@/server/utils";
+import { UserType } from "../utils/types";
 import React, { createContext, useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";

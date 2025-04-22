@@ -1,15 +1,18 @@
+"use client";
 import { useUser } from "@/app/_context/UserContext";
 import { toast } from "sonner";
 import axios from "axios";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { Heart } from "lucide-react";
 
 export function FavoriteButton({ staffId }: { staffId: string }) {
   const { user, setUser } = useUser();
   const [loading, setLoading] = useState(false);
-  console.log("user", user);
 
-  const isFavorite = user?.favoriteStaff?.includes(staffId);
+  const isFavorite = user?.favoriteStaff?.some(
+    (staff) => staff._id === staffId
+  );
 
   const toggleFavorite = async () => {
     try {
@@ -29,13 +32,14 @@ export function FavoriteButton({ staffId }: { staffId: string }) {
   return (
     <Button
       onClick={toggleFavorite}
-      variant={"destructive"}
-      className={`px-4 py-2 rounded-full text-sm absolute z-10 top-2 right-2 ${
+      variant="ghost"
+      size="icon"
+      className={`absolute right-2 top-2 h-8 w-8 rounded-full bg-white/80 ${
         isFavorite ? "bg-red-500 text-white" : "bg-gray-200 text-gray-800"
       }`}
       disabled={loading}
     >
-      {isFavorite ? "Дуртай" : "Дуртай болгох"}
+      <Heart />
     </Button>
   );
 }

@@ -9,10 +9,19 @@ import { UserNav } from "./UserNav";
 import NavLinks from "./NavLinks";
 import MobileMenu from "./MobileMenu";
 import { useUser } from "@/app/_context/UserContext";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const router = useRouter();
   const { user } = useUser();
+  const pathname = usePathname();
+  const HIDE_NAVLINKS_PATHS = [
+    "/dashboard/favorites",
+    "dashboard/appointments",
+    "/dashboard/profile",
+    "/dashboard/payment",
+    "/dashboard/settings",
+  ];
 
   const handleLogout = async () => {
     try {
@@ -32,7 +41,7 @@ export default function Navbar() {
         <Link href={user ? "/home" : "/"} className="flex items-center gap-2">
           <span className="text-xl font-bold">StyleCut</span>
         </Link>
-        <NavLinks />
+        {!HIDE_NAVLINKS_PATHS.includes(pathname) && <NavLinks />}
         <div className="flex items-center gap-4">
           {user ? (
             <UserNav handleLogout={handleLogout} />

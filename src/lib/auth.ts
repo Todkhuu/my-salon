@@ -16,7 +16,14 @@ export async function getUserFromCookie() {
 
     const user = await UserModel.findById(decoded.id)
       .select("-password")
-      .lean();
+      .lean()
+      .populate({
+        path: "favoriteStaff",
+        populate: {
+          path: "services", //  favoriteStaff.services-г populate хийх
+          model: "Services", // services-г бүртгүүлсэн model-ийн нэр
+        },
+      });
 
     if (!user) {
       throw new Error("User not found");

@@ -1,24 +1,21 @@
 "use client";
-import { ChevronRight, Star } from "lucide-react";
+import { ChevronRight, Scissors, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { StaffType } from "@/server/utils";
+import { StaffType } from "@/app/utils/types";
 import { FavoriteButton } from "./FavoriteButton";
+import { useUser } from "@/app/_context/UserContext";
+import { Card } from "../ui/card";
 
 function FavoriteStaffs() {
-  const [staffs, setStaffs] = useState<StaffType[] | null>(null);
-  console.log("first", staffs);
-  const getStaffs = async () => {
-    const staffs = await axios.get("/api/staff");
-    setStaffs(staffs.data.data);
-  };
-  useEffect(() => {
-    getStaffs();
-  }, []);
+  const { user } = useUser();
+
+  console.log("user", user);
+
   return (
     <section className="bg-gray-50 py-12 ">
       <div className="px-4 md:px-6 max-w-[1400px] m-auto md:py-16">
@@ -33,7 +30,7 @@ function FavoriteStaffs() {
           </Link>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {staffs?.map((staff: StaffType, index: number) => {
+          {user?.favoriteStaff?.map((staff: StaffType, index: number) => {
             return (
               <div
                 key={index}
@@ -70,6 +67,18 @@ function FavoriteStaffs() {
               </div>
             );
           })}
+          <Card className="flex flex-col items-center justify-center p-6 text-center">
+            <div className="mb-4 rounded-full bg-gray-100 p-4">
+              <Scissors className="h-8 w-8 text-gray-500" />
+            </div>
+            <h3 className="mb-2 font-bold">Discover More Barbers</h3>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Find the perfect stylist for your needs
+            </p>
+            <Link href="/staffs">
+              <Button variant="outline">Browse All Barbers</Button>
+            </Link>
+          </Card>
         </div>
       </div>
     </section>
