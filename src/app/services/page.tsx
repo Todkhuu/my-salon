@@ -43,7 +43,7 @@ export default function BarbersPage() {
         {services?.map((service: ServiceType) => (
           <Card key={service._id} className="overflow-hidden">
             <div className="relative">
-              <FavoriteServiceButton serviceId={service._id} />
+              {user ? <FavoriteServiceButton serviceId={service._id} /> : null}
               <Image
                 src={service.image || "/placeholder.svg"}
                 alt={service.name}

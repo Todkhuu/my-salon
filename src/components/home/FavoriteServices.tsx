@@ -54,10 +54,7 @@ function FavoriteServices() {
                 </div>
               </CardContent>
               <CardFooter className="p-4 pt-0">
-                <Link
-                  href={`/barbers?service=${service._id}`}
-                  className="w-full"
-                >
+                <Link href={`/service=${service._id}`} className="w-full">
                   <Button className="w-full">Book Service</Button>
                 </Link>
               </CardFooter>
