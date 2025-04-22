@@ -18,4 +18,4 @@ const ServiceSchema: Schema = new Schema<ServiceType>(
 );
 
 export const ServiceModel: Model<ServiceType> =
-  models["Service"] || model<ServiceType>("Service", ServiceSchema);
+  models["Services"] || model<ServiceType>("Services", ServiceSchema);

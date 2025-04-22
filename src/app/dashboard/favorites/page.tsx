@@ -87,10 +87,10 @@ export default function FavoritesPage() {
           </div>
         </TabsContent>
 
-        {/* <TabsContent value="services" className="mt-6">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {favoriteServices.map((service) => (
-              <Card key={service.id} className="overflow-hidden">
+        <TabsContent value="services" className="mt-6">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-">
+            {user?.favoriteServices?.map((service) => (
+              <Card key={service._id} className="overflow-hidden">
                 <div className="relative">
                   <Image
                     src={service.image || "/placeholder.svg"}
@@ -123,7 +123,7 @@ export default function FavoritesPage() {
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
                   <Link
-                    href={`/barbers?service=${service.id}`}
+                    href={`/barbers?service=${service._id}`}
                     className="w-full"
                   >
                     <Button className="w-full">Book Service</Button>
@@ -132,7 +132,7 @@ export default function FavoritesPage() {
               </Card>
             ))}
           </div>
-        </TabsContent> */}
+        </TabsContent>
       </Tabs>
     </div>
   );
