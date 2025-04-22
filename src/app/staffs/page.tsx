@@ -7,7 +7,7 @@ import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { StaffType } from "@/app/utils/types";
-import { FavoriteButton } from "@/components/home/FavoriteButton";
+import { FavoriteButton } from "@/components/home/FavoriteStaffButton";
 import { useUser } from "@/app/_context/UserContext";
 
 export default function BarbersPage() {

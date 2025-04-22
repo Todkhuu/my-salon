@@ -5,6 +5,7 @@ import { ServiceCategories } from "@/components/service-categories";
 import { useUser } from "./_context/UserContext";
 import { UserWelcome } from "@/components/home/UserWelcome";
 import FavoriteStaffs from "@/components/home/FavoriteStaffs";
+import FavoriteServices from "@/components/home/FavoriteServices";
 
 export default function Home() {
   const { user } = useUser();
@@ -28,7 +29,7 @@ export default function Home() {
           </div>
         </section>
       )}
-
+      {user ? <FavoriteServices /> : null}
       {user ? <FavoriteStaffs /> : null}
 
       {/* Service Categories */}

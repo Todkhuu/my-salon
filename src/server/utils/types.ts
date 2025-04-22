@@ -12,6 +12,7 @@ export interface UserType {
   phoneNumber?: string;
   username?: string;
   favoriteStaff?: Schema.Types.ObjectId[];
+  favoriteServices?: Schema.Types.ObjectId[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -62,6 +63,7 @@ export interface ServiceType {
   category: CategoryType;
   duration: number; // minutes
   description: string;
+  image: string;
   createdAt: Date;
   updatedAt: Date;
 }

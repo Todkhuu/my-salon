@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { UserModel } from "@/server/models";
 import { UserType } from "@/server/utils";
+import { populate } from "dotenv";
 
 const SECRET = process.env.JWT_SECRET!;
 
@@ -23,7 +24,8 @@ export async function getUserFromCookie() {
           path: "services", //  favoriteStaff.services-г populate хийх
           model: "Services", // services-г бүртгүүлсэн model-ийн нэр
         },
-      });
+      })
+      .populate("favoriteServices"); // favoriteServices-г populate хийх
 
     if (!user) {
       throw new Error("User not found");

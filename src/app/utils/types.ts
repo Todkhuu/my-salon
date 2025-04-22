@@ -11,6 +11,7 @@ export interface UserType {
   phoneNumber?: string;
   username?: string;
   favoriteStaff?: StaffType[];
+  favoriteServices?: ServiceType[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -61,6 +62,7 @@ export interface ServiceType {
   category: CategoryType;
   duration: number; // minutes
   description: string;
+  image: string;
   createdAt: Date;
   updatedAt: Date;
 }

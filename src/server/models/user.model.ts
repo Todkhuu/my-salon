@@ -8,9 +8,10 @@ const UserSchema: Schema = new Schema<UserType>(
     phoneNumber: { type: String },
     username: { type: String, required: true },
     favoriteStaff: { type: [Schema.Types.ObjectId], ref: "Staff" },
+    favoriteServices: { type: [Schema.Types.ObjectId], ref: "Services" },
   },
   { timestamps: true }
 );
 
 export const UserModel: Model<UserType> =
-  models["Users"] || model<UserType>("Users", UserSchema);
+  models["User"] || model<UserType>("User", UserSchema);

@@ -6,7 +6,7 @@ export default function NavLinks() {
       <Link href="/services" className="text-sm font-medium hover:underline">
         Services
       </Link>
-      <Link href="/barbers" className="text-sm font-medium hover:underline">
+      <Link href="/staffs" className="text-sm font-medium hover:underline">
         Our Barbers
       </Link>
       <Link href="/about" className="text-sm font-medium hover:underline">

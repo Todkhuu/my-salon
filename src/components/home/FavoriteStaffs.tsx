@@ -4,17 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { StaffType } from "@/app/utils/types";
-import { FavoriteButton } from "./FavoriteButton";
+import { FavoriteButton } from "./FavoriteStaffButton";
 import { useUser } from "@/app/_context/UserContext";
 import { Card } from "../ui/card";
 
 function FavoriteStaffs() {
   const { user } = useUser();
-
-  console.log("user", user);
 
   return (
     <section className="bg-gray-50 py-12 ">
