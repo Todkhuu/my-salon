@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     } else {
       const allCategory = await CategoryModel.find();
       return NextResponse.json(
-        { message: "Success", allCategory },
+        { message: "Success", data: allCategory },
         { status: 200 }
       );
     }

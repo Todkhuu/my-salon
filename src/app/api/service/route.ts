@@ -28,8 +28,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-    const serviceData = await ServiceModel.find();
-    console.log("servid", serviceData);
+    const serviceData = await ServiceModel.find().populate("category");
 
     return NextResponse.json(
       {
