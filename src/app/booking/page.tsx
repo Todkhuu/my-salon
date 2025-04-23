@@ -1,99 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent } from "@/components/ui/card";
-import { format } from "date-fns";
+import { addDays, format, isAfter, isBefore } from "date-fns";
 import { CalendarIcon, Clock, ArrowRight } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { ServiceType, StaffType } from "../utils/types";
+import axios from "axios";
 
-// This would come from your database in a real app
-const barbers = {
-  john: {
-    id: "john",
-    name: "John Smith",
-    title: "Master Barber",
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  sarah: {
-    id: "sarah",
-    name: "Sarah Johnson",
-    title: "Senior Stylist",
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  mike: {
-    id: "mike",
-    name: "Mike Williams",
-    title: "Barber & Colorist",
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  lisa: {
-    id: "lisa",
-    name: "Lisa Chen",
-    title: "Nail Technician",
-    image: "/placeholder.svg?height=100&width=100",
-  },
-};
-
-const services = {
-  "regular-cut": {
-    id: "regular-cut",
-    name: "Regular Haircut",
-    duration: 30,
-    price: 25,
-  },
-  fade: {
-    id: "fade",
-    name: "Fade Haircut",
-    duration: 45,
-    price: 35,
-  },
-  premium: {
-    id: "premium",
-    name: "Premium Cut & Style",
-    duration: 60,
-    price: 45,
-  },
-  "beard-trim": {
-    id: "beard-trim",
-    name: "Beard Trim",
-    duration: 15,
-    price: 15,
-  },
-  "beard-style": {
-    id: "beard-style",
-    name: "Beard Styling",
-    duration: 30,
-    price: 25,
-  },
-  "single-color": {
-    id: "single-color",
-    name: "Single Color",
-    duration: 90,
-    price: 65,
-  },
-  highlights: {
-    id: "highlights",
-    name: "Highlights",
-    duration: 120,
-    price: 85,
-  },
-  manicure: {
-    id: "manicure",
-    name: "Basic Manicure",
-    duration: 30,
-    price: 25,
-  },
-  pedicure: {
-    id: "pedicure",
-    name: "Basic Pedicure",
-    duration: 45,
-    price: 35,
-  },
-};
-
-// Generate time slots from 9 AM to 5 PM
 const generateTimeSlots = () => {
   const slots = [];
   for (let hour = 9; hour < 17; hour++) {
@@ -108,28 +25,53 @@ const generateTimeSlots = () => {
 
 const timeSlots = generateTimeSlots();
 
-export default function BookingPage({
-  searchParams,
-}: {
-  searchParams: { barber?: string; service?: string };
-}) {
+export default function BookingPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [staffs, setStaffs] = useState<StaffType[] | null>(null);
+  const [services, setServices] = useState<ServiceType[] | null>(null);
+  // console.log("date", date);
 
-  const barberId = searchParams.barber || "john";
-  const serviceId = searchParams.service || "regular-cut";
+  const searchParams = useSearchParams();
+  const staffId = searchParams.get("staffs") || "john";
+  const serviceId = searchParams.get("service") || "regular-cut";
 
-  const barber = barbers[barberId as keyof typeof barbers];
-  const service = services[serviceId as keyof typeof services];
+  const staff = staffs?.find((staff) => staff._id === staffId);
+  const service = services?.find((service) => service._id === serviceId);
 
-  if (!barber || !service) {
+  const getStaffs = async () => {
+    try {
+      const staffs = await axios.get("/api/staff");
+      setStaffs(staffs.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getServices = async () => {
+    const services = await axios.get("/api/service");
+    setServices(services.data.data);
+  };
+
+  useEffect(() => {
+    getStaffs();
+    getServices();
+  }, []);
+
+  if (!staff || !service) {
     return (
       <div className="container p-8">Invalid barber or service selection</div>
     );
   }
 
+  const today = new Date();
+  const oneWeekLater = addDays(today, 7);
+
+  const isOutsideRange = (date: Date) =>
+    isBefore(date, today) || isAfter(date, oneWeekLater);
+
   return (
-    <div className="max-w-[1400px] m-auto px-4 py-8 md:px-6 md:py-12">
+    <div className="container px-4 py-8 md:px-6 md:py-12">
       <div className="mb-8">
         <Link href="/" className="text-sm text-gray-500 hover:underline">
           Home
@@ -163,9 +105,19 @@ export default function BookingPage({
                 <Calendar
                   mode="single"
                   selected={date}
-                  onSelect={setDate}
+                  onSelect={(selected) => {
+                    if (selected && !isOutsideRange(selected)) {
+                      setDate(selected);
+                    }
+                  }}
                   className="rounded-md border"
-                  disabled={(date) => date < new Date()}
+                  disabled={isOutsideRange}
+                  modifiers={{
+                    outsideRange: isOutsideRange,
+                  }}
+                  modifiersClassNames={{
+                    outsideRange: "text-gray-300", // бүдгэрүүлсэн өнгө
+                  }}
                 />
               </div>
               <div>
@@ -197,16 +149,16 @@ export default function BookingPage({
               <div className="mb-4 flex items-center gap-3">
                 <div className="h-12 w-12 overflow-hidden rounded-full">
                   <Image
-                    src={barber.image || "/placeholder.svg"}
-                    alt={barber.name}
+                    src={staff.image || "/placeholder.svg"}
+                    alt={staff.name}
                     width={48}
                     height={48}
                     className="h-full w-full object-cover"
                   />
                 </div>
                 <div>
-                  <h3 className="font-medium">{barber.name}</h3>
-                  <p className="text-sm text-gray-500">{barber.title}</p>
+                  <h3 className="font-medium">{staff.name}</h3>
+                  {/* <p className="text-sm text-gray-500">{staff.title}</p> */}
                 </div>
               </div>
 
@@ -242,7 +194,7 @@ export default function BookingPage({
               </div>
 
               <Link
-                href={`/checkout?barber=${barberId}&service=${serviceId}${
+                href={`/checkout?barber=${staffId}&service=${serviceId}${
                   date ? `&date=${date.toISOString()}` : ""
                 }${
                   selectedTime

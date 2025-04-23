@@ -41,8 +41,12 @@ export interface AppointmentType {
   date: Date;
   status: AppointmentStatusEnum;
   paid: boolean;
+  paymentMethod: string;
   serviceIds: ServiceType;
   price: number;
+  username?: string;
+  email?: string;
+  phone?: string;
   createdAt: Date;
   updatedAt: Date;
 }

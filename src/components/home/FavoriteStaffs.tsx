@@ -51,10 +51,7 @@ function FavoriteStaffs() {
                     <Star className="lucide lucide-star h-4 w-4 fill-yellow-400 text-yellow-400" />
                     <span className="text-sm font-medium">{staff.rating}</span>
                   </div>
-                  <Link
-                    href={"barbers?barber=john"}
-                    className="mt-3 block w-full"
-                  >
+                  <Link href={`staff-about`} className="mt-3 block w-full">
                     <Button className="text-sm font-medium text-primary-foreground h-10 w-full">
                       Book Now
                     </Button>

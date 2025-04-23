@@ -150,7 +150,7 @@ export default function ServicesPage() {
                       ))}
                     </div>
                     <div className="flex justify-center">
-                      <Link href={`/staffs/${category?._id}`}>
+                      <Link href={`/services`}>
                         <Button variant="outline">
                           View All {category.name}
                         </Button>

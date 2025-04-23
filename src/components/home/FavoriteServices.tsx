@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { ServiceType } from "@/app/utils/types";
+import { FavoriteButton } from "./FavoriteStaffButton";
 import { useUser } from "@/app/_context/UserContext";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Clock, Heart, Scissors, Star } from "lucide-react";
@@ -53,7 +54,7 @@ function FavoriteServices() {
                 </div>
               </CardContent>
               <CardFooter className="p-4 pt-0">
-                <Link href={`/service=${service._id}`} className="w-full">
+                <Link href={`staffs?service=${service._id}`} className="w-full">
                   <Button className="w-full">Book Service</Button>
                 </Link>
               </CardFooter>
