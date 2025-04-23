@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,52 +9,20 @@ import {
   Clock,
   Scissors,
   BeakerIcon as Beard,
-  Palette,
   Sparkles,
 } from "lucide-react";
 import { useUser } from "../_context/UserContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CategoryType, ServiceType } from "../utils/types";
-import axios from "axios";
 import { FavoriteServiceButton } from "@/components/home/FavoriteServiceButton";
-import { Loader } from "@/components/ui/Loader";
+import { useService } from "../_context/ServiceContext";
+import { useCategory } from "../_context/CategoryContext";
 
 export default function ServicesPage() {
-  const [services, setServices] = useState<ServiceType[] | null>(null);
+  const { services } = useService();
   const { user } = useUser();
-  const [categories, setCategories] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const getCategories = async () => {
-    try {
-      const categories = await axios.get("/api/category");
-      setCategories(categories.data.data);
-      setLoading(true);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    getCategories();
-  }, []);
-
-  const getServices = async () => {
-    const services = await axios.get("/api/service");
-    setServices(services.data.data);
-  };
-  useEffect(() => {
-    getServices();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader />
-      </div>
-    );
-  }
+  const { categories } = useCategory();
+  const [selectedTab, setSelectedTab] = useState("all");
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -87,12 +54,19 @@ export default function ServicesPage() {
       {/* Services Section */}
       <section className="py-12 md:py-16">
         <div className="max-w-[1400px] m-auto px-4 md:px-6">
-          <Tabs defaultValue="all" className="w-full">
+          <Tabs
+            value={selectedTab}
+            onValueChange={setSelectedTab}
+            className="w-full"
+          >
             <div className="mb-8 flex justify-center">
               <TabsList className="grid w-full max-w-md grid-cols-3">
                 <TabsTrigger value="all">Бүгд</TabsTrigger>
-                <TabsTrigger value="Үс">Үс</TabsTrigger>
-                <TabsTrigger value="Маникюр">Маникюр</TabsTrigger>
+                {categories?.map((category) => (
+                  <TabsTrigger key={category._id} value={category.name}>
+                    {category.name}
+                  </TabsTrigger>
+                ))}
               </TabsList>
             </div>
 
@@ -113,7 +87,7 @@ export default function ServicesPage() {
                       <h2 className="text-2xl font-bold">{category.name}</h2>
                     </div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                      {filteredService?.map((service) => (
+                      {filteredService?.slice(0, 3).map((service) => (
                         <Card
                           key={service._id}
                           className="overflow-hidden transition-all hover:shadow-lg relative"
@@ -150,11 +124,12 @@ export default function ServicesPage() {
                       ))}
                     </div>
                     <div className="flex justify-center">
-                      <Link href={`/services`}>
-                        <Button variant="outline">
-                          View All {category.name}
-                        </Button>
-                      </Link>
+                      <Button
+                        variant="outline"
+                        onClick={() => setSelectedTab(category.name)}
+                      >
+                        View All {category.name}
+                      </Button>
                     </div>
                   </div>
                 );

@@ -3,10 +3,10 @@ import { UserType } from "../utils/types";
 import React, { createContext, useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
+import { Loader } from "@/components/ui/Loader";
 
 type UserContextType = {
   user: UserType | null;
-  loading?: boolean;
   setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
 };
 
@@ -29,6 +29,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (err: any) {
       toast.error(err.response?.data.message);
       setUser(null);
+    } finally {
       setLoading(false);
     }
   };
@@ -37,8 +38,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     getCurrentUser();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
-    <UserContext.Provider value={{ user, setUser, loading }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );

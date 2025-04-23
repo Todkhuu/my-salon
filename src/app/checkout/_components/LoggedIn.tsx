@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Calendar,
@@ -12,21 +11,22 @@ import {
   CreditCard,
   CheckCircle,
   ChevronLeft,
-  Shield,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { ServiceType, StaffType } from "@/app/utils/types";
+import { StaffType } from "@/app/utils/types";
 import axios from "axios";
 import { useUser } from "@/app/_context/UserContext";
 import { UserContactInfo } from "@/components/checkout/UserContactInfo";
 import { AppointmentSummary } from "@/components/checkout/AppointmentSummary";
+import { useService } from "@/app/_context/ServiceContext";
+import { useStaff } from "@/app/_context/StaffContext";
 
 export default function LoggedInCheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [specialInstructions, setSpecialInstructions] = useState("");
-  const [staffs, setStaffs] = useState<StaffType[] | null>(null);
-  const [services, setServices] = useState<ServiceType[] | null>(null);
+  const { staffs } = useStaff();
+  const { services } = useService();
 
   const { user } = useUser();
 
@@ -40,25 +40,6 @@ export default function LoggedInCheckoutPage() {
   const service = services?.find((service) => service._id === serviceId);
   const date = dateString ? new Date(dateString) : null;
   const time = timeString || null;
-
-  const getStaffs = async () => {
-    try {
-      const staffs = await axios.get("/api/staff");
-      setStaffs(staffs.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getServices = async () => {
-    const services = await axios.get("/api/service");
-    setServices(services.data.data);
-  };
-
-  useEffect(() => {
-    getStaffs();
-    getServices();
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

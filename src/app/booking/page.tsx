@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -8,8 +8,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { addDays, format, isAfter, isBefore } from "date-fns";
 import { CalendarIcon, Clock, ArrowRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { ServiceType, StaffType } from "../utils/types";
+import { StaffType } from "../utils/types";
 import axios from "axios";
+import { useService } from "../_context/ServiceContext";
+import { useStaff } from "../_context/StaffContext";
 
 const generateTimeSlots = () => {
   const slots = [];
@@ -28,8 +30,8 @@ const timeSlots = generateTimeSlots();
 export default function BookingPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [staffs, setStaffs] = useState<StaffType[] | null>(null);
-  const [services, setServices] = useState<ServiceType[] | null>(null);
+  const { staffs } = useStaff();
+  const { services } = useService();
 
   const searchParams = useSearchParams();
   const staffId = searchParams.get("staffs") || "john";
@@ -38,29 +40,8 @@ export default function BookingPage() {
   const staff = staffs?.find((staff) => staff._id === staffId);
   const service = services?.find((service) => service._id === serviceId);
 
-  const getStaffs = async () => {
-    try {
-      const staffs = await axios.get("/api/staff");
-      setStaffs(staffs.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getServices = async () => {
-    const services = await axios.get("/api/service");
-    setServices(services.data.data);
-  };
-
-  useEffect(() => {
-    getStaffs();
-    getServices();
-  }, []);
-
   if (!staff || !service) {
-    return (
-      <div className="container p-8">Invalid barber or service selection</div>
-    );
+    return <div></div>;
   }
 
   const today = new Date();

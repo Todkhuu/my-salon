@@ -1,51 +1,23 @@
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Star } from "lucide-react";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { StaffType } from "@/app/utils/types";
 import { FavoriteButton } from "@/components/home/FavoriteStaffButton";
 import { useUser } from "@/app/_context/UserContext";
-import { Loader } from "@/components/ui/Loader";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useSearchParams } from "next/navigation";
+import { useStaff } from "../_context/StaffContext";
 
 export default function BarbersPage() {
-  const [staffs, setStaffs] = useState<StaffType[] | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { staffs } = useStaff();
   const { user } = useUser();
 
   const searchParams = useSearchParams();
   const selectedService = searchParams.get("service");
 
   const isBookingEnabled = !!selectedService;
-
-  const getStaffs = async () => {
-    setLoading(true);
-    try {
-      const staffs = await axios.get("/api/staff");
-      setStaffs(staffs.data.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    getStaffs();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader />
-      </div>
-    );
-  }
 
   const filteredStaffs = staffs?.filter((staff) =>
     staff.services.some((service) => service._id === selectedService)

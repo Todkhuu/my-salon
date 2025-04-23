@@ -11,7 +11,7 @@ import MobileMenu from "./MobileMenu";
 import { useUser } from "@/app/_context/UserContext";
 import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+export default function Header() {
   const router = useRouter();
   const { user, setUser } = useUser();
   const pathname = usePathname();

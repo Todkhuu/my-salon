@@ -1,14 +1,12 @@
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Clock } from "lucide-react";
-import { use, useEffect, useState } from "react";
+import { use } from "react";
 import { ServiceType } from "@/app/utils/types";
-import axios from "axios";
-import { Loader } from "@/components/ui/Loader";
+import { useService } from "@/app/_context/ServiceContext";
 
 export default function CategoryPage({
   params,
@@ -16,36 +14,11 @@ export default function CategoryPage({
   params: Promise<{ category: string }>;
 }) {
   const { category } = use(params);
-  const [services, setServices] = useState<ServiceType[] | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const getServices = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`/api/service/`);
-      setServices(response.data.data);
-    } catch (error) {
-      console.error("Error fetching services:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getServices();
-  }, [category]);
+  const { services } = useService();
 
   const filteredServices = services?.filter(
     (service: ServiceType) => service.category._id === category
   );
-
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-[1400px] m-auto px-4 py-8 md:px-6 md:py-12">

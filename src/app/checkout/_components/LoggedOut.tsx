@@ -7,17 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, Clock, CreditCard, CheckCircle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { ServiceType, StaffType } from "../../utils/types";
+import { StaffType } from "../../utils/types";
 import axios from "axios";
+import { useService } from "@/app/_context/ServiceContext";
+import { useStaff } from "@/app/_context/StaffContext";
 
 export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  const [staffs, setStaffs] = useState<StaffType[] | null>(null);
-  const [services, setServices] = useState<ServiceType[] | null>(null);
+  const { staffs } = useStaff();
+  const { services } = useService();
 
   const searchParams = useSearchParams();
   const staffId = searchParams.get("staffs");
@@ -29,25 +30,6 @@ export default function CheckoutPage() {
   const service = services?.find((service) => service._id === serviceId);
   const date = dateString ? new Date(dateString) : null;
   const time = timeString || null;
-
-  const getStaffs = async () => {
-    try {
-      const staffs = await axios.get("/api/staff");
-      setStaffs(staffs.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getServices = async () => {
-    const services = await axios.get("/api/service");
-    setServices(services.data.data);
-  };
-
-  useEffect(() => {
-    getStaffs();
-    getServices();
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
