@@ -1,8 +1,6 @@
 "use client";
-
 import type React from "react";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -11,114 +9,45 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, Clock, CreditCard, CheckCircle } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { ServiceType, StaffType } from "../utils/types";
+import axios from "axios";
 
-// This would come from your database in a real app
-const barbers = {
-  john: {
-    id: "john",
-    name: "John Smith",
-    title: "Master Barber",
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  sarah: {
-    id: "sarah",
-    name: "Sarah Johnson",
-    title: "Senior Stylist",
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  mike: {
-    id: "mike",
-    name: "Mike Williams",
-    title: "Barber & Colorist",
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  lisa: {
-    id: "lisa",
-    name: "Lisa Chen",
-    title: "Nail Technician",
-    image: "/placeholder.svg?height=100&width=100",
-  },
-};
-
-const services = {
-  "regular-cut": {
-    id: "regular-cut",
-    name: "Regular Haircut",
-    duration: 30,
-    price: 25,
-  },
-  fade: {
-    id: "fade",
-    name: "Fade Haircut",
-    duration: 45,
-    price: 35,
-  },
-  premium: {
-    id: "premium",
-    name: "Premium Cut & Style",
-    duration: 60,
-    price: 45,
-  },
-  "beard-trim": {
-    id: "beard-trim",
-    name: "Beard Trim",
-    duration: 15,
-    price: 15,
-  },
-  "beard-style": {
-    id: "beard-style",
-    name: "Beard Styling",
-    duration: 30,
-    price: 25,
-  },
-  "single-color": {
-    id: "single-color",
-    name: "Single Color",
-    duration: 90,
-    price: 65,
-  },
-  highlights: {
-    id: "highlights",
-    name: "Highlights",
-    duration: 120,
-    price: 85,
-  },
-  manicure: {
-    id: "manicure",
-    name: "Basic Manicure",
-    duration: 30,
-    price: 25,
-  },
-  pedicure: {
-    id: "pedicure",
-    name: "Basic Pedicure",
-    duration: 45,
-    price: 35,
-  },
-};
-
-export default function CheckoutPage({
-  searchParams,
-}: {
-  searchParams: {
-    barber?: string;
-    service?: string;
-    date?: string;
-    time?: string;
-  };
-}) {
+export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [staffs, setStaffs] = useState<StaffType[] | null>(null);
+  const [services, setServices] = useState<ServiceType[] | null>(null);
 
-  const barberId = searchParams.barber || "john";
-  const serviceId = searchParams.service || "regular-cut";
-  const dateString = searchParams.date;
-  const timeString = searchParams.time;
+  const searchParams = useSearchParams();
+  const staffId = searchParams.get("staffs");
+  const serviceId = searchParams.get("service");
+  const dateString = searchParams.get("date");
+  const timeString = searchParams.get("time");
 
-  const barber = barbers[barberId as keyof typeof barbers];
-  const service = services[serviceId as keyof typeof services];
+  const staff = staffs?.find((staff) => staff._id === staffId);
+  const service = services?.find((service) => service._id === serviceId);
   const date = dateString ? new Date(dateString) : null;
   const time = timeString || null;
+
+  const getStaffs = async () => {
+    try {
+      const staffs = await axios.get("/api/staff");
+      setStaffs(staffs.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getServices = async () => {
+    const services = await axios.get("/api/service");
+    setServices(services.data.data);
+  };
+
+  useEffect(() => {
+    getStaffs();
+    getServices();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,27 +75,27 @@ export default function CheckoutPage({
           <div className="mb-4 flex items-center gap-3">
             <div className="h-12 w-12 overflow-hidden rounded-full">
               <Image
-                src={barber.image || "/placeholder.svg"}
-                alt={barber.name}
+                src={staff?.image || "/placeholder.svg"}
+                alt={"barber.name"}
                 width={48}
                 height={48}
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="text-left">
-              <h3 className="font-medium">{barber.name}</h3>
-              <p className="text-sm text-gray-500">{barber.title}</p>
+              <h3 className="font-medium">{staff?.name}</h3>
+              <p className="text-sm text-gray-500">{staff?.profession}</p>
             </div>
           </div>
 
           <div className="mb-4 space-y-2 border-b pb-4 text-left">
             <div className="flex justify-between">
-              <span className="font-medium">{service.name}</span>
-              <span>${service.price}</span>
+              <span className="font-medium">{service?.name}</span>
+              <span>${service?.price}</span>
             </div>
             <div className="flex items-center gap-1 text-sm text-gray-500">
               <Clock className="h-4 w-4" />
-              <span>{service.duration} min</span>
+              <span>{service?.duration} min</span>
             </div>
           </div>
 
@@ -321,27 +250,27 @@ export default function CheckoutPage({
               <div className="mb-4 flex items-center gap-3">
                 <div className="h-12 w-12 overflow-hidden rounded-full">
                   <Image
-                    src={barber.image || "/placeholder.svg"}
-                    alt={barber.name}
+                    src={staff?.image || "/placeholder.svg"}
+                    alt={"staff?.name"}
                     width={48}
                     height={48}
                     className="h-full w-full object-cover"
                   />
                 </div>
                 <div>
-                  <h3 className="font-medium">{barber.name}</h3>
-                  <p className="text-sm text-gray-500">{barber.title}</p>
+                  <h3 className="font-medium">{staff?.name}</h3>
+                  <p className="text-sm text-gray-500">{staff?.profession}</p>
                 </div>
               </div>
 
               <div className="mb-4 space-y-2 border-b pb-4">
                 <div className="flex justify-between">
-                  <span className="font-medium">{service.name}</span>
-                  <span>${service.price}</span>
+                  <span className="font-medium">{service?.name}</span>
+                  <span>${service?.price}</span>
                 </div>
                 <div className="flex items-center gap-1 text-sm text-gray-500">
                   <Clock className="h-4 w-4" />
-                  <span>{service.duration} min</span>
+                  <span>{service?.duration} min</span>
                 </div>
               </div>
 
@@ -368,16 +297,24 @@ export default function CheckoutPage({
               <div className="space-y-2 border-t pt-4">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span>${service.price}</span>
+                  <span>${service?.price}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Tax</span>
-                  <span>${(service.price * 0.1).toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between border-t pt-2 text-lg font-bold">
-                  <span>Total</span>
-                  <span>${(service.price * 1.1).toFixed(2)}</span>
-                </div>
+                {typeof service?.price === "number" ? (
+                  <>
+                    <div className="flex justify-between">
+                      <span>Tax</span>
+                      <span>${(service.price * 0.1).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between border-t pt-2 text-lg font-bold">
+                      <span>Total</span>
+                      <span>${(service.price * 1.1).toFixed(2)}</span>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-sm text-red-500">
+                    Үнийн мэдээлэл байхгүй байна
+                  </p>
+                )}
               </div>
             </CardContent>
           </Card>

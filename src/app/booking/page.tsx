@@ -30,7 +30,6 @@ export default function BookingPage() {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [staffs, setStaffs] = useState<StaffType[] | null>(null);
   const [services, setServices] = useState<ServiceType[] | null>(null);
-  // console.log("date", date);
 
   const searchParams = useSearchParams();
   const staffId = searchParams.get("staffs") || "john";
@@ -194,7 +193,7 @@ export default function BookingPage() {
               </div>
 
               <Link
-                href={`/checkout?barber=${staffId}&service=${serviceId}${
+                href={`/checkout?staffs=${staffId}&service=${serviceId}${
                   date ? `&date=${date.toISOString()}` : ""
                 }${
                   selectedTime
