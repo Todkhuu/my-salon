@@ -70,7 +70,7 @@ export default function BookingPage() {
     isBefore(date, today) || isAfter(date, oneWeekLater);
 
   return (
-    <div className="container px-4 py-8 md:px-6 md:py-12">
+    <div className="max-w-[1400px] m-auto px-4 py-8 md:px-6 md:py-12">
       <div className="mb-8">
         <Link href="/" className="text-sm text-gray-500 hover:underline">
           Home

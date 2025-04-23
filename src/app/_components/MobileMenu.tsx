@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { UserType } from "../utils/types";
 
 interface MobileMenuProps {
-  user: UserType | undefined;
+  user: UserType | null;
   onLogout: () => void;
 }
 

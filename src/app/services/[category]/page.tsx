@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,6 @@ export default function CategoryPage({
     try {
       setLoading(true);
       const response = await axios.get(`/api/service/`);
-      console.log("response", response);
       setServices(response.data.data);
     } catch (error) {
       console.error("Error fetching services:", error);
@@ -89,7 +89,7 @@ export default function CategoryPage({
             </div>
             <CardContent className="p-4">
               <h3 className="mb-1 text-xl font-bold">{service.name}</h3>
-              <p className="mb-4 text-sm text-gray-500">
+              <p className="mb-4 text-sm text-gray-500 line-clamp-3 min-h-[4.5em]">
                 {service.description}
               </p>
               <div className="flex items-center justify-between">

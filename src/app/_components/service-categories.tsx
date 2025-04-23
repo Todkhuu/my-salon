@@ -40,13 +40,13 @@ export function ServiceCategories() {
       {categories.map((category: CategoryType) => (
         <Link key={category._id} href={`/services/${category._id}`}>
           <Card className="overflow-hidden transition-all hover:shadow-lg">
-            <div className="w-full overflow-hidden">
+            <div className="w-full h-[350px] overflow-hidden">
               <Image
                 src={category.image || "/placeholder.svg"}
                 alt={category.name}
                 width={300}
                 height={200}
-                className="h-full w-full object-cover"
+                className="object-cover"
               />
             </div>
             <CardContent className="p-4">

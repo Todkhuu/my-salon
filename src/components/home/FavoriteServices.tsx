@@ -29,7 +29,7 @@ function FavoriteServices() {
         </div>
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {user?.favoriteServices?.map((service: ServiceType) => (
-            <Card key={service._id} className="overflow-hidden">
+            <Card key={service._id} className="overflow-hidden p-0">
               <div className="relative">
                 <FavoriteServiceButton serviceId={service._id} />
                 <Image
@@ -37,12 +37,12 @@ function FavoriteServices() {
                   alt={service.name}
                   width={250}
                   height={150}
-                  className="aspect-video w-full object-cover"
+                  className="w-full h-[250px] object-cover object-center"
                 />
               </div>
               <CardContent className="p-4">
                 <h3 className="font-bold">{service.name}</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground line-clamp-3 min-h-[4.5em]">
                   {service.description}
                 </p>
                 <div className="mt-3 flex items-center justify-between">

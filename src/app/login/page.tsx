@@ -1,3 +1,4 @@
+"use client";
 import { TabDemo } from "./_components/Tabs";
 import { LoginHeader } from "./_components/LoginHeader";
 import { LoginFooter } from "./_components/LoginFooter";

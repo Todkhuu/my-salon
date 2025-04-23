@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const pathname = usePathname();
   const HIDE_NAVLINKS_PATHS = [
     "/dashboard/favorites",
@@ -29,6 +29,7 @@ export default function Navbar() {
       toast.success("Амжилттай гарлаа");
       router.push("/");
       router.refresh();
+      setUser(null);
     } catch (error) {
       toast.error("Гарахад алдаа гарлаа. Дахин оролдож үзээрэй.");
       console.error(error);

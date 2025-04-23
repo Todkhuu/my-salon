@@ -1,6 +1,6 @@
 "use client";
+
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -91,8 +91,8 @@ export default function ServicesPage() {
             <div className="mb-8 flex justify-center">
               <TabsList className="grid w-full max-w-md grid-cols-3">
                 <TabsTrigger value="all">Бүгд</TabsTrigger>
-                <TabsTrigger value="Үсчин">Үсчин</TabsTrigger>
-                <TabsTrigger value="Маникюрчин">Маникюрчин</TabsTrigger>
+                <TabsTrigger value="Үс">Үс</TabsTrigger>
+                <TabsTrigger value="Маникюр">Маникюр</TabsTrigger>
               </TabsList>
             </div>
 
@@ -105,7 +105,7 @@ export default function ServicesPage() {
                 return (
                   <div key={category._id} className="space-y-6">
                     <div className="flex items-center gap-2">
-                      {category.name == "Үсчин" ? (
+                      {category.name == "Үс" ? (
                         <Scissors className="h-6 w-6" />
                       ) : (
                         <Sparkles className="h-6 w-6" />
@@ -125,7 +125,7 @@ export default function ServicesPage() {
                             <h3 className="mb-2 text-xl font-bold">
                               {service.name}
                             </h3>
-                            <p className="mb-4 text-sm text-gray-500">
+                            <p className="mb-4 text-sm text-gray-500 line-clamp-3 min-h-[4.5em]">
                               {service.description}
                             </p>
                             <div className="mb-4 flex items-center justify-between">
@@ -191,7 +191,7 @@ export default function ServicesPage() {
                           <h3 className="mb-2 text-xl font-bold">
                             {service.name}
                           </h3>
-                          <p className="mb-4 text-sm text-gray-500">
+                          <p className="mb-4 text-sm text-gray-500 min-h-[4.5em] line-clamp-3">
                             {service.description}
                           </p>
                           <div className="mb-4 flex items-center justify-between">

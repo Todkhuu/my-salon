@@ -20,9 +20,7 @@ export function FavoriteServiceButton({ serviceId }: { serviceId: string }) {
       const res = await axios.post("/api/favorite-service", { serviceId });
       toast.success("Амжилттай шинэчлэгдлээ");
       setUser?.((prev) =>
-        prev
-          ? { ...prev, favoriteServices: res.data.favoriteServices }
-          : undefined
+        prev ? { ...prev, favoriteServices: res.data.favoriteServices } : null
       );
     } catch (err: any) {
       toast.error("Алдаа гарлаа");

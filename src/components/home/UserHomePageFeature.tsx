@@ -1,10 +1,9 @@
+"use client";
 import React from "react";
 import { UserWelcome } from "./UserWelcome";
 import FavoriteServices from "./FavoriteServices";
 import FavoriteStaffs from "./FavoriteStaffs";
 import { ServiceCategories } from "../../app/_components/service-categories";
-import Link from "next/link";
-import { Button } from "../ui/button";
 
 const UserHomePageFeature: React.FC = () => {
   return (

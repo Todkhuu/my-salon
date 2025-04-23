@@ -20,7 +20,7 @@ export function FavoriteButton({ staffId }: { staffId: string }) {
       const res = await axios.post("/api/favorite-staff", { staffId });
       toast.success("Амжилттай шинэчлэгдлээ");
       setUser?.((prev) =>
-        prev ? { ...prev, favoriteStaff: res.data.favoriteStaff } : undefined
+        prev ? { ...prev, favoriteStaff: res.data.favoriteStaff } : null
       );
     } catch (err: any) {
       toast.error("Алдаа гарлаа");

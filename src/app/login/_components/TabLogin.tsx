@@ -10,6 +10,7 @@ import { TabsContent } from "@/components/ui/tabs";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "./FormInput";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/app/_context/UserContext";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Зөв email оруулна уу" }),
@@ -17,6 +18,7 @@ const loginSchema = z.object({
 });
 
 export const TabLogin = () => {
+  const { setUser } = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +30,8 @@ export const TabLogin = () => {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setLoading(true);
     try {
-      const response = await axios.post("/api/signin", values);
+      const { data } = await axios.post("/api/signin", values);
+      setUser(data.user);
       toast.success("Амжилттай нэвтэрлээ");
       router.push("/"); // refresh хийхэд хэрэглэгч хадгалагдана
     } catch (err: any) {

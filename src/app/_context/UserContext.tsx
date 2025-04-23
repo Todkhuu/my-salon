@@ -5,9 +5,9 @@ import axios from "axios";
 import { toast } from "sonner";
 
 type UserContextType = {
-  user?: UserType;
+  user: UserType | null;
   loading?: boolean;
-  setUser?: React.Dispatch<React.SetStateAction<UserType | undefined>>;
+  setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
 };
 
 export const UserContext = createContext<UserContextType>(
@@ -15,7 +15,7 @@ export const UserContext = createContext<UserContextType>(
 );
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<UserType | undefined>(undefined);
+  const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
 
   const getCurrentUser = async () => {
@@ -28,7 +28,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (err: any) {
       toast.error(err.response?.data.message);
-      setUser(undefined);
+      setUser(null);
       setLoading(false);
     }
   };
