@@ -24,10 +24,11 @@ export function AppointmentSummary({
   staffId,
   serviceId,
 }: AppointmentSummaryProps) {
+  console.log("first", selectedTime);
   return (
     <Card>
       <CardContent className="p-6">
-        <h2 className="mb-4 text-xl font-bold">Цаг товлосон мэдээлэл</h2>
+        <h2 className="mb-4 text-xl font-bold">Захиалгын дэлгэрэнгүй</h2>
 
         <div className="mb-4 flex items-center gap-3">
           <div className="h-12 w-12 overflow-hidden rounded-full">

@@ -8,7 +8,7 @@ import { useStaff } from "@/app/_context/StaffContext";
 import { Breadcrumbs } from "./(logged-out)/Breadcrumbs";
 import CheckoutTitle from "./(logged-out)/CheckoutTitle";
 import CheckoutForm from "./(logged-out)/CheckoutForm";
-import { BookingSummary } from "./(logged-out)/Booking Summary";
+import { BookingSummary } from "./(logged-out)/BookingSummary";
 
 export default function CheckoutPage() {
   const [isComplete, setIsComplete] = useState(false);

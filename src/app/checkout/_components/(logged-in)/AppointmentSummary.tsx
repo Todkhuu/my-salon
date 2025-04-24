@@ -25,7 +25,7 @@ export function AppointmentSummary({
   return (
     <Card>
       <CardContent className="p-6">
-        <h2 className="mb-4 text-xl font-bold">Booking Summary</h2>
+        <h2 className="mb-4 text-xl font-bold">Захиалгын дэлгэрэнгүй</h2>
 
         <div className="mb-4 flex items-center gap-3">
           <div className="h-12 w-12 overflow-hidden rounded-full">
@@ -46,11 +46,11 @@ export function AppointmentSummary({
         <div className="mb-4 space-y-2 border-b pb-4">
           <div className="flex justify-between">
             <span className="font-medium">{service?.name}</span>
-            <span>${service?.price}</span>
+            <span>{service?.price}₮</span>
           </div>
           <div className="flex items-center gap-1 text-sm text-gray-500">
             <Clock className="h-4 w-4" />
-            <span>{service?.duration} min</span>
+            <span>{service?.duration} мин</span>
           </div>
         </div>
 
@@ -59,41 +59,41 @@ export function AppointmentSummary({
             <Calendar className="h-4 w-4 text-gray-500" />
             <span>
               {date
-                ? date.toLocaleDateString("en-US", {
+                ? date.toLocaleDateString("mn-MN", {
                     weekday: "long",
                     year: "numeric",
                     month: "long",
                     day: "numeric",
                   })
-                : "Date not specified"}
+                : "Огноо сонгогдоогүй байна"}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-gray-500" />
-            <span>{time || "Time not specified"}</span>
+            <span>{time || "Цаг сонгогдоогүй байна"}</span>
           </div>
         </div>
 
         <div className="space-y-2 border-t pt-4">
           <div className="flex justify-between">
-            <span>Subtotal</span>
+            <span>Дүн</span>
             <span>${service?.price.toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
-            <span>Tax</span>
+            <span>НӨАТ</span>
             <span>${tax.toFixed(2)}</span>
           </div>
           <div className="flex justify-between border-t pt-2 text-lg font-bold">
-            <span>Total</span>
-            <span>${total.toFixed(2)}</span>
+            <span>Нийт дүн</span>
+            <span>{total.toFixed(2)}₮</span>
           </div>
         </div>
 
         <div className="mt-6 rounded-md bg-gray-50 p-3">
           <p className="text-sm text-gray-600">
-            <span className="font-medium">Cancellation Policy:</span> Free
-            cancellation up to 24 hours before your appointment. Late
-            cancellations may incur a fee.
+            <span className="font-medium">Цуцлах нөхцөл:</span> Захиалгаа 24
+            цагийн өмнө цуцлах боломжтой. Хожуу цуцалсан тохиолдолд нэмэлт
+            төлбөр тооцогдож магадгүй.
           </p>
         </div>
       </CardContent>

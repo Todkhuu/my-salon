@@ -120,7 +120,7 @@ export default function CheckoutForm({
         ))}
 
         {showQR && (
-          <div className="text-center my-6">
+          <div className="flex flex-col items-center my-6">
             <h3 className="text-xl font-semibold mb-2">QPay-р төлбөр төлөх</h3>
             <Image
               src="https://res.cloudinary.com/ds6kxgjh0/image/upload/v1745468279/qr_kyd9cn.png"
