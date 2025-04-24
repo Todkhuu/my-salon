@@ -6,6 +6,7 @@ import { useStaff } from "../_context/StaffContext";
 import Breadcrumbs from "./_components/Breadcrumbs";
 import { DateTimeSelector } from "./_components/DateTimeSelector";
 import { AppointmentSummary } from "./_components/AppointmentSummary";
+import { BookingTitle } from "./_components/BookingTitle";
 
 export default function BookingPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -24,11 +25,8 @@ export default function BookingPage() {
 
   return (
     <div className="max-w-[1400px] m-auto px-4 py-8 md:px-6 md:py-12">
-      <Breadcrumbs />
-      <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold">Book Your Appointment</h1>
-        <p className="text-gray-500">Select a date and time for your service</p>
-      </div>
+      <Breadcrumbs service={service} />
+      <BookingTitle />
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <DateTimeSelector

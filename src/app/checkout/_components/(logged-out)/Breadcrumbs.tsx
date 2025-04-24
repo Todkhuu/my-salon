@@ -2,27 +2,24 @@ import { ServiceType, StaffType } from "@/app/utils/types";
 import Link from "next/link";
 
 type Props = {
-  service: ServiceType | null;
+  staff: StaffType | undefined;
+  service: ServiceType | undefined;
 };
 
-export default function Breadcrumbs({ service }: Props) {
+export const Breadcrumbs = ({ staff, service }: Props) => {
   return (
     <div className="mb-8">
       <Link href="/" className="text-sm text-gray-500 hover:underline">
         Нүүр хуудас
       </Link>{" "}
       /{" "}
-      <Link href="/services" className="text-sm text-gray-500 hover:underline">
-        Үйлчилгээнүүд
-      </Link>{" "}
-      /{" "}
       <Link
-        href={`/staffs?service=${service?._id}`}
+        href={`/booking?staffs=${staff?._id}&service=${service?._id}`}
         className="text-sm text-gray-500 hover:underline"
       >
-        Артистууд
+        Цаг товлох
       </Link>{" "}
-      /<span className="text-sm font-medium"> Цаг товлох</span>
+      / <span className="text-sm font-medium">Төлбөрийн хэсэг</span>
     </div>
   );
-}
+};

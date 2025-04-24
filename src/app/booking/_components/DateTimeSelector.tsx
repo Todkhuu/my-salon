@@ -3,6 +3,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { addDays, isAfter, isBefore } from "date-fns";
 import { generateTimeSlots } from "./timeSlots";
+import { mn } from "date-fns/locale";
 
 const timeSlots = generateTimeSlots();
 
@@ -27,19 +28,20 @@ export function DateTimeSelector({
 
   return (
     <div className="mb-6 rounded-lg border p-4">
-      <h2 className="mb-4 text-xl font-bold">Select Date & Time</h2>
+      <h2 className="mb-4 text-xl font-bold">Өдөр болон цаг сонгоно уу</h2>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div>
-          <h3 className="mb-2 font-medium">Date</h3>
+          <h3 className="mb-2 font-medium">Өдөр</h3>
           <Calendar
             mode="single"
             selected={date}
+            locale={mn}
             onSelect={(selected) => {
               if (selected && !isOutsideRange(selected)) {
                 setDate(selected);
               }
             }}
-            className="rounded-md border"
+            className="rounded-md border w-full"
             disabled={isOutsideRange}
             modifiersClassNames={{
               outsideRange: "text-gray-300",
@@ -47,7 +49,7 @@ export function DateTimeSelector({
           />
         </div>
         <div>
-          <h3 className="mb-2 font-medium">Available Time Slots</h3>
+          <h3 className="mb-2 font-medium">Боломжит цаг</h3>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {timeSlots.map((time) => (
               <Button

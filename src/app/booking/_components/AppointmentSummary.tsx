@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { format } from "date-fns";
+import { mn } from "date-fns/locale";
 import { CalendarIcon, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,7 @@ export function AppointmentSummary({
   return (
     <Card>
       <CardContent className="p-6">
-        <h2 className="mb-4 text-xl font-bold">Appointment Summary</h2>
+        <h2 className="mb-4 text-xl font-bold">Цаг товлосон мэдээлэл</h2>
 
         <div className="mb-4 flex items-center gap-3">
           <div className="h-12 w-12 overflow-hidden rounded-full">
@@ -46,11 +47,11 @@ export function AppointmentSummary({
         <div className="mb-4 space-y-2 border-b pb-4">
           <div className="flex justify-between">
             <span className="font-medium">{service.name}</span>
-            <span>${service.price}</span>
+            <span>{service.price}₮</span>
           </div>
           <div className="flex items-center gap-1 text-sm text-gray-500">
             <Clock className="h-4 w-4" />
-            <span>{service.duration} min</span>
+            <span>{service.duration} мин</span>
           </div>
         </div>
 
@@ -58,18 +59,20 @@ export function AppointmentSummary({
           <div className="flex items-center gap-2">
             <CalendarIcon className="h-4 w-4 text-gray-500" />
             <span>
-              {date ? format(date, "EEEE, MMMM d, yyyy") : "Select a date"}
+              {date
+                ? format(date, "yyyy 'оны' MMMM d, EEEE", { locale: mn })
+                : "Огноо сонгоно уу"}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-gray-500" />
-            <span>{selectedTime || "Select a time"}</span>
+            <span>{selectedTime || "Цаг сонгоно уу"}</span>
           </div>
         </div>
 
         <div className="mb-4 flex justify-between border-t border-b py-2">
-          <span className="font-bold">Total</span>
-          <span className="font-bold">${service.price}</span>
+          <span className="font-bold">Нийт дүн</span>
+          <span className="font-bold">{service.price}₮</span>
         </div>
 
         <Link
@@ -81,7 +84,7 @@ export function AppointmentSummary({
             className="w-full bg-black text-white hover:bg-gray-800"
             disabled={!date || !selectedTime}
           >
-            Proceed to Checkout <ArrowRight className="ml-2 h-4 w-4" />
+            Төлбөр төлөх хуудас <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </Link>
       </CardContent>
