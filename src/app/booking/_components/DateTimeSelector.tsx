@@ -2,21 +2,23 @@
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { addDays, isAfter, isBefore } from "date-fns";
-import { generateTimeSlots } from "./TimeSlots";
+import { generateTimeSlots } from "./timeSlots";
 
 const timeSlots = generateTimeSlots();
+
+type SelectorType = {
+  date: Date | undefined;
+  setDate: (date: Date | undefined) => void;
+  selectedTime: string | null;
+  setSelectedTime: (time: string) => void;
+};
 
 export function DateTimeSelector({
   date,
   setDate,
   selectedTime,
   setSelectedTime,
-}: {
-  date: Date | undefined;
-  setDate: (date: Date | undefined) => void;
-  selectedTime: string | null;
-  setSelectedTime: (time: string) => void;
-}) {
+}: SelectorType) {
   const today = new Date();
   const oneWeekLater = addDays(today, 7);
 
