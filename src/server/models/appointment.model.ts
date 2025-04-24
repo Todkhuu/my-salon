@@ -42,17 +42,17 @@ const AppointmentSchema: Schema = new Schema<AppointmentType>(
 );
 
 // ✨ Pre-save validation
-AppointmentSchema.pre("save", function (next) {
-  if (!this.userId) {
-    if (!this.username || !this.email || !this.phone) {
-      const error = new Error(
-        "Зочин хэрэглэгч нэр, и-мэйл болон утасны дугаар заавал оруулах шаардлагатай."
-      );
-      return next(error);
-    }
-  }
-  next();
-});
+// AppointmentSchema.pre("save", function (next) {
+//   if (!this.userId) {
+//     if (!this.username || !this.email || !this.phone) {
+//       const error = new Error(
+//         "Зочин хэрэглэгч нэр, и-мэйл болон утасны дугаар заавал оруулах шаардлагатай."
+//       );
+//       return next(error);
+//     }
+//   }
+//   next();
+// });
 
 export const AppointmentModel: Model<AppointmentType> =
   models["Appointments"] ||

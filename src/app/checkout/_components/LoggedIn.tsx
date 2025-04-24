@@ -163,25 +163,34 @@ export default function LoggedInCheckoutPage() {
               <UserContactInfo user={user} />
             </div>
 
-            <div>QPAY</div>
-
-            <Button
-              type="submit"
-              className="w-full bg-black text-white hover:bg-gray-800"
-              disabled={isProcessing}
-            >
-              {isProcessing ? (
-                <span className="flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
-                  Processing...
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  <CreditCard className="h-4 w-4" />
-                  Complete Booking
-                </span>
-              )}
-            </Button>
+            <div className="w-full flex flex-col items-center">
+              <Image
+                alt="qr"
+                src={
+                  "https://res.cloudinary.com/ds6kxgjh0/image/upload/v1745468279/qr_kyd9cn.png"
+                }
+                width={300}
+                height={300}
+                className="border mb-6"
+              />{" "}
+              <Button
+                type="submit"
+                className="w-[300px] bg-black text-white hover:bg-gray-800"
+                disabled={isProcessing}
+              >
+                {isProcessing ? (
+                  <span className="flex items-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                    Processing...
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <CreditCard className="h-4 w-4" />
+                    Complete Booking
+                  </span>
+                )}
+              </Button>
+            </div>
           </form>
         </div>
 

@@ -4,6 +4,15 @@ import {
   StaffRoleEnum,
 } from "../../server/constant/enums";
 
+export interface UserCreateInputType {
+  email: string;
+  password: string;
+  phoneNumber?: string;
+  username?: string;
+  favoriteStaff?: StaffType[];
+  favoriteServices?: ServiceType[];
+}
+
 export interface UserType {
   _id: string;
   email: string;

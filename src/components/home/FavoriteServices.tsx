@@ -2,14 +2,13 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { ServiceType } from "@/app/utils/types";
-import { FavoriteButton } from "./FavoriteStaffButton";
 import { useUser } from "@/app/_context/UserContext";
-import { Card, CardContent, CardFooter } from "../ui/card";
-import { Clock, Heart, Scissors, Star } from "lucide-react";
-import Image from "next/image";
+import { Card } from "../ui/card";
+import { Scissors } from "lucide-react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { FavoriteServiceButton } from "./FavoriteServiceButton";
+
+import { ServiceCard } from "./ServiceCard";
 
 function FavoriteServices() {
   const { user } = useUser();
@@ -29,36 +28,7 @@ function FavoriteServices() {
         </div>
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {user?.favoriteServices?.map((service: ServiceType) => (
-            <Card key={service._id} className="overflow-hidden p-0">
-              <div className="relative">
-                <FavoriteServiceButton serviceId={service._id} />
-                <Image
-                  src={service.image || "/placeholder.svg"}
-                  alt={service.name}
-                  width={250}
-                  height={150}
-                  className="w-full h-[250px] object-cover object-center"
-                />
-              </div>
-              <CardContent className="p-4">
-                <h3 className="font-bold">{service.name}</h3>
-                <p className="text-sm text-muted-foreground line-clamp-3 min-h-[4.5em]">
-                  {service.description}
-                </p>
-                <div className="mt-3 flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    <span>{service.duration} min</span>
-                  </div>
-                  <div className="text-lg font-bold">${service.price}</div>
-                </div>
-              </CardContent>
-              <CardFooter className="p-4 pt-0">
-                <Link href={`staffs?service=${service._id}`} className="w-full">
-                  <Button className="w-full">Book Service</Button>
-                </Link>
-              </CardFooter>
-            </Card>
+            <ServiceCard service={service} key={service._id} />
           ))}
           <Card className="flex flex-col items-center justify-center p-6 text-center">
             <div className="mb-4 rounded-full bg-gray-100 p-4">

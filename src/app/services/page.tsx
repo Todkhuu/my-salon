@@ -17,12 +17,48 @@ import { CategoryType, ServiceType } from "../utils/types";
 import { FavoriteServiceButton } from "@/components/home/FavoriteServiceButton";
 import { useService } from "../_context/ServiceContext";
 import { useCategory } from "../_context/CategoryContext";
+import axios from "axios";
+import { toast } from "sonner";
 
 export default function ServicesPage() {
   const { services } = useService();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const { categories } = useCategory();
   const [selectedTab, setSelectedTab] = useState("all");
+  const [loading, setLoading] = useState(false);
+
+  const toggleFavorite = async (serviceId: string) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/api/favorite-service", { serviceId });
+      toast.success("Амжилттай шинэчлэгдлээ");
+
+      if (user) {
+        const isFavorite = user.favoriteServices?.some(
+          (favoriteService) => favoriteService._id === serviceId
+        );
+
+        const foundService = services?.find(
+          (service) => service._id === serviceId
+        );
+        if (!foundService) return;
+
+        const updatedFavorites = isFavorite
+          ? user.favoriteServices?.filter((fav) => fav._id !== serviceId)
+          : [
+              ...(user.favoriteServices || []),
+              services?.find((service) => service._id === foundService._id) ||
+                foundService,
+            ];
+
+        setUser({ ...user, favoriteServices: updatedFavorites });
+      }
+    } catch (error) {
+      toast.error("Алдаа гарлаа");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -93,7 +129,10 @@ export default function ServicesPage() {
                           className="overflow-hidden transition-all hover:shadow-lg relative"
                         >
                           {user ? (
-                            <FavoriteServiceButton serviceId={service._id} />
+                            <FavoriteServiceButton
+                              serviceId={service._id}
+                              toggleFavorite={toggleFavorite}
+                            />
                           ) : null}
                           <CardContent className="p-6">
                             <h3 className="mb-2 text-xl font-bold">
@@ -160,7 +199,10 @@ export default function ServicesPage() {
                         className="overflow-hidden transition-all hover:shadow-lg relative"
                       >
                         {user ? (
-                          <FavoriteServiceButton serviceId={service._id} />
+                          <FavoriteServiceButton
+                            serviceId={service._id}
+                            toggleFavorite={toggleFavorite}
+                          />
                         ) : null}
                         <CardContent className="p-6">
                           <h3 className="mb-2 text-xl font-bold">

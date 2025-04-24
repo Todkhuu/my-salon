@@ -21,9 +21,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const getCurrentUser = async () => {
     setLoading(true);
     try {
-      const user = await axios.get("/api/me");
-      if (user.status === 200) {
-        setUser(user.data || null);
+      const res = await axios.get("/api/me");
+      if (res.status === 200) {
+        setUser(res.data || null);
         setLoading(false);
       }
     } catch (err: any) {

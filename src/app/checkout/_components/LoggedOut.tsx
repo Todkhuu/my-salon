@@ -13,13 +13,41 @@ import { StaffType } from "../../utils/types";
 import axios from "axios";
 import { useService } from "@/app/_context/ServiceContext";
 import { useStaff } from "@/app/_context/StaffContext";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+
+const formSchema = z.object({
+  username: z.string().min(2, "Нэр хамгийн багадаа 2 үсэг байх ёстой"),
+  email: z.string().email("И-мэйл буруу байна"),
+  phoneNumber: z
+    .string()
+    .regex(/^(\+976)?[0-9]{8}$/, "Утасны дугаар буруу байна"),
+});
 
 export default function CheckoutPage() {
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      phoneNumber: "",
+    },
+  });
+  const [showQR, setShowQR] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const { staffs } = useStaff();
   const { services } = useService();
-
   const searchParams = useSearchParams();
   const staffId = searchParams.get("staffs");
   const serviceId = searchParams.get("service");
@@ -31,9 +59,8 @@ export default function CheckoutPage() {
   const date = dateString ? new Date(dateString) : null;
   const time = timeString || null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsProcessing(true);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setShowQR(true);
 
     const appointmentData = {
       staffId: staffId,
@@ -43,21 +70,21 @@ export default function CheckoutPage() {
       paymentMethod: "Qpay",
       paid: true,
       price: service?.price,
-      username: (document.getElementById("username") as HTMLInputElement)
-        ?.value,
-      email: (document.getElementById("email") as HTMLInputElement)?.value,
-      phone: (document.getElementById("phoneNumber") as HTMLInputElement)
-        ?.value,
+      username: values.username,
+      email: values.email,
+      phoneNumber: values.phoneNumber,
     };
-
-    try {
-      await axios.post("/api/appointment", appointmentData);
-      setIsComplete(true);
-    } catch (error) {
-      console.error("Error booking appointment:", error);
-      alert("Алдаа гарлаа. Дахин оролдоно уу.");
-    } finally {
-      setIsProcessing(false);
+    if (showQR) {
+      setIsProcessing(true);
+      try {
+        await axios.post("/api/appointment", appointmentData);
+        setIsComplete(true);
+      } catch (error) {
+        console.error("Error booking appointment:", error);
+        alert("Алдаа гарлаа. Дахин оролдоно уу.");
+      } finally {
+        setIsProcessing(false);
+      }
     }
   };
 
@@ -151,45 +178,88 @@ export default function CheckoutPage() {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-6 rounded-lg border p-6">
-              <h2 className="mb-4 text-xl font-bold">Contact Information</h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input id="username" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phoneNumber">Phone</Label>
-                  <Input id="phoneNumber" type="tel" required />
-                </div>
-              </div>
-            </div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Нэр</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Таны нэр" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <div>QPAY</div>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>И-мэйл</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="example@mail.com"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <Button
-              type="submit"
-              className="w-full bg-black text-white hover:bg-gray-800"
-              disabled={isProcessing}
-            >
-              {isProcessing ? (
-                <span className="flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
-                  Processing...
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  <CreditCard className="h-4 w-4" />
-                  Complete Booking
-                </span>
+              <FormField
+                control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Утасны дугаар</FormLabel>
+                    <FormControl>
+                      <Input type="tel" placeholder="88888888" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {showQR && (
+                <div className="text-center my-6">
+                  <h3 className="text-xl font-semibold mb-2">QPay QR код</h3>
+                  <Image
+                    src="https://res.cloudinary.com/ds6kxgjh0/image/upload/v1745468279/qr_kyd9cn.png" // 👈 QPay QR demo image or dynamic src
+                    alt="Qpay QR"
+                    width={200}
+                    height={200}
+                  />
+                  <p className="text-sm text-gray-500 mt-2">
+                    Төлбөр төлсний дараа автоматаар баталгаажна
+                  </p>
+                </div>
               )}
-            </Button>
-          </form>
+
+              <Button
+                type="submit"
+                className="w-full bg-black text-white hover:bg-gray-800"
+                disabled={isProcessing}
+              >
+                {isProcessing ? (
+                  <span className="flex items-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                    Processing...
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <CreditCard className="h-4 w-4" />
+                    {showQR ? "Check payment" : "Complete Booking"}
+                  </span>
+                )}
+              </Button>
+            </form>
+          </Form>
         </div>
 
         <div>
@@ -273,3 +343,24 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+// useEffect(() => {
+//   if (showQR && !isComplete) {
+//     const interval = setInterval(() => {
+//       // fetch(`/api/check-payment?sessionId=...`)
+//     }, 5000);
+
+//     return () => clearInterval(interval);
+//   }
+// }, [showQR, isComplete]);
+
+// const [qrUrl, setQrUrl] = useState<string | null>(null);
+
+// useEffect(() => {
+//   if (showQR) {
+//     axios
+//       .post("/api/qpay/create-payment", { price: service?.price })
+//       .then((res) => setQrUrl(res.data.qrImage))
+//       .catch(console.error);
+//   }
+// }, [showQR]);

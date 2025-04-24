@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
     if (isFavorite) {
       updatedFavorites = existingUser.favoriteStaff?.filter(
-        (id) => id.toString() !== staffObjectId.toString()
+        (id) => id && id.toString() !== staffObjectId.toString()
       );
     } else {
       updatedFavorites = [...(existingUser.favoriteStaff || []), staffId];
