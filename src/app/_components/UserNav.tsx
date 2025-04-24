@@ -1,5 +1,4 @@
 "use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +12,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User, Settings, CreditCard, LogOut } from "lucide-react";
 import Link from "next/link";
+import { useUser } from "../_context/UserContext";
 interface UserNavProps {
   handleLogout: () => void;
 }
 
 export function UserNav({ handleLogout }: UserNavProps) {
+  const { user } = useUser();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,16 +28,16 @@ export function UserNav({ handleLogout }: UserNavProps) {
               src="/placeholder.svg?height=32&width=32"
               alt="User avatar"
             />
-            <AvatarFallback>JD</AvatarFallback>
+            <AvatarFallback></AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">John Doe</p>
+            <p className="text-sm font-medium leading-none">{user?.username}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              john.doe@example.com
+              {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>

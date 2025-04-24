@@ -8,8 +8,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { addDays, format, isAfter, isBefore } from "date-fns";
 import { CalendarIcon, Clock, ArrowRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { StaffType } from "../utils/types";
-import axios from "axios";
 import { useService } from "../_context/ServiceContext";
 import { useStaff } from "../_context/StaffContext";
 
