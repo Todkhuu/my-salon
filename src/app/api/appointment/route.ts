@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Service successfully added appointment",
+        message: "Цаг амжилттай захиалагдлаа.",
         success: true,
         createdStaff,
       },
@@ -19,12 +19,12 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error during add appointment:", error);
+    console.error("Цаг захиалах үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Цаг захиалах үед алдаа гарлаа.",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
 
     if (!userId) {
       return NextResponse.json(
-        { message: "userId is required" },
+        { message: "Хэрэглэгчийн ID дамжуулаагүй байна." },
         { status: 400 }
       );
     }
@@ -47,16 +47,19 @@ export async function GET(req: NextRequest) {
       .populate("serviceIds");
 
     return NextResponse.json(
-      { message: "Service successfully added appointment", data: appointments },
+      {
+        message: "Цаг захиалагын мэдээлэл амжилттай уншигдлаа.",
+        data: appointments,
+      },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error during add appointment:", error);
+    console.error("Цагийн мэдээлэл унших үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Цагийн мэдээлэл унших үед алдаа гарлаа.",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );

@@ -43,12 +43,12 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error during sign-in:", error);
+    console.error("Нэвтрэх үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Серверийн дотоод алдаа гарлаа.",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );

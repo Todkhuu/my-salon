@@ -13,23 +13,23 @@ export async function GET(req: NextRequest) {
     if (id) {
       const category = await CategoryModel.findById(id);
       return NextResponse.json(
-        { message: "success", category },
+        { message: "Ангилал амжилттай олдлоо.", category },
         { status: 200 }
       );
     } else {
       const allCategory = await CategoryModel.find();
       return NextResponse.json(
-        { message: "Success", data: allCategory },
+        { message: "Бүх ангиллууд амжилттай уншигдлаа.", data: allCategory },
         { status: 200 }
       );
     }
   } catch (error) {
-    console.error("Error retrieving staff:", error);
+    console.error("Ангилал унших үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Ангилал унших үед алдаа гарлаа.",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );
@@ -46,16 +46,16 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Category амжилттай нэмлээ", newCategory },
+      { message: "Ангилал амжилттай нэмэгдлээ.", newCategory },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error during create staff:", error);
+    console.error("Ангилал үүсгэх үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Ангилал үүсгэх үед алдаа гарлаа.",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );
@@ -68,7 +68,10 @@ export async function PUT(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-      return NextResponse.json({ message: "Invalid ID" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Зөв ID дамжуулаагүй байна." },
+        { status: 400 }
+      );
     }
 
     const data = await req.json();
@@ -79,18 +82,18 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Staff successfully updated",
+        message: "Ангилал амжилттай шинэчлэгдлээ.",
         updatedStaff,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error during update staff:", error);
+    console.error("Ангилал шинэчлэх үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Ангилал шинэчлэх үед алдаа гарлаа.",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );
@@ -103,26 +106,32 @@ export async function DELETE(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-      return NextResponse.json({ message: "Invalid ID" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Зөв ID дамжуулаагүй байна." },
+        { status: 400 }
+      );
     }
 
     const deletedStaff = await CategoryModel.findByIdAndDelete(id);
 
     if (!deletedStaff) {
-      return NextResponse.json({ message: "Staff not found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Устгах ангилал олдсонгүй." },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(
-      { message: "Deleted successfully", deletedStaff },
+      { message: "Ангилал амжилттай устгагдлаа.", deletedStaff },
       { status: 200 }
     );
   } catch (error) {
-    console.error("DELETE error:", error);
+    console.error("Ангилал устгах үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown",
+        message: "Ангилал устгах үед алдаа гарлаа:",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );

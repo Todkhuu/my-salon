@@ -21,7 +21,7 @@ export default function MobileMenu({ user, onLogout }: MobileMenuProps) {
       <SheetTrigger asChild>
         <Button variant="outline" size="icon" className="md:hidden">
           <Menu className="h-5 w-5" />
-          <span className="sr-only">Toggle menu</span>
+          <span className="sr-only">Цэс нээх</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="right">
@@ -31,47 +31,41 @@ export default function MobileMenu({ user, onLogout }: MobileMenuProps) {
             href="/services"
             className="text-sm font-medium hover:underline"
           >
-            Services
+            Үйлчилгээнүүд
           </Link>
-          <Link href="/barbers" className="text-sm font-medium hover:underline">
-            Our Barbers
+          <Link href="/staffs" className="text-sm font-medium hover:underline">
+            Манай ажилчид
           </Link>
           <Link href="/about" className="text-sm font-medium hover:underline">
-            About Us
+            Бидний тухай
           </Link>
           <Link href="/contact" className="text-sm font-medium hover:underline">
-            Contact
+            Холбоо барих
           </Link>
           {user ? (
             <>
               <Link
-                href="/dashboard"
-                className="text-sm font-medium hover:underline"
-              >
-                Dashboard
-              </Link>
-              <Link
                 href="/dashboard/appointments"
                 className="text-sm font-medium hover:underline"
               >
-                My Appointments
+                Миний Захиалгууд
               </Link>
               <Link
                 href="/dashboard/profile"
                 className="text-sm font-medium hover:underline"
               >
-                My Profile
+                Миний Профайл
               </Link>
               <button
                 onClick={onLogout}
                 className="text-left text-sm font-medium hover:underline"
               >
-                Logout
+                Гарах
               </button>
             </>
           ) : (
             <Link href="/login" className="text-sm font-medium hover:underline">
-              Login / Register
+              Нэвтрэх / Бүртгүүлэх
             </Link>
           )}
         </nav>

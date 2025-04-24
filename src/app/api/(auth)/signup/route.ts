@@ -51,12 +51,12 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error during signup:", error);
+    console.error("Бүртгүүлэх үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Серверийн дотоод алдаа гарлаа.",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );

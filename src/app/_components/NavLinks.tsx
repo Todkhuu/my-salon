@@ -4,16 +4,16 @@ export default function NavLinks() {
   return (
     <nav className="hidden gap-6 md:flex">
       <Link href="/services" className="text-sm font-medium hover:underline">
-        Services
+        Үйлчилгээнүүд
       </Link>
       <Link href="/staffs" className="text-sm font-medium hover:underline">
-        Our Barbers
+        Манай ажилчид
       </Link>
       <Link href="/about" className="text-sm font-medium hover:underline">
-        About Us
+        Бидний тухай
       </Link>
       <Link href="/contact" className="text-sm font-medium hover:underline">
-        Contact
+        Холбоо барих
       </Link>
     </nav>
   );

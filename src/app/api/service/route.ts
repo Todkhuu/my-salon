@@ -7,19 +7,19 @@ connectMongoDb();
 export async function POST(req: NextRequest) {
   try {
     const staff = await req.json();
-    const createdStaff = await ServiceModel.create(staff);
+    const createdService = await ServiceModel.create(staff);
 
     return NextResponse.json(
-      { message: "Үйлчилгээ амжилттай нэмэгдлээ", createdStaff },
+      { message: "Үйлчилгээ амжилттай үүсгэгдлээ.", createdService },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error during add service:", error);
+    console.error("Үйлчилгээ үүсгэх үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Үйлчилгээ үүсгэх үед алдаа гарлаа.",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );
@@ -32,17 +32,17 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        message: "Амжилттай service мэдээлэл татлаа",
+        message: "Үйлчилгээний мэдээлэл амжилттай олдлоо.",
         data: serviceData,
       },
       { status: 200 }
     );
   } catch (err) {
-    console.error("Алдаа гарлаа service татах үед:", err);
+    console.error("Үйлчилгээний мэдээлэл авах үед алдаа гарлаа:", err);
 
     return NextResponse.json(
       {
-        message: "Дотоод серверийн алдаа",
+        message: "Үйлчилгээний мэдээлэл авах үед алдаа гарлаа:",
         error: err instanceof Error ? err.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }

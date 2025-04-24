@@ -12,14 +12,17 @@ export async function POST(req: NextRequest) {
     const userId = await getUserFromCookie();
 
     if (!userId) {
-      return NextResponse.json({ message: "Зөвшөөрөлгүй" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Нэвтрээгүй байна. Эхлээд нэвтэрнэ үү." },
+        { status: 401 }
+      );
     }
 
     const existingUser = await UserModel.findById(userId);
 
     if (!existingUser) {
       return NextResponse.json(
-        { message: "Хэрэглэгч олдсонгүй" },
+        { message: "Хэрэглэгч олдсонгүй." },
         { status: 404 }
       );
     }
@@ -44,11 +47,11 @@ export async function POST(req: NextRequest) {
     await existingUser.save();
 
     return NextResponse.json({
-      message: "Шинэчлэгдлээ",
+      message: "Амжилттай шинэчлэгдлээ.",
       favoriteStaff: existingUser.favoriteServices,
     });
   } catch (error) {
-    console.error("Дуртай үйлчилгээ шинэчлэх үед алдаа гарлаа:", error);
-    return NextResponse.json({ message: "Серверийн алдаа" }, { status: 500 });
+    console.error("Таалагдсан үйлчилгээ хадгалах үед алдаа гарлаа:", error);
+    return NextResponse.json({ message: "Тодорхойгүй алдаа" }, { status: 500 });
   }
 }

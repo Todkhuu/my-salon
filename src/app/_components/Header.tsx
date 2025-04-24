@@ -39,7 +39,7 @@ export default function Header() {
   return (
     <header className="border-b bg-white ">
       <div className="max-w-[1400px] m-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href={user ? "/home" : "/"} className="flex items-center gap-2">
+        <Link href={"/"} className="flex items-center gap-2">
           <span className="text-xl font-bold">StyleCut</span>
         </Link>
         {!HIDE_NAVLINKS_PATHS.includes(pathname) && <NavLinks />}
@@ -50,7 +50,7 @@ export default function Header() {
             <Link href="/login">
               <Button variant="ghost" size="icon" className="rounded-full">
                 <UserCircle className="h-5 w-5" />
-                <span className="sr-only">Login</span>
+                <span className="sr-only">Нэвтрэх</span>
               </Button>
             </Link>
           )}

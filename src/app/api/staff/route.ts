@@ -13,21 +13,27 @@ export async function GET(req: NextRequest) {
 
     if (id) {
       const staff = await StaffModel.findById(id).populate("services");
-      return NextResponse.json({ message: "Success", staff }, { status: 200 });
+      return NextResponse.json(
+        { message: "Ажилтны мэдээлэл амжилттай олдлоо.", staff },
+        { status: 200 }
+      );
     } else {
       const allStaff = await StaffModel.find().populate("services");
       return NextResponse.json(
-        { message: "Success", data: allStaff },
+        {
+          message: "Бүх ажилтнуудын мэдээлэл амжилттай олдлоо.",
+          data: allStaff,
+        },
         { status: 200 }
       );
     }
   } catch (error) {
-    console.error("Error retrieving staff:", error);
+    console.error("Ажилтны мэдээлэл авах үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Ажилтны мэдээлэл авах үед алдаа гарлаа.",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );
@@ -39,15 +45,15 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { category, ...staffData } = body;
 
-    const services = await ServiceModel.find({ category });
-    if (!services.length) {
+    const staffs = await ServiceModel.find({ category });
+    if (!staffs.length) {
       return NextResponse.json(
-        { message: "No services found for this category" },
+        { message: "Ажилтaн олдсонгүй." },
         { status: 404 }
       );
     }
 
-    const serviceIds = services.map((service) => service._id);
+    const serviceIds = staffs.map((staff) => staff._id);
     const newStaff = await StaffModel.create({
       ...staffData,
       category,
@@ -55,16 +61,16 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Staff successfully added", newStaff },
+      { message: "Шинэ ажилтны мэдээлэл амжилттай үүслээ.", newStaff },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error during create staff:", error);
+    console.error("Шинэ ажилтан үүсгэх үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Шинэ ажилтан үүсгэх үед алдаа гарлаа:",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );
@@ -77,7 +83,10 @@ export async function PUT(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-      return NextResponse.json({ message: "Invalid ID" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Мөрдөгдсөн ажилтны ID алдаатай." },
+        { status: 400 }
+      );
     }
 
     const data = await req.json();
@@ -88,18 +97,18 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: "Staff successfully updated",
+        message: "Ажилтны мэдээлэл амжилттай засварлагдлаа.",
         updatedStaff,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error during update staff:", error);
+    console.error("Ажилтны мэдээлэл засварлах үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown error",
+        message: "Ажилтны мэдээлэл засварлах үед алдаа гарлаа:",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );
@@ -112,26 +121,32 @@ export async function DELETE(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-      return NextResponse.json({ message: "Invalid ID" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Мөрдөгдсөн ажилтны ID алдаатай." },
+        { status: 400 }
+      );
     }
 
     const deletedStaff = await StaffModel.findByIdAndDelete(id);
 
     if (!deletedStaff) {
-      return NextResponse.json({ message: "Staff not found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Ажилтны мэдээлэл олдсонгүй." },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(
-      { message: "Deleted successfully", deletedStaff },
+      { message: "Ажилтны мэдээлэл амжилттай устгагдлаа.", deletedStaff },
       { status: 200 }
     );
   } catch (error) {
-    console.error("DELETE error:", error);
+    console.error("Ажилтны мэдээлэл устгах үед алдаа гарлаа:", error);
 
     return NextResponse.json(
       {
-        message: "Internal Server Error",
-        error: error instanceof Error ? error.message : "Unknown",
+        message: "Ажилтны мэдээлэл устгах үед алдаа гарлаа:",
+        error: error instanceof Error ? error.message : "Тодорхойгүй алдаа",
       },
       { status: 500 }
     );

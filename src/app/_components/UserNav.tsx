@@ -46,27 +46,27 @@ export function UserNav({ handleLogout }: UserNavProps) {
           <Link href="/dashboard/profile">
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+              <span>Миний Профайл</span>
             </DropdownMenuItem>
           </Link>
           <Link href="/dashboard/appointments">
             <DropdownMenuItem>
               <CreditCard className="mr-2 h-4 w-4" />
-              <span>Appointments</span>
+              <span>Миний Захиалгууд</span>
             </DropdownMenuItem>
           </Link>
-          <Link href="/dashboard/settings">
+          {/* <Link href="/dashboard/settings">
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
             </DropdownMenuItem>
-          </Link>
+          </Link> */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <Button variant={"ghost"} onClick={handleLogout}>
           <DropdownMenuItem>
             <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
+            <span>Гарах</span>
           </DropdownMenuItem>
         </Button>
       </DropdownMenuContent>
