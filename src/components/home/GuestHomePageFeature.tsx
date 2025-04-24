@@ -4,18 +4,10 @@ import UserHomePageFeature from "./UserHomePageFeature";
 import { ServiceCategories } from "../../app/_components/ServiceCategories";
 import { useUser } from "@/app/_context/UserContext";
 import HowItWorks from "./HowItWorks";
-import { Loader } from "../ui/Loader";
 
 function GuestHomePageFeature() {
-  const { user, loading } = useUser();
+  const { user } = useUser();
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader />
-      </div>
-    );
-  }
   return (
     <div className="min-w-[100vw] min-h-screen">
       {user ? (

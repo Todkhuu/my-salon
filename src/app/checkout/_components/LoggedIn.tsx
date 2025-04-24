@@ -1,10 +1,9 @@
 "use client";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import {
   Calendar,
   Clock,
@@ -13,18 +12,16 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { StaffType } from "@/app/utils/types";
-import axios from "axios";
 import { useUser } from "@/app/_context/UserContext";
 import { UserContactInfo } from "@/components/checkout/UserContactInfo";
 import { AppointmentSummary } from "@/components/checkout/AppointmentSummary";
 import { useService } from "@/app/_context/ServiceContext";
 import { useStaff } from "@/app/_context/StaffContext";
+import axios from "axios";
 
 export default function LoggedInCheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  const [specialInstructions, setSpecialInstructions] = useState("");
   const { staffs } = useStaff();
   const { services } = useService();
 
@@ -41,15 +38,32 @@ export default function LoggedInCheckoutPage() {
   const date = dateString ? new Date(dateString) : null;
   const time = timeString || null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
 
-    // Simulate payment processing
-    setTimeout(() => {
+    try {
+      const res = await axios.post("/api/appointment", {
+        userId: user?._id || null,
+        staffId,
+        serviceIds: [serviceId],
+        date,
+        time,
+        price: service?.price,
+        paymentMethod: "Qpay",
+      });
+
+      if (res.status === 201 && res.data.success) {
+        setIsComplete(true);
+      } else {
+        throw new Error("Failed to book appointment");
+      }
+    } catch (error: any) {
+      console.error(error);
+      alert("Booking failed: " + error?.response?.data?.error || error.message);
+    } finally {
       setIsProcessing(false);
-      setIsComplete(true);
-    }, 2000);
+    }
   };
 
   if (isComplete) {
@@ -147,25 +161,6 @@ export default function LoggedInCheckoutPage() {
             <div className="mb-6 rounded-lg border p-6">
               <h2 className="mb-4 text-xl font-bold">Contact Information</h2>
               <UserContactInfo user={user} />
-            </div>
-
-            <div className="mb-6 rounded-lg border p-6">
-              <h2 className="mb-4 text-xl font-bold">
-                Special Instructions (Optional)
-              </h2>
-              <div className="space-y-2">
-                <Label htmlFor="special-instructions">
-                  Notes for your barber
-                </Label>
-                <textarea
-                  id="special-instructions"
-                  className="w-full rounded-md border p-2"
-                  rows={3}
-                  placeholder="Any special requests or preferences for your appointment"
-                  value={specialInstructions}
-                  onChange={(e) => setSpecialInstructions(e.target.value)}
-                ></textarea>
-              </div>
             </div>
 
             <div>QPAY</div>

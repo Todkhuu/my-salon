@@ -31,15 +31,34 @@ export default function CheckoutPage() {
   const date = dateString ? new Date(dateString) : null;
   const time = timeString || null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
 
-    // Simulate payment processing
-    setTimeout(() => {
-      setIsProcessing(false);
+    const appointmentData = {
+      staffId: staffId,
+      serviceIds: [serviceId],
+      date: dateString,
+      time: timeString,
+      paymentMethod: "Qpay",
+      paid: true,
+      price: service?.price,
+      username: (document.getElementById("username") as HTMLInputElement)
+        ?.value,
+      email: (document.getElementById("email") as HTMLInputElement)?.value,
+      phone: (document.getElementById("phoneNumber") as HTMLInputElement)
+        ?.value,
+    };
+
+    try {
+      await axios.post("/api/appointment", appointmentData);
       setIsComplete(true);
-    }, 2000);
+    } catch (error) {
+      console.error("Error booking appointment:", error);
+      alert("Алдаа гарлаа. Дахин оролдоно уу.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   if (isComplete) {
@@ -137,20 +156,16 @@ export default function CheckoutPage() {
               <h2 className="mb-4 text-xl font-bold">Contact Information</h2>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="first-name">First Name</Label>
-                  <Input id="first-name" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="last-name">Last Name</Label>
-                  <Input id="last-name" required />
+                  <Label htmlFor="username">Username</Label>
+                  <Input id="username" required />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input id="email" type="email" required />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" type="tel" required />
+                  <Label htmlFor="phoneNumber">Phone</Label>
+                  <Input id="phoneNumber" type="tel" required />
                 </div>
               </div>
             </div>

@@ -30,6 +30,13 @@ export interface StaffType {
   profession: ProfessionEnum;
   services: ServiceType[];
   availableTimes: Date[];
+  bio: string;
+  phone: string;
+  location: string;
+  instagram: string;
+  facebook: string;
+  gallery: string[];
+  // clientReviews: {type: [Schema.Types.ObjectId], ref: "Reviews"},
   createdAt: Date;
   updatedAt: Date;
 }
@@ -39,6 +46,7 @@ export interface AppointmentType {
   userId: UserType;
   staffId: StaffType;
   date: Date;
+  time: string;
   status: AppointmentStatusEnum;
   paid: boolean;
   paymentMethod: string;

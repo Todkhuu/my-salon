@@ -15,6 +15,7 @@ const AppointmentSchema: Schema = new Schema<AppointmentType>(
       required: true,
     },
     date: { type: Date, required: true },
+    time: { type: String, required: true },
     status: {
       type: String,
       enum: Object.values(AppointmentStatusEnum),

@@ -89,7 +89,7 @@ export default function BarbersPage() {
                   </Button>
                 </Link>
               ) : (
-                <Link href={`/staff-about/${staff._id}`} className="w-full">
+                <Link href={`/staffs/${staff._id}`} className="w-full">
                   <Button className="w-full bg-black text-white hover:bg-gray-800">
                     View Details
                   </Button>

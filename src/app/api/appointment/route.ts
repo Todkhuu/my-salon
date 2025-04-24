@@ -10,7 +10,12 @@ export async function POST(req: NextRequest) {
     const createdStaff = await AppointmentModel.create(appointment);
 
     return NextResponse.json(
-      { message: "Service successfully added appointment", createdStaff },
+      {
+        message: "Service successfully added appointment",
+        success: true,
+        createdStaff,
+      },
+
       { status: 201 }
     );
   } catch (error) {
