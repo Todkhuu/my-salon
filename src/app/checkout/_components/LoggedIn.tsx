@@ -44,7 +44,7 @@ export default function LoggedInCheckoutPage() {
       const res = await axios.post("/api/appointment", {
         userId: user?._id || null,
         staffId,
-        serviceIds: [serviceId],
+        serviceId: [serviceId],
         date,
         time,
         price: service?.price,

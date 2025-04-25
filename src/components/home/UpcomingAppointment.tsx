@@ -5,6 +5,7 @@ import { Calendar, Clock, User } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { useAppointment } from "@/app/_context/AppointmentContext";
 import Image from "next/image";
+import { format } from "date-fns";
 
 export function UpcomingAppointment() {
   const { appointment } = useAppointment();
@@ -12,6 +13,14 @@ export function UpcomingAppointment() {
   const nextAppointment = appointment
     ?.filter((app) => new Date(app.date) >= new Date())
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
+
+  // const date = nextAppointment?.date;
+
+  // const formatted = date.toLocaleDateString("mn-MN", {
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // });
 
   console.log("first", nextAppointment);
   if (!appointment) {
@@ -35,31 +44,33 @@ export function UpcomingAppointment() {
       <CardContent className="p-6">
         <h3 className="mb-4 font-bold">Your Next Appointment</h3>
         <div className="flex items-center gap-8">
-          <Image
+          {/* <Image
             src={"/placeholder.svg"}
             alt={"Barber"}
             width={50}
             height={50}
             className="h-full w-full object-cover"
-          />
-          {/* <Avatar>
+          /> */}
+          <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
-          </Avatar> */}
+          </Avatar>
           <div>
-            <p className="font-medium">{nextAppointment?.serviceIds.name}</p>
+            <p className="font-medium">{nextAppointment?.serviceId.name}</p>
             <div className="flex flex-col gap-1 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <User className="h-3 w-3" />
-                <span>{}</span>
+                <span>{nextAppointment?.staffId.name}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Calendar className="h-3 w-3" />
-                <span>Date</span>
+                <span>
+                  {format(new Date(nextAppointment?.date ?? 0), "yyyy-MM-dd")}
+                </span>
               </div>
               <div className="flex items-center gap-1">
                 <Clock className="h-3 w-3" />
-                <span>Time</span>
+                <span>{nextAppointment?.time}</span>
               </div>
             </div>
           </div>

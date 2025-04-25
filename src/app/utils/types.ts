@@ -59,7 +59,7 @@ export interface AppointmentType {
   status: AppointmentStatusEnum;
   paid: boolean;
   paymentMethod: string;
-  serviceIds: ServiceType;
+  serviceId: ServiceType;
   price: number;
   username?: string;
   email?: string;

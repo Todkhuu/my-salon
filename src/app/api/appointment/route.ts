@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
     }
     const appointments = await AppointmentModel.find({ userId })
       .populate("userId")
-      .populate("serviceIds")
+      .populate("serviceId")
       .populate("staffId");
 
     return NextResponse.json(

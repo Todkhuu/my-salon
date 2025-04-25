@@ -28,7 +28,7 @@ const AppointmentSchema: Schema = new Schema<AppointmentType>(
       enum: ["Qpay"],
       required: true,
     },
-    serviceIds: {
+    serviceId: {
       type: Schema.Types.ObjectId,
       ref: "Services",
       required: true,

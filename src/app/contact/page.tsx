@@ -1,9 +1,9 @@
 "use client";
 import type React from "react";
-import { HeroSection } from "./_components/HeroSection";
 import { ContactInformation } from "./_components/ContactInformation";
 import { ContactForm } from "./_components/ContactForm";
 import { FAQSection } from "./_components/FAQSection";
+import { HeroSection } from "./_components/ HeroSection";
 
 export default function ContactPage() {
   return (
