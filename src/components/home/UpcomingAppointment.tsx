@@ -4,7 +4,6 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Calendar, Clock, User } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { useAppointment } from "@/app/_context/AppointmentContext";
-import Image from "next/image";
 import { format } from "date-fns";
 
 export function UpcomingAppointment() {
@@ -14,25 +13,17 @@ export function UpcomingAppointment() {
     ?.filter((app) => new Date(app.date) >= new Date())
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
 
-  // const date = nextAppointment?.date;
-
-  // const formatted = date.toLocaleDateString("mn-MN", {
-  //   year: "numeric",
-  //   month: "long",
-  //   day: "numeric",
-  // });
-
   console.log("first", nextAppointment);
   if (!appointment) {
     return (
       <Card>
         <CardContent className="p-6">
-          <h3 className="mb-2 font-bold">No Upcoming Appointments</h3>
+          <h3 className="mb-2 font-bold">Ойрын захиалга байхгүй</h3>
           <p className="mb-4 text-sm text-gray-500">
-            Book your next appointment today
+            Өнөөдөр дараагийнхаа цагийг захиалаарай
           </p>
           <Link href="/services">
-            <Button className="w-full">Book Now</Button>
+            <Button className="w-full">Цаг захиалах</Button>
           </Link>
         </CardContent>
       </Card>
@@ -42,15 +33,8 @@ export function UpcomingAppointment() {
   return (
     <Card>
       <CardContent className="p-6">
-        <h3 className="mb-4 font-bold">Your Next Appointment</h3>
+        <h3 className="mb-4 font-bold">Таны дараагийн захиалга</h3>
         <div className="flex items-center gap-8">
-          {/* <Image
-            src={"/placeholder.svg"}
-            alt={"Barber"}
-            width={50}
-            height={50}
-            className="h-full w-full object-cover"
-          /> */}
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
@@ -76,23 +60,11 @@ export function UpcomingAppointment() {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex gap-2 p-6 pt-0">
-        {/* <Link
-          href={`/dashboard/appointments/${appointment.id}`}
-          className="flex-1"
-        > */}
-        <Button variant="outline">Details</Button>
-        {/* </Link> */}
-        <Link href="/dashboard/appointments" className="flex-1">
-          <Button>All Appointments</Button>
+      <CardFooter className="flex justify-center">
+        <Link href="/dashboard/appointments">
+          <Button className="w-full">Бүх захиалга</Button>
         </Link>
       </CardFooter>
     </Card>
   );
 }
-// src={appointment.image || "/placeholder.svg"}
-// alt={appointment.barber}
-// appointment.service
-// {appointment.barber}
-// {appointment.date}
-// {appointment.time}
