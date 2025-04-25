@@ -1,5 +1,5 @@
 import type React from "react";
-import { DashboardNav } from "@/components/dashboard/DashboardNav";
+import { DashboardNav } from "@/components/dashboardss/DashboardNav";
 import { getUserFromCookie } from "@/lib/auth";
 import { redirect } from "next/navigation";
 

@@ -6,8 +6,9 @@ const SECRET = process.env.JWT_SECRET!;
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
-  console.log("Token: ", token);
   const pathname = request.nextUrl.pathname;
+  console.log("token", token);
+  console.log("path", pathname);
 
   if (!token) {
     if (
@@ -40,10 +41,18 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/", request.url));
     }
 
+    if (
+      pathname.startsWith("/dashboard") &&
+      (decoded.role === "STAFF" || decoded.role === "ADMIN")
+    ) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
     // ✅ token байгаа, зөв role → үргэлжлүүлнэ
     return NextResponse.next();
   } catch (err) {
     // ❌ JWT decode алдаа
+    console.error(err);
     return NextResponse.redirect(new URL("/login", request.url));
   }
 }

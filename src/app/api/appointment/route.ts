@@ -1,6 +1,7 @@
 import { connectMongoDb } from "@/server/database/db";
-import { AppointmentModel } from "@/server/models";
 import { NextRequest, NextResponse } from "next/server";
+import { AppointmentModel } from "@/server/models";
+import "@/server/models";
 
 connectMongoDb();
 
@@ -36,6 +37,8 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
 
+    console.log("USERID", userId);
+
     if (!userId) {
       return NextResponse.json(
         { message: "Хэрэглэгчийн ID дамжуулаагүй байна." },
@@ -44,7 +47,8 @@ export async function GET(req: NextRequest) {
     }
     const appointments = await AppointmentModel.find({ userId })
       .populate("userId")
-      .populate("serviceIds");
+      .populate("serviceIds")
+      .populate("staffId");
 
     return NextResponse.json(
       {

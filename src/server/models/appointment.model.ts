@@ -6,12 +6,12 @@ const AppointmentSchema: Schema = new Schema<AppointmentType>(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: false,
     },
     staffId: {
       type: Schema.Types.ObjectId,
-      ref: "Staffs",
+      ref: "Staff",
       required: true,
     },
     date: { type: Date, required: true },
@@ -29,7 +29,7 @@ const AppointmentSchema: Schema = new Schema<AppointmentType>(
       required: true,
     },
     serviceIds: {
-      type: [Schema.Types.ObjectId],
+      type: Schema.Types.ObjectId,
       ref: "Services",
       required: true,
     },

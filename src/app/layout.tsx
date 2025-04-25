@@ -7,6 +7,8 @@ import { ServiceProvider } from "./_context/ServiceContext";
 import Header from "./_components/Header";
 import { StaffProvider } from "./_context/StaffContext";
 import { CategoryProvider } from "./_context/CategoryContext";
+import { Footer } from "./_components/Footer";
+import { AppointmentProvider } from "./_context/AppointmentContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,9 +39,12 @@ export default async function RootLayout({
           <ServiceProvider>
             <StaffProvider>
               <CategoryProvider>
-                <Header />
-                {children}
-                <Toaster />
+                <AppointmentProvider>
+                  <Header />
+                  {children}
+                  <Footer />
+                  <Toaster />
+                </AppointmentProvider>
               </CategoryProvider>
             </StaffProvider>
           </ServiceProvider>

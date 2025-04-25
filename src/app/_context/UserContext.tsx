@@ -8,6 +8,7 @@ import { Loader } from "@/components/ui/Loader";
 type UserContextType = {
   user: UserType | null;
   setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
+  isAuthenticated: boolean;
 };
 
 export const UserContext = createContext<UserContextType>(
@@ -47,7 +48,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, isAuthenticated: !!user }}>
       {children}
     </UserContext.Provider>
   );
