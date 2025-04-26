@@ -18,11 +18,10 @@ function GuestHomePageFeature() {
             <div className="px-4 md:px-6">
               <div className="flex flex-col items-center space-y-4 text-center">
                 <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-                  Book your next style transformation
+                  Дараагийн стиль өөрчлөлтөө захиалаарай
                 </h1>
                 <p className="max-w-[700px] text-gray-500 md:text-xl">
-                  Professional haircuts, styling, and beauty services at your
-                  fingertips
+                  Мэргэжлийн үс засалт, стиллер, гоо сайхны үйлчилгээг таны гарт
                 </p>
               </div>
             </div>
@@ -30,7 +29,7 @@ function GuestHomePageFeature() {
           <section className="max-w-[1400px] m-auto py-12 md:py-16">
             <div className="px-4 md:px-6">
               <h2 className="mb-8 text-center text-3xl font-bold">
-                Our Services
+                Манай үйлчилгээнүүд
               </h2>
               <ServiceCategories />
             </div>

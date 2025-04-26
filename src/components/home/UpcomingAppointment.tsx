@@ -7,14 +7,28 @@ import { useAppointment } from "@/app/_context/AppointmentContext";
 import { format } from "date-fns";
 
 export function UpcomingAppointment() {
-  const { appointment } = useAppointment();
+  const { appointments } = useAppointment();
 
-  const nextAppointment = appointment
-    ?.filter((app) => new Date(app.date) >= new Date())
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
+  function getAppointmentDateTime(app: { date: string | Date; time: string }) {
+    const dateString =
+      typeof app.date === "string"
+        ? app.date.split("T")[0]
+        : app.date instanceof Date
+        ? app.date.toISOString().split("T")[0]
+        : "";
 
-  console.log("first", nextAppointment);
-  if (!appointment) {
+    return new Date(`${dateString}T${app.time}:00`);
+  }
+
+  const nextAppointment = appointments
+    ?.filter((app) => getAppointmentDateTime(app).getTime() > Date.now())
+    .sort(
+      (a, b) =>
+        getAppointmentDateTime(a).getTime() -
+        getAppointmentDateTime(b).getTime()
+    )[0];
+
+  if (!nextAppointment) {
     return (
       <Card>
         <CardContent className="p-6">

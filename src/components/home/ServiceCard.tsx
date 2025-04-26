@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FavoriteServiceButton } from "./FavoriteServiceButton";
 import { Button } from "../ui/button";
+
 export const ServiceCard = ({ service }: { service: ServiceType }) => {
   const { user, setUser } = useUser();
   const [loading, setLoading] = React.useState(false);
@@ -40,6 +41,7 @@ export const ServiceCard = ({ service }: { service: ServiceType }) => {
       setLoading(false);
     }
   };
+
   return (
     <Card className="overflow-hidden p-0">
       <div className="relative">
@@ -64,14 +66,14 @@ export const ServiceCard = ({ service }: { service: ServiceType }) => {
         <div className="mt-3 flex items-center justify-between">
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <Clock className="h-4 w-4" />
-            <span>{service.duration} min</span>
+            <span>{service.duration} мин</span>
           </div>
-          <div className="text-lg font-bold">${service.price}</div>
+          <div className="text-lg font-bold">{service.price}₮</div>
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Link href={`staffs?service=${service._id}`} className="w-full">
-          <Button className="w-full">Book Service</Button>
+          <Button className="w-full">Үйлчилгээ захиалах</Button>
         </Link>
       </CardFooter>
     </Card>

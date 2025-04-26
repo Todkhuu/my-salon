@@ -16,12 +16,12 @@ function FavoriteStaffs() {
     <section className="bg-gray-50 py-12 ">
       <div className="px-4 md:px-6 max-w-[1400px] m-auto md:py-16">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Your Favorite Barbers</h2>
+          <h2 className="text-2xl font-bold">Таны дуртай Стилистүүд</h2>
           <Link
             href={"/dashboard/favorites"}
             className="flex items-center text-sm font-medium text-gray-500 hover:text-black"
           >
-            <p>View All </p>
+            <p>Бүгдийг харах</p>
             <ChevronRight />
           </Link>
         </div>
@@ -53,7 +53,7 @@ function FavoriteStaffs() {
                   </div>
                   <Link href={`staff-about`} className="mt-3 block w-full">
                     <Button className="text-sm font-medium text-primary-foreground h-10 w-full">
-                      Book Now
+                      Дэлгэрэнгүйг харах
                     </Button>
                   </Link>
                 </div>
@@ -64,12 +64,12 @@ function FavoriteStaffs() {
             <div className="mb-4 rounded-full bg-gray-100 p-4">
               <Scissors className="h-8 w-8 text-gray-500" />
             </div>
-            <h3 className="mb-2 font-bold">Discover More Barbers</h3>
+            <h3 className="mb-2 font-bold">Өөр Стилистүүдийг хайж үзээрэй</h3>
             <p className="mb-4 text-sm text-muted-foreground">
-              Find the perfect stylist for your needs
+              Таны хэрэгцээнд тохирсон Стилист-ээ олно уу
             </p>
             <Link href="/staffs">
-              <Button variant="outline">Browse All Barbers</Button>
+              <Button variant="outline">Бүх Стилистүүдийг харах</Button>
             </Link>
           </Card>
         </div>

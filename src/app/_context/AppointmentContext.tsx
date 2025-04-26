@@ -7,7 +7,7 @@ import { Loader } from "@/components/ui/Loader";
 import { useUser } from "./UserContext";
 
 type AppointmentContextType = {
-  appointment: AppointmentType[] | null;
+  appointments: AppointmentType[] | null;
   setAppointment: React.Dispatch<
     React.SetStateAction<AppointmentType[] | null>
   >;
@@ -22,7 +22,7 @@ export const AppointmentProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [appointment, setAppointment] = useState<AppointmentType[] | null>(
+  const [appointments, setAppointment] = useState<AppointmentType[] | null>(
     null
   );
   const { user } = useUser();
@@ -57,7 +57,7 @@ export const AppointmentProvider = ({
   }
 
   return (
-    <AppointmentContext.Provider value={{ appointment, setAppointment }}>
+    <AppointmentContext.Provider value={{ appointments, setAppointment }}>
       {children}
     </AppointmentContext.Provider>
   );
