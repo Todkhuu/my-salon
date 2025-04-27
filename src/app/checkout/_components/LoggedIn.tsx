@@ -31,6 +31,7 @@ export default function LoggedInCheckoutPage() {
   const date = dateString ? new Date(dateString) : null;
   const time = timeString || null;
 
+  console.log("datee", date);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
@@ -50,6 +51,7 @@ export default function LoggedInCheckoutPage() {
         price: service?.price,
         paymentMethod: "Qpay",
       });
+      console.log("dateeee", date);
 
       if (res.status === 201 && res.data.success) {
         setIsComplete(true);

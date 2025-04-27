@@ -14,6 +14,8 @@ export default function BookingPage() {
   const { staffs } = useStaff();
   const { services } = useService();
 
+  console.log("date", date);
+
   const searchParams = useSearchParams();
   const staffId = searchParams.get("staffs") || "john";
   const serviceId = searchParams.get("service") || "regular-cut";

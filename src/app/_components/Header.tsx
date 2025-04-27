@@ -16,11 +16,10 @@ export default function Header() {
   const { user, setUser } = useUser();
   const pathname = usePathname();
   const HIDE_NAVLINKS_PATHS = [
+    "/dashboard",
     "/dashboard/favorites",
-    "dashboard/appointments",
+    "/dashboard/appointments",
     "/dashboard/profile",
-    "/dashboard/payment",
-    "/dashboard/settings",
   ];
 
   const handleLogout = async () => {

@@ -78,7 +78,7 @@ export function AppointmentSummary({
 
         <Link
           href={`/checkout?staffs=${staffId}&service=${serviceId}${
-            date ? `&date=${date.toISOString()}` : ""
+            date ? `&date=${date.toString()}` : ""
           }${selectedTime ? `&time=${encodeURIComponent(selectedTime)}` : ""}`}
         >
           <Button
