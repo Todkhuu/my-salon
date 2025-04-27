@@ -3,15 +3,15 @@ import Link from "next/link";
 export const LoginFooter = () => {
   return (
     <div className="mt-4 text-center text-sm text-gray-500">
-      By continuing, you agree to our{" "}
+      Үргэлжлүүлэн оролцохдоо та манай{" "}
       <Link href="/terms" className="underline">
-        Terms of Service
+        Үйлчилгээний нөхцөл
       </Link>{" "}
-      and{" "}
+      болон{" "}
       <Link href="/privacy" className="underline">
-        Privacy Policy
+        Нууцлалын бодлого
       </Link>
-      .
+      -д зөвшөөрч байна.
     </div>
   );
 };

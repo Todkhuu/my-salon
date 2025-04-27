@@ -4,45 +4,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  LayoutDashboard,
-  Calendar,
-  User,
-  Heart,
-  Settings,
-  CreditCard,
-} from "lucide-react";
+import { LayoutDashboard, Calendar, User, Heart } from "lucide-react";
 
 const items = [
   {
-    title: "Dashboard",
+    title: "Хянах Самбар",
     href: "/dashboard",
     icon: LayoutDashboard,
   },
   {
-    title: "Appointments",
+    title: "Цагийн Захиалга",
     href: "/dashboard/appointments",
     icon: Calendar,
   },
   {
-    title: "Profile",
+    title: "Профайл",
     href: "/dashboard/profile",
     icon: User,
   },
   {
-    title: "Favorites",
+    title: "Дуртай",
     href: "/dashboard/favorites",
     icon: Heart,
-  },
-  {
-    title: "Payment Methods",
-    href: "/dashboard/payment",
-    icon: CreditCard,
-  },
-  {
-    title: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
   },
 ];
 

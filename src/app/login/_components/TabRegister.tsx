@@ -63,11 +63,15 @@ export const TabRegister = ({ setTab }: RegisterFormProps) => {
     <TabsContent value="register">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
-          <FormInput control={form.control} name="username" label="Username" />
+          <FormInput
+            control={form.control}
+            name="username"
+            label="Хэрэглэгчийн нэр"
+          />
           <FormInput
             control={form.control}
             name="email"
-            label="Email"
+            label="Имэйл"
             type="email"
             placeholder="m@example.com"
           />
@@ -87,7 +91,7 @@ export const TabRegister = ({ setTab }: RegisterFormProps) => {
             type="submit"
             className="w-full bg-black text-white hover:bg-gray-800"
           >
-            Create Account
+            Бүртгүүлэх
           </Button>
         </form>
       </Form>

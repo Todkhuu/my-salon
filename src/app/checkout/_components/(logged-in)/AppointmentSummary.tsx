@@ -17,7 +17,6 @@ export function AppointmentSummary({
   date,
   time,
 }: AppointmentSummaryProps) {
-  // Calculate tax and total
   const subtotal = service?.price ?? 0;
   const tax = subtotal * 0.1;
   const total = subtotal + tax;

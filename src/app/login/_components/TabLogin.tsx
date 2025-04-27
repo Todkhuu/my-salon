@@ -46,7 +46,7 @@ export const TabLogin = () => {
     <TabsContent value="login">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
-          <FormInput control={form.control} name="email" label="Email" />
+          <FormInput control={form.control} name="email" label="Имэйл" />
           <FormInput
             control={form.control}
             name="password"
@@ -58,7 +58,7 @@ export const TabLogin = () => {
             className="w-full bg-black text-white"
             disabled={loading}
           >
-            {loading ? "Нэвтэрч байна..." : "Login"}
+            {loading ? "Нэвтэрч байна..." : "Нэвтрэх"}
           </Button>
         </form>
       </Form>

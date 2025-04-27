@@ -15,8 +15,8 @@ export const TabDemo = () => {
       className="w-full"
     >
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="login">Login</TabsTrigger>
-        <TabsTrigger value="register">Register</TabsTrigger>
+        <TabsTrigger value="login">Нэвтрэх</TabsTrigger>
+        <TabsTrigger value="register">Бүртгүүлэх</TabsTrigger>
       </TabsList>
       <TabLogin />
       <TabRegister setTab={setTab} />

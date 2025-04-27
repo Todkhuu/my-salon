@@ -149,7 +149,7 @@ export default function ServicesPage() {
                                   <span>{service.duration} мин</span>
                                 </div>
                                 <div className="text-lg font-bold">
-                                  ${service.price}
+                                  {service.price}
                                 </div>
                               </div>
                               <Link
@@ -213,7 +213,7 @@ export default function ServicesPage() {
                                 <span>{service.duration} мин</span>
                               </div>
                               <div className="text-lg font-bold">
-                                ${service.price}
+                                {service.price}
                               </div>
                             </div>
                             <Link

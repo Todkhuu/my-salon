@@ -1,3 +1,4 @@
+"use client";
 import type React from "react";
 import { useState } from "react";
 import {
@@ -65,11 +66,11 @@ export const TabsContentPersonal = () => {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle>Personal Information</CardTitle>
-            <CardDescription>Update your personal details</CardDescription>
+            <CardTitle>Хувийн мэдээлэл</CardTitle>
+            <CardDescription>Өөрийн мэдээллээ шинэчлэх</CardDescription>
           </div>
           {!isEditing && (
-            <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
+            <Button onClick={() => setIsEditing(true)}>Профайл засах</Button>
           )}
         </CardHeader>
         <CardContent>
@@ -81,7 +82,7 @@ export const TabsContentPersonal = () => {
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel>Хэрэглэгчийн нэр</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="shadcn"
@@ -98,7 +99,7 @@ export const TabsContentPersonal = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>Имэйл</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="shadcn"
@@ -115,7 +116,7 @@ export const TabsContentPersonal = () => {
                   name="phoneNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>phone</FormLabel>
+                      <FormLabel>Утасны дугаар</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="shadcn"
@@ -134,9 +135,9 @@ export const TabsContentPersonal = () => {
                       variant="outline"
                       onClick={() => setIsEditing(false)}
                     >
-                      Cancel
+                      Болих
                     </Button>
-                    <Button type="submit">Save Changes</Button>
+                    <Button type="submit">Өөрчлөлт хадгалах</Button>
                   </div>
                 )}
               </div>
