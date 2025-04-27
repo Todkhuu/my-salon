@@ -15,13 +15,12 @@ export async function getUserFromCookie() {
     const decoded = jwt.verify(token, SECRET) as { id: string };
 
     const user = await UserModel.findById(decoded.id)
-      .select("-password")
       .lean()
       .populate({
         path: "favoriteStaff",
         populate: {
-          path: "services", //  favoriteStaff.services-г populate хийх
-          model: "Services", // services-г бүртгүүлсэн model-ийн нэр
+          path: "services",
+          model: "Services",
         },
       })
       .populate("favoriteServices"); // favoriteServices-г populate хийх

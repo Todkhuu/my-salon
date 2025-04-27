@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { TabsContent } from "@/components/ui/tabs";
 import { CalendarIcon, Clock, User } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export const TabsContentPast = ({
   pastAppointments,
@@ -55,9 +56,13 @@ export const TabsContentPast = ({
                 <Badge variant="outline" className="whitespace-nowrap">
                   Дууссан
                 </Badge>
-                <Button variant="ghost" size="sm">
-                  Дахин захиалах
-                </Button>
+                <Link
+                  href={`/booking?service=${appointment.serviceId._id}&staffs=${appointment.staffId._id}`}
+                >
+                  <Button variant="ghost" size="sm">
+                    Дахин захиалах
+                  </Button>
+                </Link>
               </div>
             </div>
           </CardContent>

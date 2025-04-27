@@ -9,20 +9,28 @@ import { useState } from "react";
 const AppointmentsTabs = () => {
   const { appointments } = useAppointment();
   const [activeTab, setActiveTab] = useState("upcoming");
+
   const now = new Date();
+  const nowInMongolia = new Date(now.getTime() + 8 * 60 * 60 * 1000);
 
   const upcomingAppointments = appointments?.filter((app) => {
     const appointmentDate = new Date(app.date);
+    const appointmentDateInMongolia = new Date(
+      appointmentDate.getTime() + 8 * 60 * 60 * 1000
+    );
     return (
       (app.status === "CONFIRMED" || app.status === "PENDING") &&
-      appointmentDate >= now // Ирээдүйд байгаа бол upcoming
+      appointmentDateInMongolia >= nowInMongolia
     );
   });
 
   const pastAppointments = appointments?.filter((app) => {
     const appointmentDate = new Date(app.date);
+    const appointmentDateInMongolia = new Date(
+      appointmentDate.getTime() + 8 * 60 * 60 * 1000
+    );
     return (
-      appointmentDate < now && app.status !== "CANCELED" // Цуцлагдаагүй бол past
+      appointmentDateInMongolia < nowInMongolia && app.status !== "CANCELED"
     );
   });
 

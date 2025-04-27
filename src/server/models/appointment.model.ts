@@ -37,9 +37,17 @@ const AppointmentSchema: Schema = new Schema<AppointmentType>(
     username: { type: String, required: false, minlength: 2 },
     email: { type: String, required: false, match: /.+\@.+\..+/ },
     phone: { type: String, required: false, match: /^[0-9]{8}$/ },
+    cancellationReason: { type: String },
+    reasonType: { type: String },
+    cancellationFee: { type: Number },
+    paymentStatus: { type: String },
   },
   { timestamps: true }
 );
+
+export const AppointmentModel: Model<AppointmentType> =
+  models["Appointments"] ||
+  model<AppointmentType>("Appointments", AppointmentSchema);
 
 // ✨ Pre-save validation
 // AppointmentSchema.pre("save", function (next) {
@@ -53,7 +61,3 @@ const AppointmentSchema: Schema = new Schema<AppointmentType>(
 //   }
 //   next();
 // });
-
-export const AppointmentModel: Model<AppointmentType> =
-  models["Appointments"] ||
-  model<AppointmentType>("Appointments", AppointmentSchema);

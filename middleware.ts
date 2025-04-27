@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
     ) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
-    return NextResponse.next(); // хамгаалагдаагүй route-ууд OK
+    return NextResponse.next();
   }
 
   try {

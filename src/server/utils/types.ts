@@ -56,6 +56,10 @@ export interface AppointmentType {
   username?: string;
   email?: string;
   phone?: string;
+  cancellationReason?: string;
+  reasonType?: string;
+  cancellationFee?: number;
+  paymentStatus?: string;
   createdAt: Date;
   updatedAt: Date;
 }

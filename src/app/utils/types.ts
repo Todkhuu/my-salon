@@ -64,8 +64,10 @@ export interface AppointmentType {
   username?: string;
   email?: string;
   phone?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  cancellationReason?: string;
+  reasonType?: string;
+  cancellationFee?: number;
+  paymentStatus?: string;
 }
 
 export interface FeedbackType {

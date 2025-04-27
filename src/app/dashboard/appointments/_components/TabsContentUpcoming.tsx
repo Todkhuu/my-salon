@@ -22,7 +22,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { RescheduleDialog } from "./RescheduleDialog";
 import { CancelDialog } from "./CancelDialog";
 
 export const TabsContentUpcoming = ({
@@ -32,13 +31,6 @@ export const TabsContentUpcoming = ({
 }) => {
   const searchParams = useSearchParams();
 
-  const [rescheduleDialog, setRescheduleDialog] = useState<{
-    open: boolean;
-    appointment: any | null;
-  }>({
-    open: false,
-    appointment: null,
-  });
   const [cancelDialog, setCancelDialog] = useState<{
     open: boolean;
     appointment: any | null;
@@ -47,27 +39,17 @@ export const TabsContentUpcoming = ({
     appointment: null,
   });
 
-  // Check for success messages from URL parameters
-  const rescheduled = searchParams.get("rescheduled");
+  console.log("upcomingAppointments", upcomingAppointments);
+
   const cancelled = searchParams.get("cancelled");
   return (
     <>
-      {rescheduled && (
-        <Alert className="bg-green-50 text-green-800 border-green-200">
-          <CheckCircle2 className="h-4 w-4" />
-          <AlertTitle>Success!</AlertTitle>
-          <AlertDescription>
-            Your appointment has been successfully rescheduled.
-          </AlertDescription>
-        </Alert>
-      )}
-
       {cancelled && (
         <Alert className="bg-green-50 text-green-800 border-green-200">
           <CheckCircle2 className="h-4 w-4" />
-          <AlertTitle>Success!</AlertTitle>
+          <AlertTitle>Амжилттай!</AlertTitle>
           <AlertDescription>
-            Your appointment has been successfully cancelled.
+            Таны товлосон уулзалт амжилттай цуцлагдсан.
           </AlertDescription>
         </Alert>
       )}
@@ -134,17 +116,6 @@ export const TabsContentUpcoming = ({
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                          <Button
-                            variant="outline"
-                            className="flex-1"
-                            onClick={() =>
-                              setRescheduleDialog({ open: true, appointment })
-                            }
-                          >
-                            Цагийг өөрчлөх
-                          </Button>
-                        </DropdownMenuItem>
                         <DropdownMenuItem className="text-red-500">
                           <Button
                             variant="outline"
@@ -166,7 +137,7 @@ export const TabsContentUpcoming = ({
         ) : (
           <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
             <CalendarIcon className="mb-2 h-10 w-10 text-muted-foreground" />
-            <h3 className="mb-1 text-lg font-medium">Ирээдүйн товлолт алга</h3>
+            <h3 className="mb-1 text-lg font-medium">Захиалга алга</h3>
             <p className="mb-4 text-sm text-muted-foreground">
               Өнөөдөр дараагийн товлолтоо захиалаарай
             </p>
@@ -176,18 +147,6 @@ export const TabsContentUpcoming = ({
           </div>
         )}
       </TabsContent>
-      {rescheduleDialog.appointment && (
-        <RescheduleDialog
-          open={rescheduleDialog.open}
-          onOpenChange={(open) =>
-            setRescheduleDialog({
-              open,
-              appointment: open ? rescheduleDialog.appointment : null,
-            })
-          }
-          appointment={rescheduleDialog.appointment}
-        />
-      )}
       {cancelDialog.appointment && (
         <CancelDialog
           open={cancelDialog.open}

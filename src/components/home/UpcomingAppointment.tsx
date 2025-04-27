@@ -21,7 +21,11 @@ export function UpcomingAppointment() {
   }
 
   const nextAppointment = appointments
-    ?.filter((app) => getAppointmentDateTime(app).getTime() > Date.now())
+    ?.filter(
+      (app) =>
+        getAppointmentDateTime(app).getTime() > Date.now() &&
+        app.status !== "CANCELED"
+    )
     .sort(
       (a, b) =>
         getAppointmentDateTime(a).getTime() -
