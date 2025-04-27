@@ -39,7 +39,7 @@ export const RecommendedServices = () => {
         <CardDescription>Таны өмнөх захиалга дээр үндэслэн</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4 sm:grid-cols-1">
+        <div className="grid gap-4 sm:grid-cols-2">
           <div
             key={oneService?._id}
             className="flex overflow-hidden rounded-lg border"
