@@ -27,15 +27,15 @@ export default function BarbersPage() {
     <div className="max-w-[1400px] m-auto px-4 py-8 md:px-6 md:py-12">
       <div className="mb-8">
         <Link href="/" className="text-sm text-gray-500 hover:underline">
-          Home
+          Нүүр
         </Link>{" "}
-        / <span className="text-sm font-medium">Our Barbers</span>
+        / <span className="text-sm font-medium">Манай Стилстүүд</span>
       </div>
 
       <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold">Choose Your Stylist</h1>
+        <h1 className="mb-2 text-3xl font-bold">Стилистээ сонгоно уу</h1>
         <p className="text-gray-500">
-          Select from our team of experienced professionals for your service
+          Манай туршлагатай мэргэжилтнүүдээс сонголтоо хийгээрэй
         </p>
       </div>
 
@@ -63,7 +63,7 @@ export default function BarbersPage() {
                 </span>
               </div>
               <div className="mt-3">
-                <p className="text-xs font-medium text-gray-500">SPECIALTIES</p>
+                <p className="text-xs font-medium text-gray-500">ЧАДВАРУУД</p>
                 <div className="mt-1 flex flex-wrap gap-1 w-[201px]">
                   {staff.services.map((service, index) => (
                     <span
@@ -85,13 +85,13 @@ export default function BarbersPage() {
                   className="w-full"
                 >
                   <Button className="w-full bg-black text-white hover:bg-gray-800">
-                    Book Appointment
+                    Цаг Захиалах
                   </Button>
                 </Link>
               ) : (
                 <Link href={`/staffs/${staff._id}`} className="w-full">
                   <Button className="w-full bg-black text-white hover:bg-gray-800">
-                    View Details
+                    Дэлгэрэнгүй Үзэх
                   </Button>
                 </Link>
               )}

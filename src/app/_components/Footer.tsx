@@ -11,7 +11,7 @@ import {
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-purple-100 to-pink-100  text-white">
+    <footer className="bg-black text-white">
       <div className="max-w-[1400px] m-auto px-4 py-12 md:px-6 md:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:flex justify-between">
           <div>
