@@ -4,12 +4,11 @@ import { CategoryType } from "../utils/types";
 const CategorySchema: Schema = new Schema<CategoryType>(
   {
     name: { type: String, required: true },
-    image: { type: String },
-    description: { type: String },
+    image: { type: String, required: true },
+    description: { type: String, required: true },
     services: {
       type: [Schema.Types.ObjectId],
       ref: "Services",
-      required: true,
     },
   },
   { timestamps: true }

@@ -25,6 +25,8 @@ import { AddServiceDialog } from "./_components/AddServiceDialog";
 import { useService } from "@/app/_context/ServiceContext";
 import { EditServiceDialog } from "./_components/EditServiceDialog";
 import { DeleteServiceAlertDialog } from "./_components/DeleteServiceAlertDialog";
+import { AddCategoryDialog } from "./_components/AddCategoryDialog";
+import { EditCategoryDialog } from "./_components/EditCategoryDialog";
 
 export default function ServicesPage() {
   const { categories } = useCategory();
@@ -42,23 +44,23 @@ export default function ServicesPage() {
     <div className="flex-1 space-y-4 p-4 md:p-8">
       <div className="flex items-center justify-between">
         <AdminHeader
-          title="Services"
-          description="Manage your barbershop services"
+          title="Үйлчилгээнүүд"
+          description="Танай салоны үйлчилгээнүүдийг удирдах"
         />
         <AddServiceDialog />
       </div>
 
       <Tabs defaultValue="all">
         <TabsList>
-          <TabsTrigger value="all">All Services</TabsTrigger>
-          <TabsTrigger value="categories">Categories</TabsTrigger>
+          <TabsTrigger value="all">Бүх үйлчилгээ</TabsTrigger>
+          <TabsTrigger value="categories">Ангилалууд</TabsTrigger>
         </TabsList>
         <TabsContent value="all" className="mt-4 space-y-4">
           <div className="flex items-center gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search services..."
+                placeholder="Үйлчилгээ хайх..."
                 className="pl-8"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -70,10 +72,10 @@ export default function ServicesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Service</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Duration</TableHead>
-                  <TableHead>Price</TableHead>
+                  <TableHead>Үйлчилгээ</TableHead>
+                  <TableHead>Ангилал</TableHead>
+                  <TableHead>Хугацаа</TableHead>
+                  <TableHead>Үнэ</TableHead>
                   <TableHead className="w-[50px]"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -92,13 +94,12 @@ export default function ServicesPage() {
                     <TableCell>
                       <div className="flex items-center gap-1">
                         <Clock className="h-4 w-4 text-muted-foreground" />
-                        <span>{service.duration} min</span>
+                        <span>{service.duration} мин</span>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1">
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
-                        <span>${service.price}</span>
+                        <span>{service.price} ₮</span>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -110,7 +111,7 @@ export default function ServicesPage() {
                             className="h-8 w-8"
                           >
                             <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Open menu</span>
+                            <span className="sr-only">Цэс нээх</span>
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -135,7 +136,7 @@ export default function ServicesPage() {
               <Card key={category._id}>
                 <CardHeader className="flex flex-row items-center justify-between">
                   <CardTitle>{category.name}</CardTitle>
-                  <Button size="sm">Edit Category</Button>
+                  <EditCategoryDialog category={category} />
                 </CardHeader>
                 <CardContent>
                   <p className="mb-4 text-muted-foreground">
@@ -145,9 +146,9 @@ export default function ServicesPage() {
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Service</TableHead>
-                          <TableHead>Duration</TableHead>
-                          <TableHead>Price</TableHead>
+                          <TableHead>Үйлчилгээ</TableHead>
+                          <TableHead>Хугацаа</TableHead>
+                          <TableHead>Үнэ</TableHead>
                           <TableHead className="w-[50px]"></TableHead>
                         </TableRow>
                       </TableHeader>
@@ -167,13 +168,12 @@ export default function ServicesPage() {
                             <TableCell>
                               <div className="flex items-center gap-1">
                                 <Clock className="h-4 w-4 text-muted-foreground" />
-                                <span>{service.duration} min</span>
+                                <span>{service.duration} мин</span>
                               </div>
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center gap-1">
-                                <DollarSign className="h-4 w-4 text-muted-foreground" />
-                                <span>${service.price}</span>
+                                <span>{service.price} ₮</span>
                               </div>
                             </TableCell>
                             <TableCell>
@@ -185,19 +185,14 @@ export default function ServicesPage() {
                                     className="h-8 w-8"
                                   >
                                     <MoreHorizontal className="h-4 w-4" />
-                                    <span className="sr-only">Open menu</span>
+                                    <span className="sr-only">Цэс нээх</span>
                                   </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                  <DropdownMenuItem>
-                                    Edit service
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    Toggle popular status
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem className="text-red-500">
-                                    Delete service
-                                  </DropdownMenuItem>
+                                  <EditServiceDialog service={service} />
+                                  <DeleteServiceAlertDialog
+                                    serviceId={service._id}
+                                  />
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </TableCell>
@@ -211,7 +206,7 @@ export default function ServicesPage() {
             );
           })}
           <div className="flex justify-center">
-            <Button>Add New Category</Button>
+            <AddCategoryDialog />
           </div>
         </TabsContent>
       </Tabs>
