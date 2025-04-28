@@ -22,6 +22,14 @@ export default function Header() {
     "/dashboard/profile",
   ];
 
+  const HIDE_HEADER_PATHS = [
+    "/admin",
+    "/admin/appointments",
+    "/admin/staffs",
+    "/admin/services",
+    "/admin/customers",
+  ];
+
   const handleLogout = async () => {
     try {
       await axios.post("/api/logout");
@@ -36,26 +44,30 @@ export default function Header() {
   };
 
   return (
-    <header className="border-b bg-white ">
-      <div className="max-w-[1400px] m-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href={"/"} className="flex items-center gap-2">
-          <span className="text-xl font-bold">StyleCut</span>
-        </Link>
-        {!HIDE_NAVLINKS_PATHS.includes(pathname) && <NavLinks />}
-        <div className="flex items-center gap-4">
-          {user ? (
-            <UserNav handleLogout={handleLogout} />
-          ) : (
-            <Link href="/login">
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <UserCircle className="h-5 w-5" />
-                <span className="sr-only">Нэвтрэх</span>
-              </Button>
+    <>
+      {!HIDE_HEADER_PATHS.includes(pathname) && (
+        <header className="border-b bg-white ">
+          <div className="max-w-[1400px] m-auto flex h-16 items-center justify-between px-4 md:px-6">
+            <Link href={"/"} className="flex items-center gap-2">
+              <span className="text-xl font-bold">StyleCut</span>
             </Link>
-          )}
-          <MobileMenu user={user} onLogout={handleLogout} />
-        </div>
-      </div>
-    </header>
+            {!HIDE_NAVLINKS_PATHS.includes(pathname) && <NavLinks />}
+            <div className="flex items-center gap-4">
+              {user ? (
+                <UserNav handleLogout={handleLogout} />
+              ) : (
+                <Link href="/login">
+                  <Button variant="ghost" size="icon" className="rounded-full">
+                    <UserCircle className="h-5 w-5" />
+                    <span className="sr-only">Нэвтрэх</span>
+                  </Button>
+                </Link>
+              )}
+              <MobileMenu user={user} onLogout={handleLogout} />
+            </div>
+          </div>
+        </header>
+      )}
+    </>
   );
 }

@@ -11,13 +11,13 @@ export async function GET(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (id) {
-      const category = await CategoryModel.findById(id);
+      const category = await CategoryModel.findById(id).populate("services");
       return NextResponse.json(
         { message: "Ангилал амжилттай олдлоо.", category },
         { status: 200 }
       );
     } else {
-      const allCategory = await CategoryModel.find();
+      const allCategory = await CategoryModel.find().populate("services");
       return NextResponse.json(
         { message: "Бүх ангиллууд амжилттай уншигдлаа.", data: allCategory },
         { status: 200 }

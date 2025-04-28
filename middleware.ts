@@ -7,8 +7,6 @@ const SECRET = process.env.JWT_SECRET!;
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const pathname = request.nextUrl.pathname;
-  console.log("token", token);
-  console.log("path", pathname);
 
   if (!token) {
     if (

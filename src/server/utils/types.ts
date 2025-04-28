@@ -89,6 +89,7 @@ export interface CategoryType {
   name: string;
   image: string;
   description: string;
+  services: ServiceType;
   createdAt: Date;
   updatedAt: Date;
 }
