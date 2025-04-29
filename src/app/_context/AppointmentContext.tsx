@@ -28,23 +28,24 @@ export const AppointmentProvider = ({
   const { user } = useUser();
   const [loading, setLoading] = useState(true);
 
-  const getAppointments = async () => {
-    if (user) {
-      try {
-        setLoading(true);
-        const { data } = await axios.get(
-          `/api/appointment?userId=${user?._id}`
-        );
-        setAppointment(data.data);
-      } catch (error: any) {
-        toast.error(error.response?.data.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
   useEffect(() => {
+    const getAppointments = async () => {
+      if (user) {
+        try {
+          setLoading(true);
+          const { data } = await axios.get(
+            `/api/appointment?userId=${user?._id}`
+          );
+          setAppointment(data.data);
+        } catch (error: unknown) {
+          toast.error(axios.isAxiosError(error).toString());
+          console.log("error in context", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
     getAppointments();
   }, [user]);
 

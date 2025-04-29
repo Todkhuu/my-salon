@@ -16,11 +16,13 @@ export const RecentAppointments = () => {
   const { appointments } = useAppointment();
 
   const now = new Date();
-  const nowInMongolia = new Date(now.getTime() + 8 * 60 * 60 * 1000);
 
   const recentAppointments = appointments?.filter((app) => {
     const appointmentDate = new Date(app.date);
-    return appointmentDate < nowInMongolia && app.status !== "CANCELED";
+    const appointmentDateInMongolia = new Date(
+      appointmentDate.getTime() + 8 * 60 * 60 * 1000
+    );
+    return appointmentDateInMongolia <= now && app.status !== "CANCELED";
   });
   return (
     <Card>

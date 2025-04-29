@@ -17,7 +17,6 @@ export const UpcomingAppointments = () => {
   const { appointments } = useAppointment();
 
   const now = new Date();
-  const nowInMongolia = new Date(now.getTime() + 8 * 60 * 60 * 1000);
 
   const upcomingAppointments = appointments?.filter((app) => {
     const appointmentDate = new Date(app.date);
@@ -26,7 +25,7 @@ export const UpcomingAppointments = () => {
     );
     return (
       (app.status === "CONFIRMED" || app.status === "PENDING") &&
-      appointmentDateInMongolia >= nowInMongolia
+      appointmentDateInMongolia >= now
     );
   });
   return (

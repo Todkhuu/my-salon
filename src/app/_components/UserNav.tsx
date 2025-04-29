@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, Settings, CreditCard, LogOut } from "lucide-react";
+import { User, CreditCard, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useUser } from "../_context/UserContext";
 interface UserNavProps {

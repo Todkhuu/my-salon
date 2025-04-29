@@ -29,9 +29,9 @@ export const TestimonialsSection = () => {
                 ))}
               </div>
               <p className="mb-4 italic text-gray-600">
-                "StyleCut-д олон жил үйлчлүүлж байна. Саруул яг миний үсийг яаж
-                тайрахыг мэддэг бөгөөд шинэ трендүүдээс хоцордоггүй нь үнэхээр
-                таалагддаг."
+                &ldquo;StyleCut-д олон жил үйлчлүүлж байна. Саруул яг миний
+                үсийг яаж тайрахыг мэддэг бөгөөд шинэ трендүүдээс хоцордоггүй нь
+                үнэхээр таалагддаг.&ldquo;
               </p>
               <div className="flex items-center">
                 <div className="mr-3 h-10 w-10 overflow-hidden rounded-full bg-gray-200">
@@ -67,9 +67,9 @@ export const TestimonialsSection = () => {
                 ))}
               </div>
               <p className="mb-4 italic text-gray-600">
-                "Сара миний дүр төрхийг бүрэн өөрчилсөн! Нүүрний хэлбэрт минь
-                тохируулсан, анхааралтай хийсэн будалт нь гайхалтай байсан.
-                Хамгийн гоё үсний будаг!"
+                &ldquo;Сара миний дүр төрхийг бүрэн өөрчилсөн! Нүүрний хэлбэрт
+                минь тохируулсан, анхааралтай хийсэн будалт нь гайхалтай байсан.
+                Хамгийн гоё үсний будаг!&ldquo;
               </p>
               <div className="flex items-center">
                 <div className="mr-3 h-10 w-10 overflow-hidden rounded-full bg-gray-200">
@@ -103,9 +103,9 @@ export const TestimonialsSection = () => {
                 ))}
               </div>
               <p className="mb-4 italic text-gray-600">
-                "Онлайн цаг захиалах систем маш амархан, үйлчилгээ нь үргэлж
-                өндөр түвшинд байдаг. Гэрэлээгийн хийсэн хумсны арт гайхалтай би
-                үргэлж магтдаг!"
+                &ldquo;Онлайн цаг захиалах систем маш амархан, үйлчилгээ нь
+                үргэлж өндөр түвшинд байдаг. Гэрэлээгийн хийсэн хумсны арт
+                гайхалтай би үргэлж магтдаг!&ldquo;
               </p>
               <div className="flex items-center">
                 <div className="mr-3 h-10 w-10 overflow-hidden rounded-full bg-gray-200">

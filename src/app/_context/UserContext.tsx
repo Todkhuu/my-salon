@@ -27,8 +27,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(res.data || null);
         setLoading(false);
       }
-    } catch (err: any) {
-      toast.error(err.response?.data.message);
+    } catch (error: unknown) {
+      toast.error(axios.isAxiosError(error).toString());
+      console.log("error in context", error);
       setUser(null);
     } finally {
       setLoading(false);

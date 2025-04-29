@@ -1,6 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,7 @@ import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/app/_context/UserContext";
 import { FormInput } from "@/app/login/_components/FormInput";
+import { useStaff } from "@/app/_context/StaffContext";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Зөв email оруулна уу" }),
@@ -17,9 +18,12 @@ const loginSchema = z.object({
 });
 
 export const Login = () => {
-  const { setUser } = useUser();
+  const { loggedStaff, setLoggedStaff } = useStaff();
+  const { push } = useRouter();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const pathname = usePathname();
+  const navigateToPath = (path: string) => push(path);
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -29,8 +33,8 @@ export const Login = () => {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setLoading(true);
     try {
-      const { data } = await axios.post("/api/signin", values);
-      setUser(data.user);
+      const { data } = await axios.post("/api/admin/signin", values);
+      setLoggedStaff(data.staff);
       toast.success("Амжилттай нэвтэрлээ");
       router.push("/admin"); // refresh хийхэд хэрэглэгч хадгалагдана
     } catch (err: any) {
@@ -40,6 +44,16 @@ export const Login = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const ADMIN_PATHS = ["/admin"];
+
+    if (ADMIN_PATHS.includes(pathname)) return;
+
+    if (!loading) return;
+
+    if (!loggedStaff) navigateToPath("/auth");
+  }, [pathname, loggedStaff, loading]);
 
   return (
     <Form {...form}>

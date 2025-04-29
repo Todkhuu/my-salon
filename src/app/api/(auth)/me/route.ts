@@ -10,8 +10,8 @@ export async function GET() {
 
   if (!decoded) {
     return NextResponse.json(
-      { message: "Та нэвтрээгүй байна." },
-      { status: 401 }
+      { message: "Та нэвтрээгүй байна." }
+      // { status: 401 }
     );
   }
 
@@ -28,8 +28,8 @@ export async function GET() {
 
   if (!user) {
     return NextResponse.json(
-      { message: "Хэрэглэгч олдсонгүй." },
-      { status: 404 }
+      { message: "Хэрэглэгч олдсонгүй." }
+      // { status: 404 }
     );
   }
 

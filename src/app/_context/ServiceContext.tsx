@@ -28,8 +28,9 @@ export const ServiceProvider = ({
       const services = await axios.get("/api/service");
       setServices(services.data.data);
       setLoading(false);
-    } catch (err: any) {
-      toast.error(err.response?.data.message);
+    } catch (error: unknown) {
+      toast.error(axios.isAxiosError(error).toString());
+      console.log("error in context", error);
       setServices(null);
     } finally {
       setLoading(false);

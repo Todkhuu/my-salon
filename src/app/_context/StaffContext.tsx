@@ -8,6 +8,8 @@ import { Loader } from "@/components/ui/Loader";
 type StaffContextType = {
   staffs: StaffType[] | null;
   setStaffs: React.Dispatch<React.SetStateAction<StaffType[] | null>>;
+  setLoggedStaff: React.Dispatch<React.SetStateAction<StaffType[] | null>>;
+  loggedStaff: StaffType[] | null;
 };
 
 export const StaffContext = createContext<StaffContextType>(
@@ -16,7 +18,11 @@ export const StaffContext = createContext<StaffContextType>(
 
 export const StaffProvider = ({ children }: { children: React.ReactNode }) => {
   const [staffs, setStaffs] = useState<StaffType[] | null>(null);
+  const [loggedStaff, setLoggedStaff] = useState<StaffType[] | null>(null);
   const [loading, setLoading] = useState(true);
+
+  console.log("loggedStaff", loggedStaff);
+  console.log("Staff", staffs);
 
   const getStaffs = async () => {
     try {
@@ -24,8 +30,24 @@ export const StaffProvider = ({ children }: { children: React.ReactNode }) => {
       const staffs = await axios.get("/api/staff");
       setStaffs(staffs.data.data);
       setLoading(false);
-    } catch (err: any) {
-      toast.error(err.response?.data.message);
+    } catch (error: unknown) {
+      toast.error(axios.isAxiosError(error).toString());
+      console.log("error in context", error);
+      setStaffs(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getLoggedStaff = async () => {
+    try {
+      setLoading(true);
+      const staffs = await axios.get("/api/admin");
+      setLoggedStaff(staffs.data.data);
+      setLoading(false);
+    } catch (error: unknown) {
+      toast.error(axios.isAxiosError(error).toString());
+      console.log("error in context", error);
       setStaffs(null);
     } finally {
       setLoading(false);
@@ -34,6 +56,7 @@ export const StaffProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     getStaffs();
+    getLoggedStaff();
   }, []);
 
   if (loading) {
@@ -45,7 +68,9 @@ export const StaffProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <StaffContext.Provider value={{ staffs, setStaffs }}>
+    <StaffContext.Provider
+      value={{ staffs, setStaffs, setLoggedStaff, loggedStaff }}
+    >
       {children}
     </StaffContext.Provider>
   );

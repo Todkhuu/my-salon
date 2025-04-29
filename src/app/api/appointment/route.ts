@@ -37,8 +37,6 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
 
-    console.log("USERID", userId);
-
     if (!userId) {
       return NextResponse.json(
         { message: "Хэрэглэгчийн ID дамжуулаагүй байна." },

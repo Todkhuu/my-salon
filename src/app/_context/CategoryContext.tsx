@@ -27,8 +27,9 @@ export const CategoryProvider = ({
       setLoading(true);
       const response = await axios.get("/api/category");
       setCategories(response.data.data);
-    } catch (error: any) {
-      toast.error(error.response?.data.message);
+    } catch (error: unknown) {
+      toast.error(axios.isAxiosError(error).toString());
+      console.log("error in context", error);
     } finally {
       setLoading(false);
     }
