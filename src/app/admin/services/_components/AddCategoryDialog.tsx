@@ -27,8 +27,8 @@ import CloudinaryUpload from "./CloudinaryUpload";
 import { toast } from "sonner";
 
 const categorySchema = z.object({
-  name: z.string().min(1, "Category name is required"),
-  description: z.string().min(1, "Description is required"),
+  name: z.string().min(1, "Ангиллын нэр оруулах шаардлагатай"),
+  description: z.string().min(1, "Тайлбар оруулах шаардлагатай"),
   image: z.string(),
 });
 
@@ -47,13 +47,12 @@ export function AddCategoryDialog() {
   });
 
   const handleFormSubmit = async (values: z.infer<typeof categorySchema>) => {
-    console.log("values", values);
     try {
       setIsSubmitting(true);
 
       const imageUrl = await handleUpload();
       if (!imageUrl) {
-        toast("Image upload failed");
+        toast("Зураг оруулахад алдаа гарлаа");
         return;
       }
 
@@ -62,12 +61,12 @@ export function AddCategoryDialog() {
         image: imageUrl,
       });
 
-      toast("Category created successfully");
+      toast("Ангилал амжилттай үүслээ");
       form.reset();
       setIsDialogOpen(false);
     } catch (error) {
       console.error(error);
-      toast("Failed to create category");
+      toast("Ангилал үүсгэхэд алдаа гарлаа");
     } finally {
       setIsSubmitting(false);
     }
@@ -83,7 +82,7 @@ export function AddCategoryDialog() {
     const CLOUDINARY_NAME = "ds6kxgjh0";
 
     if (!file) {
-      toast("Please select an image");
+      toast("Зураг сонгоно уу");
       return null;
     }
 
@@ -105,7 +104,7 @@ export function AddCategoryDialog() {
       return data.secure_url as string;
     } catch (err) {
       console.error(err);
-      toast("Failed to upload file");
+      toast("Файл ачааллахад алдаа гарлаа");
     }
   };
 
@@ -114,13 +113,13 @@ export function AddCategoryDialog() {
       <DialogTrigger asChild>
         <Button className="mt-2 sm:mt-0">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Add Category
+          Ангилал нэмэх
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add New Category</DialogTitle>
+          <DialogTitle>Шинэ ангилал нэмэх</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -134,9 +133,9 @@ export function AddCategoryDialog() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category Name</FormLabel>
+                    <FormLabel>Ангиллын нэр</FormLabel>
                     <FormControl>
-                      <Input placeholder="shadcn" {...field} />
+                      <Input placeholder="Ангиллын нэр" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -147,10 +146,10 @@ export function AddCategoryDialog() {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>Тайлбар</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Enter service description"
+                        placeholder="Ангиллын тайлбарыг оруулна уу"
                         {...field}
                       />
                     </FormControl>
@@ -164,7 +163,7 @@ export function AddCategoryDialog() {
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image URL</FormLabel>
+                  <FormLabel>Зураг</FormLabel>
                   <FormControl>
                     <CloudinaryUpload handleFile={handleFile} />
                   </FormControl>
@@ -173,7 +172,7 @@ export function AddCategoryDialog() {
               )}
             />
             <Button disabled={isSubmitting} type="submit">
-              {isSubmitting ? "Saving..." : "Create Category"}
+              {isSubmitting ? "Хадгалж байна..." : "Ангилал үүсгэх"}
             </Button>
           </form>
         </Form>

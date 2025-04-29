@@ -37,12 +37,12 @@ import { ServiceType } from "@/app/utils/types";
 import EditUpload from "./EditUpload";
 
 const serviceSchema = z.object({
-  name: z.string().min(1, "Service name is required"),
-  description: z.string().min(1, "Description is required"),
-  duration: z.coerce.number().min(1, "Duration must be at least 1 minute"),
-  price: z.coerce.number().min(1, "Price must be at least $1"),
-  category: z.string().min(1, "Category is required"),
-  image: z.string().nonempty("image"),
+  name: z.string().min(1, "Үйлчилгээний нэр оруулна уу"),
+  description: z.string().min(1, "Тайлбар шаардлагатай"),
+  duration: z.coerce.number().min(1, "Хугацаа дор хаяж 1 минут байх ёстой"),
+  price: z.coerce.number().min(1, "Үнэ хамгийн багадаа 1₮ байх ёстой"),
+  category: z.string().min(1, "Ангилал шаардлагатай"),
+  image: z.string().nonempty("Зураг шаардлагатай"),
 });
 
 export function EditServiceDialog({ service }: { service: ServiceType }) {
@@ -72,7 +72,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
       if (file) {
         const uploadedUrl = await handleUpload();
         if (!uploadedUrl) {
-          toast("Image upload failed");
+          toast("Зураг байршуулахад алдаа гарлаа");
           return;
         }
         imageUrl = uploadedUrl;
@@ -83,11 +83,11 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
         image: imageUrl,
       });
 
-      toast("Service updated successfully");
+      toast("Үйлчилгээг амжилттай шинэчиллээ");
       setIsDialogOpen(false);
     } catch (error) {
       console.error(error);
-      toast("Failed to update service");
+      toast("Үйлчилгээг шинэчлэхэд алдаа гарлаа");
     } finally {
       setIsSubmitting(false);
     }
@@ -103,7 +103,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
     const CLOUDINARY_NAME = "ds6kxgjh0";
 
     if (!file) {
-      toast("Please select an image");
+      toast("Зураг сонгоно уу");
       return null;
     }
 
@@ -124,7 +124,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
       return data.secure_url as string;
     } catch (err) {
       console.error(err);
-      toast("Failed to upload file");
+      toast("Файл байршуулахад алдаа гарлаа");
     }
   };
 
@@ -133,13 +133,13 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm">
           <Pencil className="mr-2 h-4 w-4" />
-          Edit
+          Засах
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Service</DialogTitle>
+          <DialogTitle>Үйлчилгээ засах</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -152,9 +152,9 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Service Name</FormLabel>
+                  <FormLabel>Үйлчилгээний нэр</FormLabel>
                   <FormControl>
-                    <Input placeholder="Service name" {...field} />
+                    <Input placeholder="Үйлчилгээний нэр" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -165,10 +165,10 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Тайлбар</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Enter service description"
+                      placeholder="Үйлчилгээний тайлбар оруулна уу"
                       {...field}
                     />
                   </FormControl>
@@ -182,7 +182,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
                 name="duration"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Duration (minutes)</FormLabel>
+                    <FormLabel>Хугацаа (минут)</FormLabel>
                     <FormControl>
                       <Input type="number" min={1} {...field} />
                     </FormControl>
@@ -195,7 +195,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Price ($)</FormLabel>
+                    <FormLabel>Үнэ (₮)</FormLabel>
                     <FormControl>
                       <Input type="number" min={1} step={0.01} {...field} />
                     </FormControl>
@@ -208,7 +208,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel>Ангилал</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -235,7 +235,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
                 name="image"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Image</FormLabel>
+                    <FormLabel>Зураг</FormLabel>
                     <FormControl>
                       <EditUpload handleFile={handleFile} />
                     </FormControl>
@@ -245,7 +245,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
               />
             </div>
             <Button disabled={isSubmitting} type="submit">
-              {isSubmitting ? "Saving..." : "Save Changes"}
+              {isSubmitting ? "Хадгалж байна..." : "Өөрчлөлтийг хадгалах"}
             </Button>
           </form>
         </Form>

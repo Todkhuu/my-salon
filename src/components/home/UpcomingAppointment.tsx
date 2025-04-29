@@ -54,7 +54,11 @@ export function UpcomingAppointment() {
         <h3 className="mb-4 font-bold">Таны дараагийн захиалга</h3>
         <div className="flex items-center gap-8">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarImage
+              src={nextAppointment.staffId.image}
+              alt="@shadcn"
+              className="object-cover"
+            />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div>

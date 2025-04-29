@@ -25,7 +25,7 @@ export async function PATCH(
 
     if (!updatedService) {
       return NextResponse.json(
-        { message: "Service not found" },
+        { message: "Үйлчилгээ олдсонгүй" },
         { status: 404 }
       );
     }
@@ -34,7 +34,7 @@ export async function PATCH(
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "Ямар нэгэн алдаа гарлаа" },
       { status: 500 }
     );
   }
@@ -48,19 +48,19 @@ export async function DELETE(req: NextRequest, { params }: Params) {
 
     if (!service) {
       return NextResponse.json(
-        { message: "Service not found" },
+        { message: "Үйлчилгээ олдсонгүй" },
         { status: 404 }
       );
     }
 
     return NextResponse.json(
-      { message: "Service deleted successfully" },
+      { message: "Үйлчилгээ амжилттай устгагдлаа" },
       { status: 200 }
     );
   } catch (error) {
     console.error("[SERVICE_DELETE]", error);
     return NextResponse.json(
-      { message: "Failed to delete service" },
+      { message: "Үйлчилгээ устгах үед алдаа гарлаа" },
       { status: 500 }
     );
   }

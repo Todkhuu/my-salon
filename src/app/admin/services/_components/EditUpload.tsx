@@ -35,7 +35,7 @@ const EditUpload = ({ handleFile }: { handleFile: (_file: File) => void }) => {
       ) : (
         <div className="h-[138px] border border-dashed rounded-md flex flex-col justify-center items-center">
           <FileImage className="stroke-[#71717a] w-[18px] h-[18px]" />
-          <p className="text-[#71717a] text-[14px]">Add image</p>
+          <p className="text-[#71717a] text-[14px]">Зураг оруулах</p>
         </div>
       )}
       <Input

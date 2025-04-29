@@ -24,14 +24,14 @@ export default function CategoryPage({
     <div className="max-w-[1400px] m-auto px-4 py-8 md:px-6 md:py-12">
       <div className="mb-8">
         <Link href="/" className="text-sm text-gray-500 hover:underline">
-          Home
+          Нүүр
         </Link>{" "}
         /{" "}
         <Link
           href="/services"
           className="text-sm text-gray-500 hover:underline"
         >
-          Services
+          Үйлчилгээнүүд
         </Link>{" "}
         /{" "}
         <span className="text-sm font-medium">
@@ -50,7 +50,7 @@ export default function CategoryPage({
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {filteredServices?.map((service: ServiceType) => (
-          <Card key={service._id} className="overflow-hidden">
+          <Card key={service._id} className="overflow-hidden p-0">
             <div className="aspect-video w-full overflow-hidden">
               <Image
                 src={service.image || "/placeholder.svg"}

@@ -15,13 +15,16 @@ import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import { Trash2 } from "lucide-react";
+import { ServiceType } from "@/app/utils/types";
 
 interface DeleteServiceAlertDialogProps {
   serviceId: string;
+  setServices: React.Dispatch<React.SetStateAction<ServiceType[] | null>>;
 }
 
 export function DeleteServiceAlertDialog({
   serviceId,
+  setServices,
 }: DeleteServiceAlertDialogProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -32,12 +35,17 @@ export function DeleteServiceAlertDialog({
 
       await axios.delete(`/api/service/${serviceId}`);
 
-      toast.success("Service deleted successfully");
+      toast.success("Үйлчилгээ амжилттай устгагдлаа");
+
+      setServices((prev) => {
+        if (!prev) return [];
+        return prev.filter((service) => service._id !== serviceId);
+      });
 
       setIsDialogOpen(false);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to delete service");
+      toast.error("Үйлчилгээг устгах үед алдаа гарлаа");
     } finally {
       setIsDeleting(false);
     }
@@ -52,26 +60,26 @@ export function DeleteServiceAlertDialog({
         onClick={() => setIsDialogOpen(true)}
       >
         <Trash2 className="mr-2 h-4 w-4" />
-        Delete
+        Устгах
       </Button>
 
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle>Та итгэлтэй байна уу?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete the
-            service and remove its data from our servers.
+            Энэ үйлдлийг буцаах боломжгүй. Үйлчилгээг бүрмөсөн устгах ба
+            серверээс устгагдана.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isDeleting}>Болих</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={isDeleting}
             className="bg-destructive hover:bg-destructive/90"
           >
-            {isDeleting ? "Deleting..." : "Delete"}
+            {isDeleting ? "Устгаж байна..." : "Устгах"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

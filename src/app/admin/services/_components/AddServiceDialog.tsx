@@ -33,13 +33,16 @@ import { useCategory } from "@/app/_context/CategoryContext";
 import { Textarea } from "@/components/ui/textarea";
 import CloudinaryUpload from "./CloudinaryUpload";
 import { toast } from "sonner";
+import { ServiceType } from "@/app/utils/types";
 
 const serviceSchema = z.object({
-  name: z.string().min(1, "Service name is required"),
-  description: z.string().min(1, "Description is required"),
-  duration: z.coerce.number().min(1, "Duration must be at least 1 minute"),
-  price: z.coerce.number().min(1, "Price must be at least $1"),
-  category: z.string().min(1, "Category is required"),
+  name: z.string().min(1, "Үйлчилгээний нэр шаардлагатай"),
+  description: z.string().min(1, "Тайлбар шаардлагатай"),
+  duration: z.coerce
+    .number()
+    .min(1, "Хугацаа хамгийн багадаа 1 минут байх ёстой"),
+  price: z.coerce.number().min(1, "Үнэ хамгийн багадаа 1₮ байх ёстой"),
+  category: z.string().min(1, "Ангилал сонгох шаардлагатай"),
   image: z.string(),
 });
 
@@ -67,21 +70,21 @@ export function AddServiceDialog() {
 
       const imageUrl = await handleUpload();
       if (!imageUrl) {
-        toast("Image upload failed");
+        toast("Зураг байршуулахад алдаа гарлаа");
         return;
       }
 
-      await axios.post("/api/service", {
+      const res = await axios.post("/api/service", {
         ...values,
         image: imageUrl,
       });
 
-      toast("Service created successfully");
+      toast("Үйлчилгээ амжилттай үүсгэгдлээ");
       form.reset();
       setIsDialogOpen(false);
     } catch (error) {
       console.error(error);
-      toast("Failed to create service");
+      toast("Үйлчилгээ үүсгэхэд алдаа гарлаа");
     } finally {
       setIsSubmitting(false);
     }
@@ -97,7 +100,7 @@ export function AddServiceDialog() {
     const CLOUDINARY_NAME = "ds6kxgjh0";
 
     if (!file) {
-      toast("Please select an image");
+      toast("Зураг сонгоно уу");
       return null;
     }
 
@@ -119,7 +122,7 @@ export function AddServiceDialog() {
       return data.secure_url as string;
     } catch (err) {
       console.error(err);
-      toast("Failed to upload file");
+      toast("Файл байршуулахад алдаа гарлаа");
     }
   };
 
@@ -128,13 +131,13 @@ export function AddServiceDialog() {
       <DialogTrigger asChild>
         <Button className="mt-2 sm:mt-0">
           <PlusCircle className="mr-2 h-4 w-4" />
-          Add Service
+          Үйлчилгээ нэмэх
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add New Service</DialogTitle>
+          <DialogTitle>Шинэ үйлчилгээ нэмэх</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -147,9 +150,9 @@ export function AddServiceDialog() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Service Name</FormLabel>
+                  <FormLabel>Үйлчилгээний нэр</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input placeholder="Үйлчилгээний нэр" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -160,10 +163,10 @@ export function AddServiceDialog() {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Тайлбар</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Enter service description"
+                      placeholder="Үйлчилгээний тайлбарыг оруулна уу"
                       {...field}
                     />
                   </FormControl>
@@ -177,7 +180,7 @@ export function AddServiceDialog() {
                 name="duration"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Duration (minutes)</FormLabel>
+                    <FormLabel>Хугацаа (минут)</FormLabel>
                     <FormControl>
                       <Input type="number" min={1} {...field} />
                     </FormControl>
@@ -190,7 +193,7 @@ export function AddServiceDialog() {
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Price ($)</FormLabel>
+                    <FormLabel>Үнэ (₮)</FormLabel>
                     <FormControl>
                       <Input type="number" min={1} step={0.01} {...field} />
                     </FormControl>
@@ -203,14 +206,14 @@ export function AddServiceDialog() {
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel>Ангилал</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a category" />
+                          <SelectValue placeholder="Ангилал сонгох" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -230,7 +233,7 @@ export function AddServiceDialog() {
                 name="image"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Image URL</FormLabel>
+                    <FormLabel>Зураг</FormLabel>
                     <FormControl>
                       <CloudinaryUpload handleFile={handleFile} />
                     </FormControl>
@@ -240,7 +243,7 @@ export function AddServiceDialog() {
               />
             </div>
             <Button disabled={isSubmitting} type="submit">
-              {isSubmitting ? "Saving..." : "Create Service"}
+              {isSubmitting ? "Хадгалж байна..." : "Үйлчилгээ үүсгэх"}
             </Button>
           </form>
         </Form>

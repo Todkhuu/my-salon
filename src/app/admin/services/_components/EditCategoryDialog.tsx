@@ -29,9 +29,9 @@ import { CategoryType } from "@/app/utils/types";
 import EditUpload from "./EditUpload";
 
 const categorySchema = z.object({
-  name: z.string().min(1, "Category name is required"),
-  description: z.string().min(1, "Description is required"),
-  image: z.string().nonempty("image"),
+  name: z.string().min(1, "Ангиллын нэр заавал шаардлагатай"),
+  description: z.string().min(1, "Тайлбар заавал шаардлагатай"),
+  image: z.string().nonempty("Зураг заавал шаардлагатай"),
 });
 
 export function EditCategoryDialog({ category }: { category: CategoryType }) {
@@ -57,7 +57,7 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
       if (file) {
         const uploadedUrl = await handleUpload();
         if (!uploadedUrl) {
-          toast("Image upload failed");
+          toast("Зураг оруулахад алдаа гарлаа");
           return;
         }
         imageUrl = uploadedUrl;
@@ -68,11 +68,11 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
         image: imageUrl,
       });
 
-      toast("Category updated successfully");
+      toast("Ангиллыг амжилттай шинэчиллээ");
       setIsDialogOpen(false);
     } catch (error) {
       console.error(error);
-      toast("Failed to update category");
+      toast("Ангиллыг шинэчлэхэд алдаа гарлаа");
     } finally {
       setIsSubmitting(false);
     }
@@ -88,7 +88,7 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
     const CLOUDINARY_NAME = "ds6kxgjh0";
 
     if (!file) {
-      toast("Please select an image");
+      toast("Зураг сонгоно уу");
       return null;
     }
 
@@ -109,7 +109,7 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
       return data.secure_url as string;
     } catch (err) {
       console.error(err);
-      toast("Failed to upload file");
+      toast("Файл оруулахад алдаа гарлаа");
     }
   };
 
@@ -118,13 +118,13 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
       <DialogTrigger asChild>
         <Button variant={"outline"} size="sm">
           <Pencil className="mr-2 h-4 w-4" />
-          Edit
+          Засах
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Category</DialogTitle>
+          <DialogTitle>Ангиллыг засах</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -138,9 +138,9 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category Name</FormLabel>
+                    <FormLabel>Ангиллын нэр</FormLabel>
                     <FormControl>
-                      <Input placeholder="Category name" {...field} />
+                      <Input placeholder="Ангиллын нэр" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -151,10 +151,10 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>Тайлбар</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Enter service description"
+                        placeholder="Ангиллын тайлбар оруулна уу"
                         {...field}
                       />
                     </FormControl>
@@ -168,7 +168,7 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image</FormLabel>
+                  <FormLabel>Зураг</FormLabel>
                   <FormControl>
                     <EditUpload handleFile={handleFile} />
                   </FormControl>
@@ -178,7 +178,7 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
             />
 
             <Button disabled={isSubmitting} type="submit">
-              {isSubmitting ? "Saving..." : "Save Changes"}
+              {isSubmitting ? "Хадгалж байна..." : "Өөрчлөлтийг хадгалах"}
             </Button>
           </form>
         </Form>

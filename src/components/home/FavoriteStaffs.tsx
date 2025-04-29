@@ -36,10 +36,12 @@ function FavoriteStaffs() {
                   <FavoriteButton staffId={staff._id} />
                   <Image
                     alt="Staff"
-                    width={100}
-                    height={100}
+                    width={200}
+                    height={200}
                     src={staff.image}
-                    className="h-full w-full object-cover"
+                    quality={100}
+                    priority
+                    className="h-full w-full object-cover object-center "
                   />
                 </div>
                 <div className="p-4">

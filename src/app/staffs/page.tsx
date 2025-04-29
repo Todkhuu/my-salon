@@ -41,7 +41,7 @@ export default function BarbersPage() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {(selectedService ? filteredStaffs : staffs)?.map((staff) => (
-          <Card key={staff._id} className="overflow-hidden">
+          <Card key={staff._id} className="overflow-hidden p-0">
             <div className="aspect-[3/4] w-full overflow-hidden relative">
               {user ? <FavoriteButton staffId={staff._id} /> : ""}
               <Image

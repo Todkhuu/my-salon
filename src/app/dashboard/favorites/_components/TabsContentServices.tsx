@@ -11,7 +11,7 @@ export const TabsContentServices = ({ user }: { user: UserType | null }) => {
     <TabsContent value="services" className="mt-6">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-">
         {user?.favoriteServices?.map((service: ServiceType) => (
-          <Card key={service._id} className="overflow-hidden">
+          <Card key={service._id} className="overflow-hidden p-0">
             <div className="relative">
               <Image
                 src={service.image || "/placeholder.svg"}

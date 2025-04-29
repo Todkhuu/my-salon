@@ -11,7 +11,6 @@ const AppointmentsTabs = () => {
   const [activeTab, setActiveTab] = useState("upcoming");
 
   const now = new Date();
-  const nowInMongolia = new Date(now.getTime() + 8 * 60 * 60 * 1000);
 
   const upcomingAppointments = appointments?.filter((app) => {
     const appointmentDate = new Date(app.date);
@@ -20,13 +19,16 @@ const AppointmentsTabs = () => {
     );
     return (
       (app.status === "CONFIRMED" || app.status === "PENDING") &&
-      appointmentDateInMongolia >= nowInMongolia
+      appointmentDateInMongolia >= now
     );
   });
 
   const pastAppointments = appointments?.filter((app) => {
     const appointmentDate = new Date(app.date);
-    return appointmentDate < nowInMongolia && app.status !== "CANCELED";
+    const appointmentDateInMongolia = new Date(
+      appointmentDate.getTime() + 8 * 60 * 60 * 1000
+    );
+    return appointmentDateInMongolia <= now && app.status !== "CANCELED";
   });
 
   const cancelledAppointments = appointments?.filter(

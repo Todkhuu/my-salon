@@ -2,7 +2,7 @@
 import { useUser } from "@/app/_context/UserContext";
 import { toast } from "sonner";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { Heart } from "lucide-react";
 
@@ -11,13 +11,27 @@ export function FavoriteButton({ staffId }: { staffId: string }) {
   const [loading, setLoading] = useState(false);
 
   const toggleFavorite = async () => {
+    if (!user || !setUser) return;
+
+    const isAlreadyFavorite = user.favoriteStaff?.some(
+      (staff) => staff._id === staffId
+    );
+
+    // 1. UI-г түрүүлж өөрчил
+    setUser((prev) => {
+      if (!prev) return prev;
+
+      const updatedFavorites = isAlreadyFavorite
+        ? prev.favoriteStaff?.filter((staff) => staff._id !== staffId) // устгах
+        : [...(prev.favoriteStaff || []), { _id: staffId } as any]; // нэмэх (mock object)
+
+      return { ...prev, favoriteStaff: updatedFavorites };
+    });
+
     try {
       setLoading(true);
-      const res = await axios.post("/api/favorite-staff", { staffId });
+      await axios.post("/api/favorite-staff", { staffId });
       toast.success("Амжилттай шинэчлэгдлээ");
-      setUser?.((prev) =>
-        prev ? { ...prev, favoriteStaff: res.data.favoriteStaff } : null
-      );
     } catch (err: any) {
       toast.error("Алдаа гарлаа");
     } finally {

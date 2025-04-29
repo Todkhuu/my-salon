@@ -25,7 +25,7 @@ export async function PATCH(
 
     if (!updatedCategory) {
       return NextResponse.json(
-        { message: "Category not found" },
+        { message: "Ангилал олдсонгүй" },
         { status: 404 }
       );
     }
@@ -34,7 +34,7 @@ export async function PATCH(
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "Ямар нэгэн алдаа гарлаа" },
       { status: 500 }
     );
   }
@@ -48,19 +48,19 @@ export async function DELETE(req: NextRequest, { params }: Params) {
 
     if (!category) {
       return NextResponse.json(
-        { message: "Category not found" },
+        { message: "Ангилал олдсонгүй" },
         { status: 404 }
       );
     }
 
     return NextResponse.json(
-      { message: "Category deleted successfully" },
+      { message: "Ангилал амжилттай устгагдлаа" },
       { status: 200 }
     );
   } catch (error) {
     console.error("[CATEGORY_DELETE]", error);
     return NextResponse.json(
-      { message: "Failed to delete category" },
+      { message: "Ангилал устгах үед алдаа гарлаа" },
       { status: 500 }
     );
   }

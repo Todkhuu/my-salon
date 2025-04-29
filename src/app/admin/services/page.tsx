@@ -13,12 +13,11 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clock, DollarSign, MoreHorizontal, Search } from "lucide-react";
+import { Clock, MoreHorizontal, Search } from "lucide-react";
 import { AdminHeader } from "../appointments/_components/AdminHeader";
 import { useCategory } from "@/app/_context/CategoryContext";
 import { AddServiceDialog } from "./_components/AddServiceDialog";
@@ -30,7 +29,7 @@ import { EditCategoryDialog } from "./_components/EditCategoryDialog";
 
 export default function ServicesPage() {
   const { categories } = useCategory();
-  const { services } = useService();
+  const { services, setServices } = useService();
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredServices = services?.filter(
@@ -116,7 +115,10 @@ export default function ServicesPage() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <EditServiceDialog service={service} />
-                          <DeleteServiceAlertDialog serviceId={service._id} />
+                          <DeleteServiceAlertDialog
+                            serviceId={service._id}
+                            setServices={setServices}
+                          />
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
@@ -131,7 +133,6 @@ export default function ServicesPage() {
             const filteredService = services?.filter(
               (service) => service.category._id == category._id
             );
-            console.log("object", filteredService);
             return (
               <Card key={category._id}>
                 <CardHeader className="flex flex-row items-center justify-between">
@@ -192,6 +193,7 @@ export default function ServicesPage() {
                                   <EditServiceDialog service={service} />
                                   <DeleteServiceAlertDialog
                                     serviceId={service._id}
+                                    setServices={setServices}
                                   />
                                 </DropdownMenuContent>
                               </DropdownMenu>

@@ -25,7 +25,7 @@ export const TeamSection = () => {
               >
                 <div className="aspect-[3/4] w-full overflow-hidden">
                   <Image
-                    src="/placeholder.svg?height=400&width=300"
+                    src={staff.image}
                     alt=""
                     width={300}
                     height={400}
