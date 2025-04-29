@@ -60,6 +60,7 @@ export interface AppointmentType {
   reasonType?: string;
   cancellationFee?: number;
   paymentStatus?: string;
+  message?: string;
   createdAt: Date;
   updatedAt: Date;
 }

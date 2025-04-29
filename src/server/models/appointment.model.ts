@@ -41,6 +41,7 @@ const AppointmentSchema: Schema = new Schema<AppointmentType>(
     reasonType: { type: String },
     cancellationFee: { type: Number },
     paymentStatus: { type: String },
+    message: { type: String },
   },
   { timestamps: true }
 );

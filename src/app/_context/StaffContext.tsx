@@ -21,9 +21,6 @@ export const StaffProvider = ({ children }: { children: React.ReactNode }) => {
   const [loggedStaff, setLoggedStaff] = useState<StaffType[] | null>(null);
   const [loading, setLoading] = useState(true);
 
-  console.log("loggedStaff", loggedStaff);
-  console.log("Staff", staffs);
-
   const getStaffs = async () => {
     try {
       setLoading(true);

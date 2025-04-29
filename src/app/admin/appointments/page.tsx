@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { format } from "date-fns";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -32,6 +31,9 @@ import { CalendarIcon, MoreHorizontal, Search } from "lucide-react";
 import { AdminHeader } from "./_components/AdminHeader";
 import { useAppointment } from "@/app/_context/AppointmentContext";
 import { useCategory } from "@/app/_context/CategoryContext";
+import { useService } from "@/app/_context/ServiceContext";
+import { format, parseISO, isValid } from "date-fns";
+import { AddAppointmentDialog } from "./_components/AddAppointmentDialog";
 
 export default function AppointmentsPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -41,62 +43,70 @@ export default function AppointmentsPage() {
   const [serviceFilter, setServiceFilter] = useState("all");
 
   const { appointments } = useAppointment();
-  const { categories } = useCategory();
+  const { services } = useService();
 
   const uniqueStaffNames = [
     ...new Set(appointments?.map((a) => a.staffId.name)),
   ];
 
-  let filtered = appointments || [];
+  // const guestAppointments = appointments?.filter((a) => !a.userId);
 
-  if (searchQuery) {
-    filtered = filtered.filter(
-      (appointment) =>
-        appointment.staffId.name
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
-        appointment.userId.email
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase()) ||
-        appointment.serviceId.name
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase())
-    );
-  }
+  const filteredAppointments = useMemo(() => {
+    if (!appointments) return [];
 
-  if (statusFilter !== "all") {
-    filtered = filtered.filter(
-      (appointment) => appointment.status === statusFilter
-    );
-  }
+    let filtered = [...appointments];
 
-  if (staffFilter !== "all") {
-    filtered = filtered.filter(
-      (appointment) => appointment.staffId.name === staffFilter
-    );
-  }
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (a) =>
+          a.staffId.name.toLowerCase().includes(q) ||
+          a.userId.email.toLowerCase().includes(q) ||
+          a.serviceId.name.toLowerCase().includes(q)
+      );
+    }
 
-  if (serviceFilter !== "all") {
-    filtered = filtered.filter(
-      (appointment) => appointment.serviceId.name === serviceFilter
-    );
-  }
+    if (statusFilter !== "all") {
+      filtered = filtered.filter((a) => a.status === statusFilter);
+    }
 
-  if (date) {
-    filtered = filtered.filter(
-      (appointment) =>
-        format(appointment.date, "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
-    );
-  }
+    if (staffFilter !== "all") {
+      filtered = filtered.filter((a) => a.staffId.name === staffFilter);
+    }
 
-  const filteredAppointments = filtered;
+    if (serviceFilter !== "all") {
+      filtered = filtered.filter((a) => a.serviceId.name === serviceFilter);
+    }
+
+    if (date) {
+      filtered = filtered.filter((a) => {
+        const apptDate = typeof a.date === "string" ? parseISO(a.date) : a.date;
+        return (
+          isValid(apptDate) &&
+          format(apptDate, "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
+        );
+      });
+    }
+
+    return filtered;
+  }, [
+    appointments,
+    searchQuery,
+    statusFilter,
+    staffFilter,
+    serviceFilter,
+    date,
+  ]);
 
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8">
-      <AdminHeader
-        title="Appointments"
-        description="Manage your barbershop appointments"
-      />
+      <div className="flex items-center justify-between">
+        <AdminHeader
+          title="Appointments"
+          description="Manage your barbershop appointments"
+        />
+        <AddAppointmentDialog />
+      </div>
 
       <div className="grid gap-4 md:grid-cols-[250px_1fr]">
         <div className="space-y-4">
@@ -156,10 +166,13 @@ export default function AppointmentsPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All Services</SelectItem>
-                      {categories?.map((category) => {
+                      {services?.map((service) => {
                         return (
-                          <SelectItem value={`${category.name}`}>
-                            {category.name}
+                          <SelectItem
+                            key={service._id}
+                            value={`${service.name}`}
+                          >
+                            {service.name}
                           </SelectItem>
                         );
                       })}
@@ -222,13 +235,13 @@ export default function AppointmentsPage() {
                       </TableCell>
                       <TableCell>
                         <div>
-                          <div>{[appointment.serviceId.name]}</div>
+                          <div>{appointment.serviceId.name}</div>
                           <div className="text-sm text-muted-foreground">
                             {appointment.serviceId.duration}
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell>{[appointment.staffId.name]}</TableCell>
+                      <TableCell>{appointment.staffId.name}</TableCell>
                       <TableCell>
                         <div>
                           <div>{format(appointment.date, "PPP")}</div>
