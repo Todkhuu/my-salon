@@ -35,10 +35,10 @@ function FavoriteStaffs() {
                 <div className="aspect-square w-full overflow-hidden relative">
                   <FavoriteButton staffId={staff._id} />
                   <Image
+                    src={`${staff.image}`}
                     alt="Staff"
                     width={200}
                     height={200}
-                    src={staff.image}
                     quality={100}
                     priority
                     className="h-full w-full object-cover object-center "

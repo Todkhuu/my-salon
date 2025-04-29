@@ -55,7 +55,7 @@ export default function CheckoutForm({
 
     const appointmentData = {
       staffId: staff?._id,
-      serviceIds: [service?._id],
+      serviceId: service?._id,
       date: date?.toISOString(),
       time: time,
       paymentMethod: "Qpay",

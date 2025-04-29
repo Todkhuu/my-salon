@@ -19,6 +19,10 @@ export function Footer() {
     "/admin/staffs",
     "/admin/services",
     "/admin/customers",
+    "/dashboard",
+    "/dashboard/appointments",
+    "/dashboard/profile",
+    "/dashboard/favorites",
   ];
   return (
     <>

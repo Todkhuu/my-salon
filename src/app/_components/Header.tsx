@@ -49,7 +49,7 @@ export default function Header() {
         <header className="border-b bg-white ">
           <div className="max-w-[1400px] m-auto flex h-16 items-center justify-between px-4 md:px-6">
             <Link href={"/"} className="flex items-center gap-2">
-              <span className="text-xl font-bold">StyleCut</span>
+              <span className="text-xl font-bold">СтайлКат</span>
             </Link>
             {!HIDE_NAVLINKS_PATHS.includes(pathname) && <NavLinks />}
             <div className="flex items-center gap-4">
