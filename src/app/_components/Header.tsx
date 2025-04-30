@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { UserCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { toast } from "sonner";
 import { UserNav } from "./UserNav";
 import NavLinks from "./NavLinks";

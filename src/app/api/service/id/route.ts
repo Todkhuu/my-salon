@@ -4,21 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 await connectMongoDb();
 
-interface Params {
-  params: {
-    id: string;
-  };
-}
-
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(req: NextRequest) {
   try {
-    const { id } = params;
     const body = await req.json();
 
-    const updatedService = await ServiceModel.findByIdAndUpdate(id, body, {
+    const updatedService = await ServiceModel.findByIdAndUpdate(body.id, body, {
       new: true, // update хийсний дараах шинэ document-г буцаана
       runValidators: true, // validation шалгалтуудыг мөн ажиллуулна
     });
@@ -40,9 +30,10 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: Params) {
+export async function DELETE(req: NextRequest) {
   try {
-    const { id } = params;
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
 
     const service = await ServiceModel.findByIdAndDelete(id);
 

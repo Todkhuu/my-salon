@@ -3,7 +3,6 @@ import { AppointmentType } from "../utils/types";
 import React, { createContext, useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { Loader } from "@/components/ui/Loader";
 import { useUser } from "./UserContext";
 
 type AppointmentContextType = {

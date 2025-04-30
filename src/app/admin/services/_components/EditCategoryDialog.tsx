@@ -66,6 +66,7 @@ export function EditCategoryDialog({ category }: { category: CategoryType }) {
       await axios.patch(`/api/category/${category._id}`, {
         ...values,
         image: imageUrl,
+        id: category._id,
       });
 
       toast("Ангиллыг амжилттай шинэчиллээ");

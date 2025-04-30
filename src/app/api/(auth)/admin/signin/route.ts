@@ -1,8 +1,6 @@
 import { connectMongoDb } from "@/server/database/db";
 import { StaffModel } from "@/server/models";
 import { NextResponse } from "next/server";
-import { signToken } from "@/server/utils/jwt";
-import { cookies } from "next/headers";
 
 connectMongoDb();
 

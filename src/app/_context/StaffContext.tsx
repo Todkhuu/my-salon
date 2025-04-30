@@ -3,7 +3,6 @@ import { StaffType } from "../utils/types";
 import React, { createContext, useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { Loader } from "@/components/ui/Loader";
 
 type StaffContextType = {
   staffs: StaffType[] | null;
@@ -35,20 +34,20 @@ export const StaffProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const getLoggedStaff = async () => {
-    try {
-      // setLoading(true);
-      const staffs = await axios.get("/api/admin");
-      setLoggedStaff(staffs.data.data);
-      // setLoading(false);
-    } catch (error: unknown) {
-      toast.error(axios.isAxiosError(error).toString());
-      console.log("error in context", error);
-      setStaffs(null);
-    } finally {
-      // setLoading(false);
-    }
-  };
+  // const getLoggedStaff = async () => {
+  //   try {
+  //     // setLoading(true);
+  //     const staffs = await axios.get("/api/admin");
+  //     setLoggedStaff(staffs.data.data);
+  //     // setLoading(false);
+  //   } catch (error: unknown) {
+  //     toast.error(axios.isAxiosError(error).toString());
+  //     console.log("error in context", error);
+  //     setStaffs(null);
+  //   } finally {
+  //     // setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     getStaffs();

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Heart } from "lucide-react";
+import { StaffType } from "@/app/utils/types";
 
 export function FavoriteButton({ staffId }: { staffId: string }) {
   const { user, setUser } = useUser();
@@ -23,7 +24,7 @@ export function FavoriteButton({ staffId }: { staffId: string }) {
 
       const updatedFavorites = isAlreadyFavorite
         ? prev.favoriteStaff?.filter((staff) => staff._id !== staffId)
-        : [...(prev.favoriteStaff || []), { _id: staffId } as any];
+        : [...(prev.favoriteStaff || []), { _id: staffId } as StaffType];
 
       return { ...prev, favoriteStaff: updatedFavorites };
     });
@@ -32,8 +33,13 @@ export function FavoriteButton({ staffId }: { staffId: string }) {
       setLoading(true);
       await axios.post("/api/favorite-staff", { staffId });
       toast.success("Амжилттай шинэчлэгдлээ");
-    } catch (err: any) {
-      toast.error("Алдаа гарлаа");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.log("first", err.response?.data?.message);
+        toast.error(err.response?.data?.message || "Алдаа гарлаа");
+      } else {
+        toast.error("Тодорхойгүй алдаа гарлаа");
+      }
     } finally {
       setLoading(false);
     }

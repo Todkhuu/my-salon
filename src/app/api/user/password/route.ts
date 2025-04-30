@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectMongoDb } from "@/server/database/db";
 import bcrypt from "bcryptjs";
-import { getUserFromCookie } from "@/lib/auth";
 import { UserModel } from "@/server/models";
 
 await connectMongoDb();
@@ -11,7 +10,7 @@ export async function PUT(request: Request) {
     const body = await request.json();
     const { currentPassword, newPassword } = body;
 
-    const user = await getUserFromCookie();
+    const user = localStorage.getItem("id");
     if (!user) {
       return NextResponse.json(
         { message: "Хэрэглэгчийг олж чадсангүй." },
@@ -19,7 +18,7 @@ export async function PUT(request: Request) {
       );
     }
 
-    const userId = user?._id;
+    const userId = user;
 
     const existingUser = await UserModel.findById(userId);
     if (!existingUser) {

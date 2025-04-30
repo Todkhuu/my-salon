@@ -33,7 +33,7 @@ export function DeleteServiceAlertDialog({
     try {
       setIsDeleting(true);
 
-      await axios.delete(`/api/service/${serviceId}`);
+      await axios.delete(`/api/service?id=${serviceId}`);
 
       toast.success("Үйлчилгээ амжилттай устгагдлаа");
 

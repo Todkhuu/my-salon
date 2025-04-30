@@ -15,7 +15,7 @@ export async function GET() {
     );
   }
 
-  const staffAndAdmin = await StaffModel.findById(decoded.id);
+  const staffAndAdmin = await StaffModel.findById(decoded);
 
   console.log("staffAndAdmin", staffAndAdmin);
 

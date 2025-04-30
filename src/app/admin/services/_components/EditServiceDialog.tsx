@@ -80,6 +80,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
       await axios.patch(`/api/service/${service._id}`, {
         ...values,
         image: imageUrl,
+        id: service._id,
       });
 
       toast("Үйлчилгээг амжилттай шинэчиллээ");

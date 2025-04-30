@@ -17,7 +17,7 @@ export const ServiceCard = ({ service }: { service: ServiceType }) => {
   const toggleFavorite = async (serviceId: string) => {
     try {
       setLoading(true);
-      const res = await axios.post("/api/favorite-service", { serviceId });
+      await axios.post("/api/favorite-service", { serviceId });
       toast.success("Амжилттай шинэчлэгдлээ");
       if (user) {
         const isFavorite = user.favoriteServices?.some(
@@ -35,7 +35,7 @@ export const ServiceCard = ({ service }: { service: ServiceType }) => {
           favoriteServices: updatedFavorites,
         });
       }
-    } catch (err: any) {
+    } catch {
       toast.error("Алдаа гарлаа");
     } finally {
       setLoading(false);

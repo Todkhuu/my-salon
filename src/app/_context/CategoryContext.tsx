@@ -3,7 +3,6 @@ import { CategoryType } from "../utils/types";
 import React, { createContext, useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { Loader } from "@/components/ui/Loader";
 
 type CategoryContextType = {
   categories: CategoryType[] | null;

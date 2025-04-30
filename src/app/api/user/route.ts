@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectMongoDb } from "@/server/database/db";
 import { UserModel } from "@/server/models";
-import { getUserFromCookie } from "@/lib/auth";
 
 await connectMongoDb();
 
@@ -9,8 +8,8 @@ export async function PUT(request: Request) {
   try {
     const body = await request.json();
     const { username, email, phoneNumber } = body;
-    const user = await getUserFromCookie();
-    const userId = user?._id;
+    const user = localStorage.getItem("id");
+    const userId = user;
 
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
