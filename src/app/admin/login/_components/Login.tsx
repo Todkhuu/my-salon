@@ -10,6 +10,7 @@ import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { FormInput } from "@/app/login/_components/FormInput";
 import { useStaff } from "@/app/_context/StaffContext";
+import { useUser } from "@/app/_context/UserContext";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Зөв email оруулна уу" }),
@@ -18,6 +19,7 @@ const loginSchema = z.object({
 
 export const Login = () => {
   const { loggedStaff, setLoggedStaff } = useStaff();
+  const { user } = useUser();
   const { push } = useRouter();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -60,8 +62,8 @@ export const Login = () => {
 
     if (!loading) return;
 
-    if (!loggedStaff) navigateToPath("/admin/login");
-  }, [pathname, loggedStaff, loading, navigateToPath]);
+    if (!loggedStaff || !user) navigateToPath("/admin/login");
+  }, [pathname, loggedStaff, loading, navigateToPath, user]);
 
   return (
     <Form {...form}>
