@@ -7,9 +7,7 @@ await connectMongoDb();
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { username, email, phoneNumber } = body;
-    const user = localStorage.getItem("id");
-    const userId = user;
+    const { username, email, phoneNumber, userId } = body;
 
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,

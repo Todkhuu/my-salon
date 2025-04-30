@@ -2,7 +2,6 @@
 import { ChevronRight, Scissors, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { Button } from "../ui/button";
 import { StaffType } from "@/app/utils/types";
 import { FavoriteButton } from "./FavoriteStaffButton";
@@ -35,7 +34,7 @@ function FavoriteStaffs() {
                 <div className="aspect-square w-full overflow-hidden relative">
                   <FavoriteButton staffId={staff._id} />
                   <Image
-                    src={`${staff?.image}`}
+                    src={`${staff?.image || "/placeholder.jpg"}`}
                     alt="Staff"
                     width={200}
                     height={200}

@@ -8,26 +8,22 @@ await connectMongoDb();
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { currentPassword, newPassword } = body;
+    const { userId, currentPassword, newPassword } = body;
 
-    const user = localStorage.getItem("id");
-    if (!user) {
+    if (!userId) {
       return NextResponse.json(
         { message: "Хэрэглэгчийг олж чадсангүй." },
         { status: 401 }
       );
     }
 
-    const userId = user;
-
-    const existingUser = await UserModel.findById(userId);
+    const existingUser = await UserModel.findById(userId).select("+password");
     if (!existingUser) {
       return NextResponse.json(
         { message: "Хэрэглэгч олдсонгүй." },
         { status: 404 }
       );
     }
-    console.log("Болсон хэрэглэгчийн нууц үг:", existingUser);
 
     if (!currentPassword || !existingUser?.password) {
       return NextResponse.json(
@@ -49,7 +45,6 @@ export async function PUT(request: Request) {
         { status: 400 }
       );
     }
-    console.log("Нууц үг зөв эсэх:", isPasswordCorrect);
 
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 

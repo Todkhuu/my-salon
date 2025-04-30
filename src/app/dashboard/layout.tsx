@@ -1,14 +1,15 @@
+"use client";
 import type React from "react";
 import { DashboardNav } from "@/app/_components/DashboardNav";
-import { getUserFromCookie } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { useUser } from "../_context/UserContext";
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getUserFromCookie();
+  const { user } = useUser();
 
   if (!user) {
     redirect("/login");

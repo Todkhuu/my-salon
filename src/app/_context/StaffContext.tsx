@@ -9,6 +9,7 @@ type StaffContextType = {
   setStaffs: React.Dispatch<React.SetStateAction<StaffType[] | null>>;
   setLoggedStaff: React.Dispatch<React.SetStateAction<StaffType[] | null>>;
   loggedStaff: StaffType[] | null;
+  getStaffs: () => void;
 };
 
 export const StaffContext = createContext<StaffContextType>(
@@ -56,7 +57,7 @@ export const StaffProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <StaffContext.Provider
-      value={{ staffs, setStaffs, setLoggedStaff, loggedStaff }}
+      value={{ staffs, setStaffs, setLoggedStaff, loggedStaff, getStaffs }}
     >
       {children}
     </StaffContext.Provider>

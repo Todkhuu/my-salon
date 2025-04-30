@@ -37,10 +37,19 @@ export const useChangePassword = (onSuccess: () => void) => {
   const handlePasswordChange = async (
     values: z.infer<typeof passwordSchema>
   ) => {
-    const { ...dataToSend } = values;
+    const userId = localStorage.getItem("id");
+
+    if (!userId) {
+      toast.error("Хэрэглэгчийн мэдээлэл алга байна.");
+      return;
+    }
+
     try {
       setIsSubmittingPassword(true);
-      const response = await axios.put("/api/user/password", dataToSend);
+      const response = await axios.put("/api/user/password", {
+        ...values,
+        userId,
+      });
       if (response.status === 200) {
         toast.success("Нууц үг амжилттай шинэчлэгдлээ.");
         onSuccess();

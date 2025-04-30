@@ -1,8 +1,9 @@
 import { ServiceType, UserType } from "@/app/utils/types";
+import { FavoriteServiceButton } from "@/components/home/FavoriteServiceButton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { TabsContent } from "@/components/ui/tabs";
-import { Clock, Heart } from "lucide-react";
+import { Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,14 +21,7 @@ export const TabsContentServices = ({ user }: { user: UserType | null }) => {
                 height={150}
                 className="aspect-video w-full object-cover"
               />
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-2 top-2 h-8 w-8 rounded-full bg-white/80"
-              >
-                <Heart className="h-4 w-4 fill-red-500 text-red-500" />
-                <span className="sr-only">Дуртайгаас хасах</span>
-              </Button>
+              <FavoriteServiceButton serviceId={service._id} />
             </div>
             <CardContent className="p-4">
               <h3 className="font-bold">{service.name}</h3>

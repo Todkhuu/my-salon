@@ -1,6 +1,12 @@
 "use client";
 import { AppointmentType } from "../utils/types";
-import React, { createContext, useEffect, useContext, useState } from "react";
+import React, {
+  createContext,
+  useEffect,
+  useContext,
+  useState,
+  useCallback,
+} from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useUser } from "./UserContext";
@@ -14,6 +20,7 @@ type AppointmentContextType = {
     React.SetStateAction<AppointmentType[] | null>
   >;
   allAppointment: AppointmentType[] | null;
+  getAppointments: () => void;
 };
 
 export const AppointmentContext = createContext<AppointmentContextType>(
@@ -34,26 +41,21 @@ export const AppointmentProvider = ({
 
   const { user } = useUser();
 
-  useEffect(() => {
-    const getAppointments = async () => {
-      if (user?._id) {
-        try {
-          // setLoading(true);
-          const { data } = await axios.get(
-            `/api/appointment/userId?userId=${user?._id}`
-          );
-          setAppointment(data.data);
-        } catch (error: unknown) {
-          toast.error(axios.isAxiosError(error).toString());
-          console.log("error in context", error);
-        } finally {
-          // setLoading(false);
-        }
+  const getAppointments = useCallback(async () => {
+    if (user?._id) {
+      try {
+        // setLoading(true);
+        const { data } = await axios.get(
+          `/api/appointment/userId?userId=${user?._id}`
+        );
+        setAppointment(data.data);
+      } catch (error: unknown) {
+        toast.error(axios.isAxiosError(error).toString());
+        console.log("error in context", error);
+      } finally {
       }
-    };
-
-    getAppointments();
-  }, [user]);
+    }
+  }, [user?._id]); // зөвхөн user._id өөрчлөгдвөл дахин үүснэ
 
   const getAllAppointment = async () => {
     try {
@@ -64,13 +66,13 @@ export const AppointmentProvider = ({
       toast.error(axios.isAxiosError(error).toString());
       console.log("error in context", error);
     } finally {
-      // setLoading(false);
     }
   };
 
   useEffect(() => {
+    getAppointments();
     getAllAppointment();
-  }, []);
+  }, [user, getAppointments]);
 
   return (
     <AppointmentContext.Provider
@@ -79,6 +81,7 @@ export const AppointmentProvider = ({
         setAppointment,
         setAllAppointment,
         allAppointment,
+        getAppointments,
       }}
     >
       {children}

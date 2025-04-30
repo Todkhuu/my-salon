@@ -38,6 +38,7 @@ const profileSchema = z.object({
 export const TabsContentPersonal = () => {
   const { user } = useUser();
   const [isEditing, setIsEditing] = useState(false);
+  const userId = localStorage.getItem("id");
 
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
@@ -50,7 +51,7 @@ export const TabsContentPersonal = () => {
 
   const onSubmit = async (values: z.infer<typeof profileSchema>) => {
     try {
-      const response = await axios.put("/api/user/", values);
+      const response = await axios.put("/api/user/", { ...values, userId });
       if (response.status === 200) {
         toast.success("Амжилттай шинчлэгдлээ");
         setIsEditing(false);

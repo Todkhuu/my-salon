@@ -46,7 +46,7 @@ export default function BarbersPage() {
               {user ? <FavoriteButton staffId={staff._id} /> : ""}
               <Image
                 src={staff.image || "/placeholder.svg"}
-                alt={staff.name}
+                alt={staff.name || "Staff photo"}
                 width={300}
                 height={400}
                 className="h-full w-full object-cover"

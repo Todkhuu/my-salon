@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner";
-import { UserProvider } from "./_context/UserContext";
-import { ServiceProvider } from "./_context/ServiceContext";
 import Header from "./_components/Header";
-import { StaffProvider } from "./_context/StaffContext";
-import { CategoryProvider } from "./_context/CategoryContext";
 import { Footer } from "./_components/Footer";
-import { AppointmentProvider } from "./_context/AppointmentContext";
+import { Providers } from "./Providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -35,20 +30,11 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UserProvider>
-          <ServiceProvider>
-            <StaffProvider>
-              <CategoryProvider>
-                <AppointmentProvider>
-                  <Header />
-                  {children}
-                  <Footer />
-                  <Toaster />
-                </AppointmentProvider>
-              </CategoryProvider>
-            </StaffProvider>
-          </ServiceProvider>
-        </UserProvider>
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

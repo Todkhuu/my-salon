@@ -33,7 +33,7 @@ export default function Header() {
     localStorage.removeItem("id");
     toast.success("Амжилттай гарлаа");
     router.push("/");
-    setUser(null);
+    setTimeout(() => setUser(null), 100);
   };
 
   return (

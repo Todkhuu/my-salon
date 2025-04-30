@@ -8,7 +8,6 @@ interface ServicesTabsProps {
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
   user: UserType | null;
-  toggleFavorite: (serviceId: string) => void;
 }
 
 export const ServicesTabs = ({
@@ -17,7 +16,6 @@ export const ServicesTabs = ({
   selectedTab,
   setSelectedTab,
   user,
-  toggleFavorite,
 }: ServicesTabsProps) => {
   return (
     <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
@@ -45,7 +43,6 @@ export const ServicesTabs = ({
                 category={category}
                 services={servicesInCategory.slice(0, 3)}
                 user={user}
-                toggleFavorite={toggleFavorite}
               />
             );
           })}
@@ -66,7 +63,6 @@ export const ServicesTabs = ({
                 category={category}
                 services={servicesInCategory ?? []}
                 user={user}
-                toggleFavorite={toggleFavorite}
               />
             </TabsContent>
           );

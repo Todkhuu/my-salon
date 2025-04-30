@@ -12,12 +12,14 @@ import { IsCompleted } from "./(logged-out)/IsComplete";
 import { CheckoutHeader } from "./(logged-in)/CheckoutHeader";
 import { Qr } from "./(logged-in)/Qr";
 import { toast } from "sonner";
+import { useAppointment } from "@/app/_context/AppointmentContext";
 
 export default function LoggedInCheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const { staffs } = useStaff();
   const { services } = useService();
+  const { getAppointments } = useAppointment();
 
   const { user } = useUser();
 
@@ -32,7 +34,6 @@ export default function LoggedInCheckoutPage() {
   const date = dateString ? new Date(dateString) : null;
   const time = timeString || null;
 
-  console.log("datee", date);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
@@ -69,6 +70,7 @@ export default function LoggedInCheckoutPage() {
     } finally {
       setIsProcessing(false);
     }
+    getAppointments();
   };
 
   if (isComplete) {

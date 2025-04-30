@@ -6,8 +6,6 @@ import { useService } from "../_context/ServiceContext";
 import { useCategory } from "../_context/CategoryContext";
 import { HeroSection } from "./_components/HeroSection";
 import { ServicesTabs } from "./_components/ServicesTabs";
-import axios from "axios";
-import { toast } from "sonner";
 import {
   cyrillicToLatinMap,
   latinToCyrillicMap,
@@ -16,35 +14,10 @@ import {
 
 export default function ServicesPage() {
   const { services } = useService();
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const { categories } = useCategory();
   const [selectedTab, setSelectedTab] = useState("all");
   const [search, setSearch] = useState("");
-
-  const toggleFavorite = async (serviceId: string) => {
-    try {
-      await axios.post("/api/favorite-service", { serviceId });
-      toast.success("Амжилттай шинэчлэгдлээ");
-
-      if (user) {
-        const isFavorite = user.favoriteServices?.some(
-          (favoriteService) => favoriteService._id === serviceId
-        );
-        const foundService = services?.find(
-          (service) => service._id === serviceId
-        );
-        if (!foundService) return;
-
-        const updatedFavorites = isFavorite
-          ? user.favoriteServices?.filter((fav) => fav._id !== serviceId)
-          : [...(user.favoriteServices || []), foundService];
-
-        setUser({ ...user, favoriteServices: updatedFavorites });
-      }
-    } catch {
-      toast.error("Алдаа гарлаа");
-    }
-  };
 
   const filteredServices = services?.filter((service) => {
     const matchCategory =
@@ -80,7 +53,6 @@ export default function ServicesPage() {
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
             user={user}
-            toggleFavorite={toggleFavorite}
           />
         </div>
       </section>

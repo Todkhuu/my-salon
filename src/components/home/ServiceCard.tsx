@@ -1,8 +1,5 @@
-import { useUser } from "@/app/_context/UserContext";
 import { ServiceType } from "@/app/utils/types";
 import React from "react";
-import { toast } from "sonner";
-import axios from "axios";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Clock } from "lucide-react";
 import Image from "next/image";
@@ -11,45 +8,12 @@ import { FavoriteServiceButton } from "./FavoriteServiceButton";
 import { Button } from "../ui/button";
 
 export const ServiceCard = ({ service }: { service: ServiceType }) => {
-  const { user, setUser } = useUser();
-  const [loading, setLoading] = React.useState(false);
-
-  const toggleFavorite = async (serviceId: string) => {
-    try {
-      setLoading(true);
-      await axios.post("/api/favorite-service", { serviceId });
-      toast.success("Амжилттай шинэчлэгдлээ");
-      if (user) {
-        const isFavorite = user.favoriteServices?.some(
-          (s) => s._id === serviceId
-        );
-
-        const updatedFavorites = isFavorite
-          ? user.favoriteServices?.filter(
-              (favoriteService) => favoriteService._id !== serviceId
-            )
-          : [...(user.favoriteServices || []), service];
-
-        setUser({
-          ...user,
-          favoriteServices: updatedFavorites,
-        });
-      }
-    } catch {
-      toast.error("Алдаа гарлаа");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [loading] = React.useState(false);
 
   return (
     <Card className="overflow-hidden p-0">
       <div className="relative">
-        <FavoriteServiceButton
-          serviceId={service._id}
-          toggleFavorite={toggleFavorite}
-          loading={loading}
-        />
+        <FavoriteServiceButton serviceId={service._id} loading={loading} />
         <Image
           src={service.image || "/placeholder.svg"}
           alt={service.name}

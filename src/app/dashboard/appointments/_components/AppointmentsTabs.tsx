@@ -28,7 +28,7 @@ const AppointmentsTabs = () => {
     const appointmentDateInMongolia = new Date(
       appointmentDate.getTime() + 8 * 60 * 60 * 1000
     );
-    return appointmentDateInMongolia <= now && app.status !== "CANCELED";
+    return appointmentDateInMongolia < now && app.status !== "CANCELED";
   });
 
   const cancelledAppointments = appointments?.filter(

@@ -1,9 +1,10 @@
 import { ServiceType, StaffType, UserType } from "@/app/utils/types";
+import { FavoriteButton } from "@/components/home/FavoriteStaffButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { TabsContent } from "@/components/ui/tabs";
-import { Heart, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -21,14 +22,7 @@ export const TabsContentStaffs = ({ user }: { user: UserType | null }) => {
                 height={200}
                 className="aspect-square w-full object-cover"
               />
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-2 top-2 h-8 w-8 rounded-full bg-white/80"
-              >
-                <Heart className="h-4 w-4 fill-red-500 text-red-500" />
-                <span className="sr-only">Дуртайгаас хасах</span>
-              </Button>
+              <FavoriteButton staffId={staff._id} />
             </div>
             <CardContent className="p-4">
               <h3 className="font-bold">{staff.name}</h3>

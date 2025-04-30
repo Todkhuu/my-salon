@@ -6,14 +6,12 @@ interface CategorySectionProps {
   category: CategoryType;
   services: ServiceType[];
   user: UserType | null;
-  toggleFavorite: (serviceId: string) => void;
 }
 
 export const CategorySection = ({
   category,
   services,
   user,
-  toggleFavorite,
 }: CategorySectionProps) => {
   if (!services.length) return null;
 
@@ -29,12 +27,7 @@ export const CategorySection = ({
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (
-          <ServiceCard
-            key={service._id}
-            service={service}
-            user={user}
-            toggleFavorite={toggleFavorite}
-          />
+          <ServiceCard key={service._id} service={service} user={user} />
         ))}
       </div>
     </div>

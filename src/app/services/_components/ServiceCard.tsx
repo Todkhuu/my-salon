@@ -8,22 +8,12 @@ import { ServiceType, UserType } from "@/app/utils/types";
 interface ServiceCardProps {
   service: ServiceType;
   user: UserType | null;
-  toggleFavorite: (serviceId: string) => void;
 }
 
-export const ServiceCard = ({
-  service,
-  user,
-  toggleFavorite,
-}: ServiceCardProps) => {
+export const ServiceCard = ({ service, user }: ServiceCardProps) => {
   return (
     <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-      {user && (
-        <FavoriteServiceButton
-          serviceId={service._id}
-          toggleFavorite={toggleFavorite}
-        />
-      )}
+      {user && <FavoriteServiceButton serviceId={service._id} />}
       <CardContent className="p-6">
         <h3 className="mb-2 text-xl font-bold">{service.name}</h3>
         <p className="mb-4 text-sm text-gray-500 line-clamp-3 min-h-[4.5em]">
