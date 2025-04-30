@@ -4,7 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Calendar, Users, Scissors, LogOut, Menu, User } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -41,10 +46,12 @@ export default function AdminSidebar() {
       <div className="flex h-16 items-center border-b bg-white px-4 md:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="mr-2">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Цэс Toggle хийх</span>
-            </Button>
+            <SheetTitle>
+              <Button variant="outline" size="icon" className="mr-2">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Цэс Toggle хийх</span>
+              </Button>
+            </SheetTitle>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0">
             <div className="flex h-16 items-center border-b px-4">

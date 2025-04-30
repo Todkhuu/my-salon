@@ -19,7 +19,7 @@ export function ServiceCategories() {
                 alt={category.name}
                 width={300}
                 height={200}
-                className="object-cover"
+                className="w-full h-[250px] object-cover object-center"
               />
             </div>
             <CardContent className="p-4">

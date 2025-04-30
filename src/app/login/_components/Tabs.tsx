@@ -12,7 +12,7 @@ export const TabDemo = () => {
     <Tabs
       value={tab}
       onValueChange={(value) => setTab(value as TabType)}
-      className="w-full"
+      className="w-full px-4 sm:px-0"
     >
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="login">Нэвтрэх</TabsTrigger>

@@ -41,7 +41,7 @@ export function DateTimeSelector({
                 setDate(selected);
               }
             }}
-            className="rounded-md border w-full"
+            className="rounded-md border w-full flex justify-center"
             disabled={isOutsideRange}
             modifiersClassNames={{
               outsideRange: "text-gray-300",
