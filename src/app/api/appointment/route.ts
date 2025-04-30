@@ -32,18 +32,9 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
-
-    if (!userId) {
-      return NextResponse.json(
-        { message: "Хэрэглэгчийн ID дамжуулаагүй байна." },
-        { status: 400 }
-      );
-    }
-    const appointments = await AppointmentModel.find({ userId })
+    const appointments = await AppointmentModel.find()
       .populate("userId")
       .populate("serviceId")
       .populate("staffId");
