@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { FileImage } from "lucide-react";
 
 const EditUpload = ({ handleFile }: { handleFile: (_file: File) => void }) => {

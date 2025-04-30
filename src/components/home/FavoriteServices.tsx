@@ -27,9 +27,13 @@ function FavoriteServices() {
           </Link>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {user?.favoriteServices?.map((service: ServiceType) => (
-            <ServiceCard service={service} key={service._id} />
-          ))}
+          {user?.favoriteServices?.map(
+            (service: ServiceType, index: number) => (
+              <div key={index}>
+                <ServiceCard service={service} />
+              </div>
+            )
+          )}
           <Card className="flex flex-col items-center justify-center p-6 text-center">
             <div className="mb-4 rounded-full bg-gray-100 p-4">
               <Scissors className="h-8 w-8 text-gray-500" />

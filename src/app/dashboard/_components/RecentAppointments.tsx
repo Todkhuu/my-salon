@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Calendar, User, Star, ChevronRight } from "lucide-react";
+import { Calendar, User, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 

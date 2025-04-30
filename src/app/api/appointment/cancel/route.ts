@@ -5,8 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { appointmentId, cancellationReason, reasonType, price } =
-      await req.json();
+    const { appointmentId, cancellationReason, reasonType } = await req.json();
 
     await connectMongoDb();
     const appointment = await AppointmentModel.findById(appointmentId);

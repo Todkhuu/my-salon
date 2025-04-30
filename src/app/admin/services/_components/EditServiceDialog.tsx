@@ -28,7 +28,6 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
 import { useCategory } from "@/app/_context/CategoryContext";
 import { Textarea } from "@/components/ui/textarea";
@@ -233,7 +232,7 @@ export function EditServiceDialog({ service }: { service: ServiceType }) {
               <FormField
                 control={form.control}
                 name="image"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>Зураг</FormLabel>
                     <FormControl>

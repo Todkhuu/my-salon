@@ -11,6 +11,7 @@ import axios from "axios";
 import { IsCompleted } from "./(logged-out)/IsComplete";
 import { CheckoutHeader } from "./(logged-in)/CheckoutHeader";
 import { Qr } from "./(logged-in)/Qr";
+import { toast } from "sonner";
 
 export default function LoggedInCheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -58,9 +59,13 @@ export default function LoggedInCheckoutPage() {
       } else {
         throw new Error("Failed to book appointment");
       }
-    } catch (error: any) {
-      console.error(error);
-      alert("Booking failed: " + error?.response?.data?.error || error.message);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.log("first", err.response?.data?.message);
+        toast.error(err.response?.data?.message || "Алдаа гарлаа");
+      } else {
+        toast.error("Тодорхойгүй алдаа гарлаа");
+      }
     } finally {
       setIsProcessing(false);
     }

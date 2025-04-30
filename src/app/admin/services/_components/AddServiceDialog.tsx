@@ -33,7 +33,6 @@ import { useCategory } from "@/app/_context/CategoryContext";
 import { Textarea } from "@/components/ui/textarea";
 import CloudinaryUpload from "./CloudinaryUpload";
 import { toast } from "sonner";
-import { ServiceType } from "@/app/utils/types";
 
 const serviceSchema = z.object({
   name: z.string().min(1, "Үйлчилгээний нэр шаардлагатай"),
@@ -74,7 +73,7 @@ export function AddServiceDialog() {
         return;
       }
 
-      const res = await axios.post("/api/service", {
+      await axios.post("/api/service", {
         ...values,
         image: imageUrl,
       });
@@ -231,7 +230,7 @@ export function AddServiceDialog() {
               <FormField
                 control={form.control}
                 name="image"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>Зураг</FormLabel>
                     <FormControl>

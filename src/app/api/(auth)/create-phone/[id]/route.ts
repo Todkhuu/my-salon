@@ -19,7 +19,7 @@ export async function PUT(
   try {
     await UserModel.findByIdAndUpdate(params.id, { phoneNumber });
     return NextResponse.json({ message: "Утасны дугаар амжилттай сольсон" });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Update амжилтгүй" }, { status: 500 });
   }
 }

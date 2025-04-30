@@ -69,7 +69,7 @@ export default function CheckoutForm({
       try {
         await axios.post("/api/appointment", appointmentData);
         onComplete(); // 🤘 parent-д мэдэгдэх
-      } catch (err) {
+      } catch {
         alert("Алдаа гарлаа. Дахин оролдоно уу.");
       } finally {
         setIsProcessing(false);

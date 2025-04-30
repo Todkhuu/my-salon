@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
   try {
     const { serviceId } = await req.json();
     const userId = await getUserFromCookie();
+    console.log("userId", userId);
 
     if (!userId) {
       return NextResponse.json(

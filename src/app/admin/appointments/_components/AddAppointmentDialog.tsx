@@ -123,7 +123,7 @@ export function AddAppointmentDialog() {
     try {
       setIsSubmitting(true);
 
-      const res = await axios.post("/api/appointment", values);
+      await axios.post("/api/appointment", values);
 
       toast("Цаг захиалга амжилттай илгээлээ!");
       form.reset();
@@ -159,7 +159,7 @@ export function AddAppointmentDialog() {
               <FormField
                 control={form.control}
                 name="serviceId"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>Үйлчилгээ</FormLabel>
                     <Select
@@ -193,7 +193,7 @@ export function AddAppointmentDialog() {
               <FormField
                 control={form.control}
                 name="staffId"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>Ажилтан</FormLabel>
                     <Select

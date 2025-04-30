@@ -11,7 +11,7 @@ export async function getUserFromCookie() {
 
   try {
     const decoded = jwt.verify(token, SECRET) as { id: string };
-    return decoded; // Зөвхөн decoded-г буцаана!
+    return decoded.id; // Зөвхөн decoded-г буцаана!
   } catch (error) {
     console.error("Error verifying token:", error);
     return null;

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { useAppointment } from "@/app/_context/AppointmentContext";
-import { Check, CheckCheck, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 
 export const RecommendedServices = () => {
   const { appointments } = useAppointment();

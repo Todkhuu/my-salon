@@ -1,6 +1,5 @@
 "use client";
 import { useAppointment } from "@/app/_context/AppointmentContext";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,

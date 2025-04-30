@@ -1,4 +1,4 @@
-import { ServiceType, StaffType } from "@/app/utils/types";
+import { ServiceType } from "@/app/utils/types";
 import Link from "next/link";
 
 type Props = {

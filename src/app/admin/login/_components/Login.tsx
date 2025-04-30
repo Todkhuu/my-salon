@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
@@ -8,7 +8,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@/app/_context/UserContext";
 import { FormInput } from "@/app/login/_components/FormInput";
 import { useStaff } from "@/app/_context/StaffContext";
 
@@ -23,7 +22,12 @@ export const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
-  const navigateToPath = (path: string) => push(path);
+  const navigateToPath = useCallback(
+    (path: string) => {
+      push(path);
+    },
+    [push]
+  );
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -37,9 +41,13 @@ export const Login = () => {
       setLoggedStaff(data.staff);
       toast.success("Амжилттай нэвтэрлээ");
       router.push("/admin"); // refresh хийхэд хэрэглэгч хадгалагдана
-    } catch (err: any) {
-      console.log("first", err.response.data.message);
-      toast.error(err.response.data.message);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.log("first", err.response?.data?.message);
+        toast.error(err.response?.data?.message || "Алдаа гарлаа");
+      } else {
+        toast.error("Тодорхойгүй алдаа гарлаа");
+      }
     } finally {
       setLoading(false);
     }
@@ -53,7 +61,7 @@ export const Login = () => {
     if (!loading) return;
 
     if (!loggedStaff) navigateToPath("/auth");
-  }, [pathname, loggedStaff, loading]);
+  }, [pathname, loggedStaff, loading, navigateToPath]);
 
   return (
     <Form {...form}>

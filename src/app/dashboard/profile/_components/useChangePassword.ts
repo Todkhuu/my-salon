@@ -10,11 +10,9 @@ const passwordSchema = z
     currentPassword: z
       .string()
       .min(1, { message: "Одоогийн нууц үг шаардлагатай." }),
-    newPassword: z
-      .string()
-      .min(6, {
-        message: "Шинэ нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой.",
-      }),
+    newPassword: z.string().min(6, {
+      message: "Шинэ нууц үг хамгийн багадаа 6 тэмдэгт байх ёстой.",
+    }),
     confirmPassword: z
       .string()
       .min(1, { message: "Шинэ нууц үгээ давтан оруулна уу." }),
@@ -39,7 +37,7 @@ export const useChangePassword = (onSuccess: () => void) => {
   const handlePasswordChange = async (
     values: z.infer<typeof passwordSchema>
   ) => {
-    const { confirmPassword, ...dataToSend } = values;
+    const { ...dataToSend } = values;
     try {
       setIsSubmittingPassword(true);
       const response = await axios.put("/api/user/password", dataToSend);
@@ -47,8 +45,13 @@ export const useChangePassword = (onSuccess: () => void) => {
         toast.success("Нууц үг амжилттай шинэчлэгдлээ.");
         onSuccess();
       }
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Алдаа гарлаа.");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.log("first", err.response?.data?.message);
+        toast.error(err.response?.data?.message || "Алдаа гарлаа");
+      } else {
+        toast.error("Тодорхойгүй алдаа гарлаа");
+      }
     } finally {
       setIsSubmittingPassword(false);
     }

@@ -33,7 +33,7 @@ export const TabsContentUpcoming = ({
 
   const [cancelDialog, setCancelDialog] = useState<{
     open: boolean;
-    appointment: any | null;
+    appointment: AppointmentType | null;
   }>({
     open: false,
     appointment: null,

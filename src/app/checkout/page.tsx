@@ -1,6 +1,5 @@
 "use client";
 
-import { Check } from "lucide-react";
 import { useUser } from "../_context/UserContext";
 import LoggedInCheckoutPage from "./_components/LoggedIn";
 import CheckoutPage from "./_components/LoggedOut";
