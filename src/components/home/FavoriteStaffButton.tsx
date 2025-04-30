@@ -22,8 +22,8 @@ export function FavoriteButton({ staffId }: { staffId: string }) {
       if (!prev) return prev;
 
       const updatedFavorites = isAlreadyFavorite
-        ? prev.favoriteStaff?.filter((staff) => staff._id !== staffId) // устгах
-        : [...(prev.favoriteStaff || []), { _id: staffId } as any]; // нэмэх (mock object)
+        ? prev.favoriteStaff?.filter((staff) => staff._id !== staffId)
+        : [...(prev.favoriteStaff || []), { _id: staffId } as any];
 
       return { ...prev, favoriteStaff: updatedFavorites };
     });

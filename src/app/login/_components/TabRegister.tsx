@@ -53,9 +53,13 @@ export const TabRegister = ({ setTab }: RegisterFormProps) => {
 
       toast.success("Бүртгэл амжилттай үүслээ!");
       setTab("login");
-    } catch (error: any) {
-      console.log("Signup error:", error.response?.data.message);
-      toast(error.response?.data.message);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.log("first", err.response?.data?.message);
+        toast.error(err.response?.data?.message || "Алдаа гарлаа");
+      } else {
+        toast.error("Тодорхойгүй алдаа гарлаа");
+      }
     }
   };
 

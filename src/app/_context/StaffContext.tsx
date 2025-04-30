@@ -19,50 +19,41 @@ export const StaffContext = createContext<StaffContextType>(
 export const StaffProvider = ({ children }: { children: React.ReactNode }) => {
   const [staffs, setStaffs] = useState<StaffType[] | null>(null);
   const [loggedStaff, setLoggedStaff] = useState<StaffType[] | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const getStaffs = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const staffs = await axios.get("/api/staff");
       setStaffs(staffs.data.data);
-      setLoading(false);
+      // setLoading(false);
     } catch (error: unknown) {
       toast.error(axios.isAxiosError(error).toString());
       console.log("error in context", error);
       setStaffs(null);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   const getLoggedStaff = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const staffs = await axios.get("/api/admin");
       setLoggedStaff(staffs.data.data);
-      setLoading(false);
+      // setLoading(false);
     } catch (error: unknown) {
       toast.error(axios.isAxiosError(error).toString());
       console.log("error in context", error);
       setStaffs(null);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   useEffect(() => {
     getStaffs();
-    getLoggedStaff();
+    // getLoggedStaff();
   }, []);
-
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <StaffContext.Provider

@@ -11,7 +11,17 @@ export async function POST(req: Request) {
   try {
     const { password, email } = await req.json();
 
-    const user = await UserModel.findOne({ email }).select("+password");
+    const user = await UserModel.findOne({ email })
+      .select("+password")
+      .lean()
+      .populate({
+        path: "favoriteStaff",
+        populate: {
+          path: "services",
+          model: "Services",
+        },
+      })
+      .populate("favoriteServices");
 
     if (!user) {
       return NextResponse.json(
@@ -29,14 +39,14 @@ export async function POST(req: Request) {
       );
     }
 
-    const token = signToken({ id: user._id });
+    // const token = signToken({ id: user._id });
 
-    const cookieStore = await cookies();
-    cookieStore.set("token", token, {
-      httpOnly: true,
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 хоног
-    });
+    // const cookieStore = await cookies();
+    // cookieStore.set("token", token, {
+    //   httpOnly: true,
+    //   path: "/",
+    //   maxAge: 60 * 60 * 24 * 7, // 7 хоног
+    // });
 
     return NextResponse.json(
       { message: "Амжилттай нэвтэрлээ.", user },

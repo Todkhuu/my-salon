@@ -40,7 +40,7 @@ export const Login = () => {
       const { data } = await axios.post("/api/admin/signin", values);
       setLoggedStaff(data.staff);
       toast.success("Амжилттай нэвтэрлээ");
-      router.push("/admin"); // refresh хийхэд хэрэглэгч хадгалагдана
+      router.push("/admin");
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         console.log("first", err.response?.data?.message);
@@ -60,7 +60,7 @@ export const Login = () => {
 
     if (!loading) return;
 
-    if (!loggedStaff) navigateToPath("/auth");
+    if (!loggedStaff) navigateToPath("/admin/login");
   }, [pathname, loggedStaff, loading, navigateToPath]);
 
   return (

@@ -20,34 +20,25 @@ export const ServiceProvider = ({
   children: React.ReactNode;
 }) => {
   const [services, setServices] = useState<ServiceType[] | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const getService = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const services = await axios.get("/api/service");
       setServices(services.data.data);
-      setLoading(false);
+      // setLoading(false);
     } catch (error: unknown) {
       toast.error(axios.isAxiosError(error).toString());
       console.log("error in context", error);
       setServices(null);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   useEffect(() => {
     getService();
   }, []);
-
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <ServiceContext.Provider value={{ services, setServices }}>

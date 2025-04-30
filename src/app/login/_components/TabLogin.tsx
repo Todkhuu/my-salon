@@ -32,11 +32,17 @@ export const TabLogin = () => {
     try {
       const { data } = await axios.post("/api/signin", values);
       setUser(data.user);
+      console.log("user", data.user);
+      localStorage.setItem("id", data.user._id);
       toast.success("Амжилттай нэвтэрлээ");
       router.push("/"); // refresh хийхэд хэрэглэгч хадгалагдана
-    } catch (err: any) {
-      console.log("first", err.response.data.message);
-      toast.error(err.response.data.message);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        console.log("first", err.response?.data?.message);
+        toast.error(err.response?.data?.message || "Алдаа гарлаа");
+      } else {
+        toast.error("Тодорхойгүй алдаа гарлаа");
+      }
     } finally {
       setLoading(false);
     }

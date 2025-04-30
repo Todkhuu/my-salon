@@ -1,13 +1,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CategorySection } from "./CategorySection";
-import { CategoryType, ServiceType } from "@/app/utils/types";
+import { CategoryType, ServiceType, UserType } from "@/app/utils/types";
 
 interface ServicesTabsProps {
   categories: CategoryType[] | null;
   filteredServices: ServiceType[] | undefined;
   selectedTab: string;
   setSelectedTab: (tab: string) => void;
-  user: any;
+  user: UserType | null;
   toggleFavorite: (serviceId: string) => void;
 }
 

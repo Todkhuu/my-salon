@@ -34,13 +34,12 @@ export const AppointmentProvider = ({
   >(null);
 
   const { user } = useUser();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getAppointments = async () => {
       if (user?._id) {
         try {
-          setLoading(true);
+          // setLoading(true);
           const { data } = await axios.get(
             `/api/appointment/userId?userId=${user?._id}`
           );
@@ -49,7 +48,7 @@ export const AppointmentProvider = ({
           toast.error(axios.isAxiosError(error).toString());
           console.log("error in context", error);
         } finally {
-          setLoading(false);
+          // setLoading(false);
         }
       }
     };
@@ -59,28 +58,20 @@ export const AppointmentProvider = ({
 
   const getAllAppointment = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const { data } = await axios.get("/api/appointment");
       setAllAppointment(data.data);
     } catch (error: unknown) {
       toast.error(axios.isAxiosError(error).toString());
       console.log("error in context", error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   useEffect(() => {
     getAllAppointment();
   }, []);
-
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <AppointmentContext.Provider

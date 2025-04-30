@@ -31,16 +31,10 @@ export default function Header() {
   ];
 
   const handleLogout = async () => {
-    try {
-      await axios.post("/api/logout");
-      toast.success("Амжилттай гарлаа");
-      router.push("/");
-      router.refresh();
-      setUser(null);
-    } catch (error) {
-      toast.error("Гарахад алдаа гарлаа. Дахин оролдож үзээрэй.");
-      console.error(error);
-    }
+    localStorage.removeItem("id");
+    toast.success("Амжилттай гарлаа");
+    router.push("/");
+    setUser(null);
   };
 
   return (

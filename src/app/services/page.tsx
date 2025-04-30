@@ -41,7 +41,7 @@ export default function ServicesPage() {
 
         setUser({ ...user, favoriteServices: updatedFavorites });
       }
-    } catch (error) {
+    } catch {
       toast.error("Алдаа гарлаа");
     }
   };

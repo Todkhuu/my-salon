@@ -1,10 +1,11 @@
 import { Scissors, Sparkles } from "lucide-react";
 import { ServiceCard } from "./ServiceCard";
+import { CategoryType, ServiceType, UserType } from "@/app/utils/types";
 
 interface CategorySectionProps {
-  category: any;
-  services: any[];
-  user: any;
+  category: CategoryType;
+  services: ServiceType[];
+  user: UserType | null;
   toggleFavorite: (serviceId: string) => void;
 }
 

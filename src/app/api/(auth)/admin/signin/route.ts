@@ -28,15 +28,6 @@ export async function POST(req: Request) {
       );
     }
 
-    const token = signToken({ id: staff._id });
-
-    const cookieStore = await cookies();
-    cookieStore.set("token", token, {
-      httpOnly: true,
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 хоног
-    });
-
     return NextResponse.json(
       { message: "Амжилттай нэвтэрлээ.", staff },
       { status: 200 }

@@ -3,10 +3,11 @@ import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { FavoriteServiceButton } from "@/components/home/FavoriteServiceButton";
+import { ServiceType, UserType } from "@/app/utils/types";
 
 interface ServiceCardProps {
-  service: any;
-  user: any;
+  service: ServiceType;
+  user: UserType | null;
   toggleFavorite: (serviceId: string) => void;
 }
 

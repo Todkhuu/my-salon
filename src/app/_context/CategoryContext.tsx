@@ -20,32 +20,23 @@ export const CategoryProvider = ({
   children: React.ReactNode;
 }) => {
   const [categories, setCategories] = useState<CategoryType[] | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const getCategories = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const response = await axios.get("/api/category");
       setCategories(response.data.data);
     } catch (error: unknown) {
       toast.error(axios.isAxiosError(error).toString());
       console.log("error in context", error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   useEffect(() => {
     getCategories();
   }, []);
-
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <CategoryContext.Provider value={{ categories, setCategories }}>

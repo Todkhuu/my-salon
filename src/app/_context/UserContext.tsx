@@ -21,8 +21,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const getCurrentUser = async () => {
     setLoading(true);
+    const userId = localStorage.getItem("id");
+
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await axios.get("/api/me");
+      const res = await axios.post("/api/me", { userId });
       if (res.status === 200) {
         setUser(res.data || null);
         setLoading(false);
