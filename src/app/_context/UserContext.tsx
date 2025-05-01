@@ -4,6 +4,7 @@ import React, { createContext, useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { Loader } from "@/components/ui/Loader";
+import { usePathname } from "next/navigation";
 
 type UserContextType = {
   user: UserType | null;
@@ -18,6 +19,7 @@ export const UserContext = createContext<UserContextType>(
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
 
   const getCurrentUser = async () => {
     setLoading(true);
@@ -45,7 +47,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+  }, [pathname]);
 
   if (loading) {
     return (

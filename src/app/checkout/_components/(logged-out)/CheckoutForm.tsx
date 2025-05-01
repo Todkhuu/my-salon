@@ -147,7 +147,7 @@ export default function CheckoutForm({
           ) : (
             <span className="flex items-center gap-2">
               <CreditCard className="h-4 w-4" />
-              {showQR ? "Төлбөр шалгах" : "Цаг товлох"}
+              {showQR ? "Төлбөр шалгах" : "Үргэлжлүүлэх"}
             </span>
           )}
         </Button>
