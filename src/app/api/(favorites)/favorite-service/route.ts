@@ -8,17 +8,7 @@ connectMongoDb();
 
 export async function POST(req: NextRequest) {
   try {
-    const { serviceId } = await req.json();
-    const userId = await getUserFromCookie();
-    console.log("userId", userId);
-
-    if (!userId) {
-      return NextResponse.json(
-        { message: "Нэвтрээгүй байна. Эхлээд нэвтэрнэ үү." },
-        { status: 401 }
-      );
-    }
-
+    const { userId, serviceId } = await req.json();
     const existingUser = await UserModel.findById(userId);
 
     if (!existingUser) {

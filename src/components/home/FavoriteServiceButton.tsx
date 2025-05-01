@@ -18,7 +18,10 @@ export function FavoriteServiceButton({
 
   const toggleFavorite = async (serviceId: string) => {
     try {
-      await axios.post("/api/favorite-service", { serviceId });
+      await axios.post("/api/favorite-service", {
+        serviceId,
+        userId: user?._id,
+      });
       toast.success("Амжилттай шинэчлэгдлээ");
 
       if (user) {
