@@ -31,7 +31,7 @@ export function FavoriteButton({ staffId }: { staffId: string }) {
 
     try {
       setLoading(true);
-      await axios.post("/api/favorite-staff", { staffId });
+      await axios.post("/api/favorite-staff", { staffId, userId: user._id });
       toast.success("Амжилттай шинэчлэгдлээ");
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {

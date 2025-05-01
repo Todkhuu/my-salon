@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UserModel } from "@/server/models";
-import { getUserFromCookie } from "@/lib/auth"; // httpOnly cookie-г decode хийдэг функц
 import { connectMongoDb } from "@/server/database/db";
 import { Types } from "mongoose";
 
@@ -8,8 +7,7 @@ connectMongoDb();
 
 export async function POST(req: NextRequest) {
   try {
-    const { staffId } = await req.json();
-    const userId = await getUserFromCookie();
+    const { staffId, userId } = await req.json();
 
     if (!userId) {
       return NextResponse.json(

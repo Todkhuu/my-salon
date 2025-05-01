@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UserModel } from "@/server/models";
-import { getUserFromCookie } from "@/lib/auth"; // httpOnly cookie-г decode хийдэг функц
 import { connectMongoDb } from "@/server/database/db";
 import { Types } from "mongoose";
 
