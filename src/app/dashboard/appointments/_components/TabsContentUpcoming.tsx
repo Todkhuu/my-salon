@@ -39,8 +39,6 @@ export const TabsContentUpcoming = ({
     appointment: null,
   });
 
-  console.log("upcomingAppointments", upcomingAppointments);
-
   const cancelled = searchParams.get("cancelled");
   return (
     <>

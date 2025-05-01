@@ -5,30 +5,24 @@ import { TabsContentUpcoming } from "./TabsContentUpcoming";
 import { TabsContentPast } from "./TabsContentPast";
 import { TabsContentCancell } from "./TabsContentCancell";
 import { useState } from "react";
+import getAppointmentDateTime from "@/app/utils/getAppointmentDateTime";
 
 const AppointmentsTabs = () => {
   const { appointments } = useAppointment();
   const [activeTab, setActiveTab] = useState("upcoming");
 
-  const now = new Date();
-
   const upcomingAppointments = appointments?.filter((app) => {
-    const appointmentDate = new Date(app.date);
-    const appointmentDateInMongolia = new Date(
-      appointmentDate.getTime() + 8 * 60 * 60 * 1000
-    );
     return (
       (app.status === "CONFIRMED" || app.status === "PENDING") &&
-      appointmentDateInMongolia >= now
+      getAppointmentDateTime(app).getTime() >= Date.now()
     );
   });
 
   const pastAppointments = appointments?.filter((app) => {
-    const appointmentDate = new Date(app.date);
-    const appointmentDateInMongolia = new Date(
-      appointmentDate.getTime() + 8 * 60 * 60 * 1000
+    return (
+      getAppointmentDateTime(app).getTime() <= Date.now() &&
+      app.status !== "CANCELED"
     );
-    return appointmentDateInMongolia < now && app.status !== "CANCELED";
   });
 
   const cancelledAppointments = appointments?.filter(
