@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
 export const ContactInformation = () => {
   return (
