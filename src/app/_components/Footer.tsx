@@ -32,7 +32,7 @@ export function Footer() {
             <div className="grid gap-8 md:grid-cols-2 lg:flex justify-between">
               <div>
                 <h3 className="mb-4 text-xl font-bold text-gray-600">
-                  StyleCut
+                  СтайлКат
                 </h3>
                 <p className="mb-4 text-gray-400">
                   Гоо сайхны мэргэжлийн үйлчилгээ таны гарт.

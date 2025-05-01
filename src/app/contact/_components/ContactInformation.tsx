@@ -67,14 +67,13 @@ export const ContactInformation = () => {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-lg">
-        <Image
-          src="/placeholder.svg?height=300&width=500"
-          alt="Map location"
-          width={500}
-          height={300}
-          className="h-full w-full object-cover"
-        />
+      <div className="relative w-full h-0 pb-[56.25%] overflow-hidden rounded-lg">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d285.0078839475883!2d106.91664423176118!3d47.91440416633872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5d969248b9807d57%3A0xf9ae8f46ed2063c0!2sWork!5e0!3m2!1sen!2smn!4v1746058726664!5m2!1sen!2smn"
+          width="600"
+          height="450"
+          className="absolute top-0 left-0 w-full h-full border-0"
+        ></iframe>
       </div>
     </div>
   );
