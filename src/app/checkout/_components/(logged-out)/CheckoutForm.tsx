@@ -68,7 +68,7 @@ export default function CheckoutForm({
       setIsProcessing(true);
       try {
         await axios.post("/api/appointment", appointmentData);
-        onComplete(); // 🤘 parent-д мэдэгдэх
+        onComplete();
       } catch {
         alert("Алдаа гарлаа. Дахин оролдоно уу.");
       } finally {
@@ -79,7 +79,7 @@ export default function CheckoutForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
         {["username", "email", "phone"].map((field) => (
           <FormField
             key={field}

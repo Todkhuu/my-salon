@@ -49,8 +49,8 @@ export function UpcomingAppointment() {
   }
 
   return (
-    <Card>
-      <CardContent className="p-6">
+    <Card className="mx-auto md:mx-0 max-w-[280px] w-full md:w-full">
+      <CardContent className="p-6 ">
         <h3 className="mb-4 font-bold">Таны дараагийн захиалга</h3>
         <div className="flex items-center gap-8">
           <Avatar>

@@ -24,7 +24,7 @@ export const ServiceCard = ({ service, user }: ServiceCardProps) => {
             <Clock className="h-4 w-4" />
             <span>{service.duration} мин</span>
           </div>
-          <div className="text-lg font-bold">{service.price}</div>
+          <div className="text-lg font-bold">{service.price}₮</div>
         </div>
         <Link href={`/staffs?service=${service._id}`} className="w-full">
           <Button className="w-full bg-black text-white hover:bg-gray-800">

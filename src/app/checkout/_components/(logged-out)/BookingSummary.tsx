@@ -66,17 +66,17 @@ export const BookingSummary = ({ staff, service, date, time }: Props) => {
         <div className="space-y-2 border-t pt-4">
           <div className="flex justify-between">
             <span>Дүн</span>
-            <span>${service?.price}</span>
+            <span>{service?.price}₮</span>
           </div>
           {typeof service?.price === "number" ? (
             <>
               <div className="flex justify-between">
                 <span>Татвар</span>
-                <span>${(service.price * 0.1).toFixed(2)}</span>
+                <span>{(service.price * 0.1).toFixed(2)}₮</span>
               </div>
               <div className="flex justify-between border-t pt-2 text-lg font-bold">
                 <span>Нийт</span>
-                <span>${(service.price * 1.1).toFixed(2)}</span>
+                <span>{(service.price * 1.1).toFixed(2)}₮</span>
               </div>
             </>
           ) : (

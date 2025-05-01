@@ -53,7 +53,6 @@ export default function LoggedInCheckoutPage() {
         price: service?.price,
         paymentMethod: "Qpay",
       });
-      console.log("dateeee", date);
 
       if (res.status === 201 && res.data.success) {
         setIsComplete(true);

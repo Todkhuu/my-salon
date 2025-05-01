@@ -32,20 +32,20 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-[1400px] m-auto  px-4 py-8 md:px-6 md:py-12">
+    <div className="max-w-[1400px] w-full mx-auto px-4 py-8 bg-[#ffffff] md:px-6 md:py-12">
       <Breadcrumbs staff={staff} service={service} />
       <CheckoutTitle />
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <CheckoutForm
-            onComplete={() => setIsComplete(true)}
-            staff={staff}
-            service={service}
-            date={date}
-            time={time}
-          />
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-15 lg:gap-40 lg:grid-cols-[2fr_1fr] ">
+        {/* <div className="lg:col-span-2"> */}
+        <CheckoutForm
+          onComplete={() => setIsComplete(true)}
+          staff={staff}
+          service={service}
+          date={date}
+          time={time}
+        />
+        {/* </div> */}
 
         <BookingSummary
           staff={staff}

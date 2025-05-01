@@ -20,8 +20,8 @@ export function UserWelcome() {
 
   return (
     <section className="bg-gradient-to-r from-purple-100 to-pink-100 py-20 md:py-32">
-      <div className="flex justify-center items-center gap-10 px-4 md:px-6">
-        <div className="flex flex-col items-center space-y-4 text-center">
+      <div className="md:flex md:justify-center items-center gap-10 px-4 md:px-6">
+        <div className="mb-4 md:mb-0 flex flex-col items-center space-y-4 text-center">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
             {greeting}, {user?.username}!
           </h1>

@@ -76,11 +76,11 @@ export function AppointmentSummary({
         <div className="space-y-2 border-t pt-4">
           <div className="flex justify-between">
             <span>Дүн</span>
-            <span>${service?.price.toFixed(2)}</span>
+            <span>{service?.price.toFixed(2)}₮</span>
           </div>
           <div className="flex justify-between">
             <span>НӨАТ</span>
-            <span>${tax.toFixed(2)}</span>
+            <span>{tax.toFixed(2)}₮</span>
           </div>
           <div className="flex justify-between border-t pt-2 text-lg font-bold">
             <span>Нийт дүн</span>
