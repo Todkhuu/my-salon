@@ -33,11 +33,6 @@ export function UserNav({ handleLogout }: UserNavProps) {
     exit: { opacity: 0, y: -10 },
   };
 
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: -5 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
