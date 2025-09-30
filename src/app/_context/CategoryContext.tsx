@@ -7,6 +7,7 @@ import { toast } from "sonner";
 type CategoryContextType = {
   categories: CategoryType[] | null;
   setCategories: React.Dispatch<React.SetStateAction<CategoryType[] | null>>;
+  loading: boolean;
 };
 
 export const CategoryContext = createContext<CategoryContextType>(
@@ -19,17 +20,18 @@ export const CategoryProvider = ({
   children: React.ReactNode;
 }) => {
   const [categories, setCategories] = useState<CategoryType[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true); // ✅ эхэндээ true
 
   const getCategories = async () => {
     try {
-      // setLoading(true);
+      setLoading(true);
       const response = await axios.get("/api/category");
       setCategories(response.data.data);
     } catch (error: unknown) {
       toast.error(axios.isAxiosError(error).toString());
       console.log("error in context", error);
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -38,9 +40,10 @@ export const CategoryProvider = ({
   }, []);
 
   return (
-    <CategoryContext.Provider value={{ categories, setCategories }}>
+    <CategoryContext.Provider value={{ categories, setCategories, loading }}>
       {children}
     </CategoryContext.Provider>
   );
 };
+
 export const useCategory = () => useContext(CategoryContext);

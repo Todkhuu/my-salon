@@ -9,6 +9,7 @@ import NavLinks from "./NavLinks";
 import MobileMenu from "./MobileMenu";
 import { useUser } from "@/app/_context/UserContext";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function Header() {
   const router = useRouter();
@@ -36,31 +37,34 @@ export default function Header() {
     setTimeout(() => setUser(null), 100);
   };
 
+  if (HIDE_HEADER_PATHS.includes(pathname)) return null;
+
   return (
-    <>
-      {!HIDE_HEADER_PATHS.includes(pathname) && (
-        <header className="border-b bg-white ">
-          <div className="max-w-[1400px] m-auto flex h-16 items-center justify-between px-4 md:px-6">
-            <Link href={"/"} className="flex items-center gap-2">
-              <span className="text-xl font-bold">СтайлКат</span>
+    <motion.header
+      className="border-b bg-white"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <div className="max-w-[1400px] m-auto flex h-16 items-center justify-between px-4 md:px-6">
+        <Link href={"/"} className="flex items-center gap-2">
+          <span className="text-xl font-bold">СтайлКат</span>
+        </Link>
+        {!HIDE_NAVLINKS_PATHS.includes(pathname) && <NavLinks />}
+        <div className="flex items-center gap-4">
+          {user ? (
+            <UserNav handleLogout={handleLogout} />
+          ) : (
+            <Link href="/login">
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <UserCircle className="h-5 w-5" />
+                <span className="sr-only">Нэвтрэх</span>
+              </Button>
             </Link>
-            {!HIDE_NAVLINKS_PATHS.includes(pathname) && <NavLinks />}
-            <div className="flex items-center gap-4">
-              {user ? (
-                <UserNav handleLogout={handleLogout} />
-              ) : (
-                <Link href="/login">
-                  <Button variant="ghost" size="icon" className="rounded-full">
-                    <UserCircle className="h-5 w-5" />
-                    <span className="sr-only">Нэвтрэх</span>
-                  </Button>
-                </Link>
-              )}
-              <MobileMenu user={user} onLogout={handleLogout} />
-            </div>
-          </div>
-        </header>
-      )}
-    </>
+          )}
+          <MobileMenu user={user} onLogout={handleLogout} />
+        </div>
+      </div>
+    </motion.header>
   );
 }
