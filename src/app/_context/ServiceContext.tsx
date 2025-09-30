@@ -7,6 +7,7 @@ import { toast } from "sonner";
 type ServiceContextType = {
   services: ServiceType[] | null;
   setServices: React.Dispatch<React.SetStateAction<ServiceType[] | null>>;
+  loading: boolean;
 };
 
 export const ServiceContext = createContext<ServiceContextType>(
@@ -19,19 +20,19 @@ export const ServiceProvider = ({
   children: React.ReactNode;
 }) => {
   const [services, setServices] = useState<ServiceType[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getService = async () => {
     try {
-      // setLoading(true);
+      setLoading(true);
       const services = await axios.get("/api/service");
       setServices(services.data.data);
-      // setLoading(false);
     } catch (error: unknown) {
       toast.error(axios.isAxiosError(error).toString());
       console.log("error in context", error);
       setServices(null);
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -40,7 +41,7 @@ export const ServiceProvider = ({
   }, []);
 
   return (
-    <ServiceContext.Provider value={{ services, setServices }}>
+    <ServiceContext.Provider value={{ services, setServices, loading }}>
       {children}
     </ServiceContext.Provider>
   );

@@ -11,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 import { useStaff } from "../_context/StaffContext";
 
 export default function BarbersPage() {
-  const { staffs } = useStaff();
+  const { staffs, loading } = useStaff();
   const { user } = useUser();
 
   const searchParams = useSearchParams();
@@ -22,6 +22,8 @@ export default function BarbersPage() {
   const filteredStaffs = staffs?.filter((staff) =>
     staff.services.some((service) => service._id === selectedService)
   );
+
+  const displayStaffs = selectedService ? filteredStaffs : staffs;
 
   return (
     <div className="max-w-[1400px] m-auto px-4 py-8 md:px-6 md:py-12">
@@ -40,64 +42,90 @@ export default function BarbersPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {(selectedService ? filteredStaffs : staffs)?.map((staff) => (
-          <Card key={staff._id} className="overflow-hidden p-0">
-            <div className="aspect-[3/4] w-full overflow-hidden relative">
-              {user ? <FavoriteButton staffId={staff._id} /> : ""}
-              <Image
-                src={staff.image || "/placeholder.svg"}
-                alt={staff.name || "Staff photo"}
-                width={300}
-                height={400}
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <CardContent className="p-4">
-              <h3 className="mb-1 text-xl font-bold">{staff.name}</h3>
-              <p className="text-sm text-gray-500">{staff.profession}</p>
-              <div className="mt-2 flex items-center gap-1">
-                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                <span className="text-sm font-medium">{staff.rating}</span>
-                <span className="text-sm text-gray-500">
-                  (staff.reviews reviews)
-                </span>
-              </div>
-              <div className="mt-3">
-                <p className="text-xs font-medium text-gray-500">ЧАДВАРУУД</p>
-                <div className="mt-1 flex flex-wrap gap-1 w-[201px]">
-                  {staff.services.map((service, index) => (
-                    <span
-                      key={index}
-                      className="rounded-full bg-gray-100 px-2 py-1 text-xs"
-                    >
-                      {service.name}
-                    </span>
-                  ))}
+        {loading
+          ? Array.from({ length: 8 }).map((_, index) => (
+              <Card key={index} className="overflow-hidden p-0 animate-pulse">
+                <div className="aspect-[3/4] w-full bg-gray-200" />
+                <CardContent className="p-4">
+                  <div className="h-5 w-3/4 bg-gray-300 mb-2 rounded"></div>
+                  <div className="h-4 w-1/2 bg-gray-300 mb-2 rounded"></div>
+                  <div className="mt-2 h-4 w-1/3 bg-gray-300 rounded"></div>
+                </CardContent>
+                <CardFooter className="p-4 pt-0">
+                  <div className="h-8 w-full bg-gray-300 rounded"></div>
+                </CardFooter>
+              </Card>
+            ))
+          : displayStaffs?.map((staff) => (
+              <Card key={staff._id} className="overflow-hidden p-0">
+                <div className="aspect-[3/4] w-full overflow-hidden relative">
+                  {user ? <FavoriteButton staffId={staff._id} /> : ""}
+                  <Image
+                    src={staff.image || "/placeholder.svg"}
+                    alt={staff.name || "Staff photo"}
+                    width={300}
+                    height={400}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
-              </div>
-            </CardContent>
-            <CardFooter className="p-4 pt-0">
-              {isBookingEnabled ? (
-                <Link
-                  href={`/booking?staffs=${staff._id}${
-                    selectedService ? `&service=${selectedService}` : ""
-                  }`}
-                  className="w-full"
-                >
-                  <Button className="w-full bg-black text-white hover:bg-gray-800">
-                    Цаг Захиалах
-                  </Button>
-                </Link>
-              ) : (
-                <Link href={`/staffs/${staff._id}`} className="w-full">
-                  <Button className="w-full bg-black text-white hover:bg-gray-800">
-                    Дэлгэрэнгүй Үзэх
-                  </Button>
-                </Link>
-              )}
-            </CardFooter>
-          </Card>
-        ))}
+                <CardContent className="p-4">
+                  <h3 className="mb-1 text-xl font-bold">{staff.name}</h3>
+                  <p className="text-sm text-gray-500">{staff.profession}</p>
+                  <div className="mt-2 flex items-center gap-1">
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <span className="text-sm font-medium">{staff.rating}</span>
+                    <span className="text-sm text-gray-500">
+                      (staff.reviews reviews)
+                    </span>
+                  </div>
+                  <div className="mt-3">
+                    <p className="text-xs font-medium text-gray-500">
+                      ЧАДВАРУУД
+                    </p>
+                    <div className="mt-1 flex flex-wrap gap-1 w-[201px] ">
+                      {staff.services.map((service, index) => (
+                        <span
+                          key={index}
+                          className="rounded-full bg-gray-100 px-2 py-1 text-xs"
+                        >
+                          {service.name}
+                        </span>
+                      ))}
+                      {Array.from({
+                        length: Math.max(0, 5 - staff.services.length),
+                      }).map((_, index) => (
+                        <span
+                          key={`empty-${index}`}
+                          className="rounded-full bg-transparent px-2 py-1 text-xs"
+                        >
+                          &nbsp;
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="p-4 pt-0">
+                  {isBookingEnabled ? (
+                    <Link
+                      href={`/booking?staffs=${staff._id}${
+                        selectedService ? `&service=${selectedService}` : ""
+                      }`}
+                      className="w-full"
+                    >
+                      <Button className="w-full bg-black text-white hover:bg-gray-800">
+                        Цаг Захиалах
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link href={`/staffs/${staff._id}`} className="w-full">
+                      <Button className="w-full bg-black text-white hover:bg-gray-800">
+                        Дэлгэрэнгүй Үзэх
+                      </Button>
+                    </Link>
+                  )}
+                </CardFooter>
+              </Card>
+            ))}
       </div>
     </div>
   );

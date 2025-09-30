@@ -20,7 +20,7 @@ export const CategoryProvider = ({
   children: React.ReactNode;
 }) => {
   const [categories, setCategories] = useState<CategoryType[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true); // ✅ эхэндээ true
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getCategories = async () => {
     try {

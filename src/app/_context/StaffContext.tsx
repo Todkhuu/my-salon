@@ -10,6 +10,7 @@ type StaffContextType = {
   setLoggedStaff: React.Dispatch<React.SetStateAction<StaffType[] | null>>;
   loggedStaff: StaffType[] | null;
   getStaffs: () => void;
+  loading: boolean;
 };
 
 export const StaffContext = createContext<StaffContextType>(
@@ -19,45 +20,37 @@ export const StaffContext = createContext<StaffContextType>(
 export const StaffProvider = ({ children }: { children: React.ReactNode }) => {
   const [staffs, setStaffs] = useState<StaffType[] | null>(null);
   const [loggedStaff, setLoggedStaff] = useState<StaffType[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getStaffs = async () => {
     try {
-      // setLoading(true);
+      setLoading(true);
       const staffs = await axios.get("/api/staff");
       setStaffs(staffs.data.data);
-      // setLoading(false);
+      setLoading(false);
     } catch (error: unknown) {
       toast.error(axios.isAxiosError(error).toString());
       console.log("error in context", error);
       setStaffs(null);
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
-  // const getLoggedStaff = async () => {
-  //   try {
-  //     // setLoading(true);
-  //     const staffs = await axios.get("/api/admin");
-  //     setLoggedStaff(staffs.data.data);
-  //     // setLoading(false);
-  //   } catch (error: unknown) {
-  //     toast.error(axios.isAxiosError(error).toString());
-  //     console.log("error in context", error);
-  //     setStaffs(null);
-  //   } finally {
-  //     // setLoading(false);
-  //   }
-  // };
-
   useEffect(() => {
     getStaffs();
-    // getLoggedStaff();
   }, []);
 
   return (
     <StaffContext.Provider
-      value={{ staffs, setStaffs, setLoggedStaff, loggedStaff, getStaffs }}
+      value={{
+        staffs,
+        setStaffs,
+        setLoggedStaff,
+        loggedStaff,
+        getStaffs,
+        loading,
+      }}
     >
       {children}
     </StaffContext.Provider>
